@@ -1,0 +1,93 @@
+ARM GAS  /tmp/cco7HwvN.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"stm32f1xx_hal_msp.c"
+  15              		.section	.text.HAL_MspInit,"ax",%progbits
+  16              		.align	1
+  17              		.global	HAL_MspInit
+  18              		.thumb
+  19              		.thumb_func
+  21              	HAL_MspInit:
+  22              		@ args = 0, pretend = 0, frame = 8
+  23              		@ frame_needed = 0, uses_anonymous_args = 0
+  24 0000 204B     		ldr	r3, .L2
+  25 0002 07B5     		push	{r0, r1, r2, lr}
+  26 0004 9A69     		ldr	r2, [r3, #24]
+  27 0006 0320     		movs	r0, #3
+  28 0008 42F00102 		orr	r2, r2, #1
+  29 000c 9A61     		str	r2, [r3, #24]
+  30 000e 9B69     		ldr	r3, [r3, #24]
+  31 0010 03F00103 		and	r3, r3, #1
+  32 0014 0193     		str	r3, [sp, #4]
+  33 0016 019B     		ldr	r3, [sp, #4]
+  34 0018 FFF7FEFF 		bl	HAL_NVIC_SetPriorityGrouping
+  35 001c 0021     		movs	r1, #0
+  36 001e 0A46     		mov	r2, r1
+  37 0020 6FF00B00 		mvn	r0, #11
+  38 0024 FFF7FEFF 		bl	HAL_NVIC_SetPriority
+  39 0028 0021     		movs	r1, #0
+  40 002a 0A46     		mov	r2, r1
+  41 002c 6FF00A00 		mvn	r0, #10
+  42 0030 FFF7FEFF 		bl	HAL_NVIC_SetPriority
+  43 0034 0021     		movs	r1, #0
+  44 0036 0A46     		mov	r2, r1
+  45 0038 6FF00900 		mvn	r0, #9
+  46 003c FFF7FEFF 		bl	HAL_NVIC_SetPriority
+  47 0040 0021     		movs	r1, #0
+  48 0042 0A46     		mov	r2, r1
+  49 0044 6FF00400 		mvn	r0, #4
+  50 0048 FFF7FEFF 		bl	HAL_NVIC_SetPriority
+  51 004c 0021     		movs	r1, #0
+  52 004e 0A46     		mov	r2, r1
+  53 0050 6FF00300 		mvn	r0, #3
+  54 0054 FFF7FEFF 		bl	HAL_NVIC_SetPriority
+  55 0058 0021     		movs	r1, #0
+  56 005a 0A46     		mov	r2, r1
+  57 005c 6FF00100 		mvn	r0, #1
+  58 0060 FFF7FEFF 		bl	HAL_NVIC_SetPriority
+ARM GAS  /tmp/cco7HwvN.s 			page 2
+
+
+  59 0064 0021     		movs	r1, #0
+  60 0066 0A46     		mov	r2, r1
+  61 0068 4FF0FF30 		mov	r0, #-1
+  62 006c FFF7FEFF 		bl	HAL_NVIC_SetPriority
+  63 0070 054A     		ldr	r2, .L2+4
+  64 0072 5368     		ldr	r3, [r2, #4]
+  65 0074 23F0E063 		bic	r3, r3, #117440512
+  66 0078 43F08063 		orr	r3, r3, #67108864
+  67 007c 5360     		str	r3, [r2, #4]
+  68 007e 03B0     		add	sp, sp, #12
+  69              		@ sp needed
+  70 0080 5DF804FB 		ldr	pc, [sp], #4
+  71              	.L3:
+  72              		.align	2
+  73              	.L2:
+  74 0084 00100240 		.word	1073876992
+  75 0088 00000140 		.word	1073807360
+  77              		.ident	"GCC: (4.9.2-10+14~bpo8+1) 4.9.2"
+ARM GAS  /tmp/cco7HwvN.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 stm32f1xx_hal_msp.c
+     /tmp/cco7HwvN.s:16     .text.HAL_MspInit:0000000000000000 $t
+     /tmp/cco7HwvN.s:21     .text.HAL_MspInit:0000000000000000 HAL_MspInit
+     /tmp/cco7HwvN.s:74     .text.HAL_MspInit:0000000000000084 $d
+
+UNDEFINED SYMBOLS
+HAL_NVIC_SetPriorityGrouping
+HAL_NVIC_SetPriority

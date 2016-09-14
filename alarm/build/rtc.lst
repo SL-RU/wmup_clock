@@ -1,0 +1,179 @@
+ARM GAS  /tmp/ccRbneF4.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"rtc.c"
+  15              		.section	.text.MX_RTC_Init,"ax",%progbits
+  16              		.align	1
+  17              		.global	MX_RTC_Init
+  18              		.thumb
+  19              		.thumb_func
+  21              	MX_RTC_Init:
+  22              		@ args = 0, pretend = 0, frame = 16
+  23              		@ frame_needed = 0, uses_anonymous_args = 0
+  24 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+  25 0002 1F48     		ldr	r0, .L19
+  26 0004 1F49     		ldr	r1, .L19+4
+  27 0006 4FF0FF32 		mov	r2, #-1
+  28 000a 4FF48073 		mov	r3, #256
+  29 000e 80E80E00 		stmia	r0, {r1, r2, r3}
+  30 0012 FFF7FEFF 		bl	HAL_RTC_Init
+  31 0016 08B1     		cbz	r0, .L2
+  32 0018 FFF7FEFF 		bl	Error_Handler
+  33              	.L2:
+  34 001c 0124     		movs	r4, #1
+  35 001e 0023     		movs	r3, #0
+  36 0020 1748     		ldr	r0, .L19
+  37 0022 6946     		mov	r1, sp
+  38 0024 2246     		mov	r2, r4
+  39 0026 8DF80040 		strb	r4, [sp]
+  40 002a 8DF80130 		strb	r3, [sp, #1]
+  41 002e 8DF80230 		strb	r3, [sp, #2]
+  42 0032 FFF7FEFF 		bl	HAL_RTC_SetTime
+  43 0036 08B1     		cbz	r0, .L3
+  44 0038 FFF7FEFF 		bl	Error_Handler
+  45              	.L3:
+  46 003c 8DF80440 		strb	r4, [sp, #4]
+  47 0040 8DF80540 		strb	r4, [sp, #5]
+  48 0044 8DF80640 		strb	r4, [sp, #6]
+  49 0048 0D48     		ldr	r0, .L19
+  50 004a 0024     		movs	r4, #0
+  51 004c 01A9     		add	r1, sp, #4
+  52 004e 0122     		movs	r2, #1
+  53 0050 8DF80740 		strb	r4, [sp, #7]
+  54 0054 FFF7FEFF 		bl	HAL_RTC_SetDate
+  55 0058 08B1     		cbz	r0, .L4
+  56 005a FFF7FEFF 		bl	Error_Handler
+  57              	.L4:
+  58 005e 0848     		ldr	r0, .L19
+ARM GAS  /tmp/ccRbneF4.s 			page 2
+
+
+  59 0060 02A9     		add	r1, sp, #8
+  60 0062 0122     		movs	r2, #1
+  61 0064 8DF80840 		strb	r4, [sp, #8]
+  62 0068 8DF80940 		strb	r4, [sp, #9]
+  63 006c 8DF80A40 		strb	r4, [sp, #10]
+  64 0070 0394     		str	r4, [sp, #12]
+  65 0072 FFF7FEFF 		bl	HAL_RTC_SetAlarm
+  66 0076 08B1     		cbz	r0, .L1
+  67 0078 FFF7FEFF 		bl	Error_Handler
+  68              	.L1:
+  69 007c 04B0     		add	sp, sp, #16
+  70              		@ sp needed
+  71 007e 10BD     		pop	{r4, pc}
+  72              	.L20:
+  73              		.align	2
+  74              	.L19:
+  75 0080 00000000 		.word	hrtc
+  76 0084 00280040 		.word	1073752064
+  78              		.section	.text.HAL_RTC_MspInit,"ax",%progbits
+  79              		.align	1
+  80              		.global	HAL_RTC_MspInit
+  81              		.thumb
+  82              		.thumb_func
+  84              	HAL_RTC_MspInit:
+  85              		@ args = 0, pretend = 0, frame = 8
+  86              		@ frame_needed = 0, uses_anonymous_args = 0
+  87 0000 07B5     		push	{r0, r1, r2, lr}
+  88 0002 0E4B     		ldr	r3, .L23
+  89 0004 0268     		ldr	r2, [r0]
+  90 0006 9A42     		cmp	r2, r3
+  91 0008 15D1     		bne	.L21
+  92 000a FFF7FEFF 		bl	HAL_PWR_EnableBkUpAccess
+  93 000e 0C4B     		ldr	r3, .L23+4
+  94 0010 DA69     		ldr	r2, [r3, #28]
+  95 0012 42F00062 		orr	r2, r2, #134217728
+  96 0016 DA61     		str	r2, [r3, #28]
+  97 0018 DB69     		ldr	r3, [r3, #28]
+  98 001a 03F00063 		and	r3, r3, #134217728
+  99 001e 0193     		str	r3, [sp, #4]
+ 100 0020 019B     		ldr	r3, [sp, #4]
+ 101 0022 4FF40043 		mov	r3, #32768
+ 102              	@ 531 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 103 0026 93FAA3F3 		rbit r3, r3
+ 104              	@ 0 "" 2
+ 105              		.thumb
+ 106 002a B3FA83F3 		clz	r3, r3
+ 107 002e 054A     		ldr	r2, .L23+8
+ 108 0030 0121     		movs	r1, #1
+ 109 0032 42F82310 		str	r1, [r2, r3, lsl #2]
+ 110              	.L21:
+ 111 0036 03B0     		add	sp, sp, #12
+ 112              		@ sp needed
+ 113 0038 5DF804FB 		ldr	pc, [sp], #4
+ 114              	.L24:
+ 115              		.align	2
+ 116              	.L23:
+ 117 003c 00280040 		.word	1073752064
+ARM GAS  /tmp/ccRbneF4.s 			page 3
+
+
+ 118 0040 00100240 		.word	1073876992
+ 119 0044 00044242 		.word	1111622656
+ 121              		.section	.text.HAL_RTC_MspDeInit,"ax",%progbits
+ 122              		.align	1
+ 123              		.global	HAL_RTC_MspDeInit
+ 124              		.thumb
+ 125              		.thumb_func
+ 127              	HAL_RTC_MspDeInit:
+ 128              		@ args = 0, pretend = 0, frame = 0
+ 129              		@ frame_needed = 0, uses_anonymous_args = 0
+ 130              		@ link register save eliminated.
+ 131 0000 0268     		ldr	r2, [r0]
+ 132 0002 074B     		ldr	r3, .L27
+ 133 0004 9A42     		cmp	r2, r3
+ 134 0006 09D1     		bne	.L25
+ 135 0008 4FF40043 		mov	r3, #32768
+ 136              	@ 531 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 137 000c 93FAA3F3 		rbit r3, r3
+ 138              	@ 0 "" 2
+ 139              		.thumb
+ 140 0010 B3FA83F3 		clz	r3, r3
+ 141 0014 034A     		ldr	r2, .L27+4
+ 142 0016 0021     		movs	r1, #0
+ 143 0018 42F82310 		str	r1, [r2, r3, lsl #2]
+ 144              	.L25:
+ 145 001c 7047     		bx	lr
+ 146              	.L28:
+ 147 001e 00BF     		.align	2
+ 148              	.L27:
+ 149 0020 00280040 		.word	1073752064
+ 150 0024 00044242 		.word	1111622656
+ 152              		.comm	hrtc,20,4
+ 153              		.ident	"GCC: (4.9.2-10+14~bpo8+1) 4.9.2"
+ARM GAS  /tmp/ccRbneF4.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 rtc.c
+     /tmp/ccRbneF4.s:16     .text.MX_RTC_Init:0000000000000000 $t
+     /tmp/ccRbneF4.s:21     .text.MX_RTC_Init:0000000000000000 MX_RTC_Init
+     /tmp/ccRbneF4.s:75     .text.MX_RTC_Init:0000000000000080 $d
+                            *COM*:0000000000000014 hrtc
+     /tmp/ccRbneF4.s:79     .text.HAL_RTC_MspInit:0000000000000000 $t
+     /tmp/ccRbneF4.s:84     .text.HAL_RTC_MspInit:0000000000000000 HAL_RTC_MspInit
+     /tmp/ccRbneF4.s:117    .text.HAL_RTC_MspInit:000000000000003c $d
+     /tmp/ccRbneF4.s:122    .text.HAL_RTC_MspDeInit:0000000000000000 $t
+     /tmp/ccRbneF4.s:127    .text.HAL_RTC_MspDeInit:0000000000000000 HAL_RTC_MspDeInit
+     /tmp/ccRbneF4.s:149    .text.HAL_RTC_MspDeInit:0000000000000020 $d
+
+UNDEFINED SYMBOLS
+HAL_RTC_Init
+Error_Handler
+HAL_RTC_SetTime
+HAL_RTC_SetDate
+HAL_RTC_SetAlarm
+HAL_PWR_EnableBkUpAccess

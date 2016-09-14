@@ -1,0 +1,4184 @@
+ARM GAS  /tmp/cccQ9HVm.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"stm32f1xx_hal_i2c.c"
+  15              		.section	.text.I2C_IsAcknowledgeFailed,"ax",%progbits
+  16              		.align	1
+  17              		.thumb
+  18              		.thumb_func
+  20              	I2C_IsAcknowledgeFailed:
+  21              		@ args = 0, pretend = 0, frame = 0
+  22              		@ frame_needed = 0, uses_anonymous_args = 0
+  23              		@ link register save eliminated.
+  24 0000 0268     		ldr	r2, [r0]
+  25 0002 5369     		ldr	r3, [r2, #20]
+  26 0004 13F48063 		ands	r3, r3, #1024
+  27 0008 1FBF     		itttt	ne
+  28 000a 5369     		ldrne	r3, [r2, #20]
+  29 000c 23F48063 		bicne	r3, r3, #1024
+  30 0010 5361     		strne	r3, [r2, #20]
+  31 0012 0423     		movne	r3, #4
+  32 0014 1FBF     		itttt	ne
+  33 0016 8363     		strne	r3, [r0, #56]
+  34 0018 2023     		movne	r3, #32
+  35 001a 80F83530 		strbne	r3, [r0, #53]
+  36 001e 0023     		movne	r3, #0
+  37 0020 1ABF     		itte	ne
+  38 0022 80F83430 		strbne	r3, [r0, #52]
+  39 0026 0120     		movne	r0, #1
+  40 0028 1846     		moveq	r0, r3
+  41 002a 7047     		bx	lr
+  43              		.section	.text.I2C_WaitOnFlagUntilTimeout,"ax",%progbits
+  44              		.align	1
+  45              		.thumb
+  46              		.thumb_func
+  48              	I2C_WaitOnFlagUntilTimeout:
+  49              		@ args = 0, pretend = 0, frame = 0
+  50              		@ frame_needed = 0, uses_anonymous_args = 0
+  51 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  52 0004 0E46     		mov	r6, r1
+  53 0006 1D46     		mov	r5, r3
+  54 0008 0446     		mov	r4, r0
+  55 000a 9046     		mov	r8, r2
+  56 000c FFF7FEFF 		bl	HAL_GetTick
+  57 0010 330C     		lsrs	r3, r6, #16
+  58 0012 0746     		mov	r7, r0
+  59 0014 B8F1000F 		cmp	r8, #0
+  60 0018 34D1     		bne	.L31
+ARM GAS  /tmp/cccQ9HVm.s 			page 2
+
+
+  61 001a 5FFA83F8 		uxtb	r8, r3
+  62              	.L7:
+  63 001e 2368     		ldr	r3, [r4]
+  64 0020 B8F1010F 		cmp	r8, #1
+  65 0024 0CBF     		ite	eq
+  66 0026 5B69     		ldreq	r3, [r3, #20]
+  67 0028 9B69     		ldrne	r3, [r3, #24]
+  68 002a DB43     		mvns	r3, r3
+  69 002c 9BB2     		uxth	r3, r3
+  70 002e 3342     		tst	r3, r6
+  71 0030 14BF     		ite	ne
+  72 0032 0123     		movne	r3, #1
+  73 0034 0023     		moveq	r3, #0
+  74 0036 C3B1     		cbz	r3, .L22
+  75 0038 6A1C     		adds	r2, r5, #1
+  76 003a F0D0     		beq	.L7
+  77 003c CDB1     		cbz	r5, .L17
+  78 003e FFF7FEFF 		bl	HAL_GetTick
+  79 0042 C01B     		subs	r0, r0, r7
+  80 0044 A842     		cmp	r0, r5
+  81 0046 EAD9     		bls	.L7
+  82 0048 13E0     		b	.L17
+  83              	.L21:
+  84 004a 6B1C     		adds	r3, r5, #1
+  85 004c 10D1     		bne	.L32
+  86              	.L15:
+  87 004e 2368     		ldr	r3, [r4]
+  88 0050 B8F1010F 		cmp	r8, #1
+  89 0054 0CBF     		ite	eq
+  90 0056 5B69     		ldreq	r3, [r3, #20]
+  91 0058 9B69     		ldrne	r3, [r3, #24]
+  92 005a DB43     		mvns	r3, r3
+  93 005c 9BB2     		uxth	r3, r3
+  94 005e 3342     		tst	r3, r6
+  95 0060 0CBF     		ite	eq
+  96 0062 0123     		moveq	r3, #1
+  97 0064 0023     		movne	r3, #0
+  98 0066 002B     		cmp	r3, #0
+  99 0068 EFD1     		bne	.L21
+ 100              	.L22:
+ 101 006a 0020     		movs	r0, #0
+ 102 006c BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 103              	.L32:
+ 104 0070 5DB9     		cbnz	r5, .L16
+ 105              	.L17:
+ 106 0072 2023     		movs	r3, #32
+ 107 0074 84F83530 		strb	r3, [r4, #53]
+ 108 0078 0023     		movs	r3, #0
+ 109 007a 84F83430 		strb	r3, [r4, #52]
+ 110 007e 0320     		movs	r0, #3
+ 111 0080 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 112              	.L31:
+ 113 0084 5FFA83F8 		uxtb	r8, r3
+ 114 0088 E1E7     		b	.L15
+ 115              	.L16:
+ 116 008a FFF7FEFF 		bl	HAL_GetTick
+ 117 008e C01B     		subs	r0, r0, r7
+ARM GAS  /tmp/cccQ9HVm.s 			page 3
+
+
+ 118 0090 A842     		cmp	r0, r5
+ 119 0092 DCD9     		bls	.L15
+ 120 0094 EDE7     		b	.L17
+ 122              		.section	.text.I2C_WaitOnMasterAddressFlagUntilTimeout,"ax",%progbits
+ 123              		.align	1
+ 124              		.thumb
+ 125              		.thumb_func
+ 127              	I2C_WaitOnMasterAddressFlagUntilTimeout:
+ 128              		@ args = 0, pretend = 0, frame = 0
+ 129              		@ frame_needed = 0, uses_anonymous_args = 0
+ 130 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 131 0004 0D46     		mov	r5, r1
+ 132 0006 0446     		mov	r4, r0
+ 133 0008 1646     		mov	r6, r2
+ 134 000a FFF7FEFF 		bl	HAL_GetTick
+ 135 000e 0746     		mov	r7, r0
+ 136 0010 C5F30748 		ubfx	r8, r5, #16, #8
+ 137              	.L37:
+ 138 0014 2368     		ldr	r3, [r4]
+ 139 0016 B8F1010F 		cmp	r8, #1
+ 140 001a 0CBF     		ite	eq
+ 141 001c 5869     		ldreq	r0, [r3, #20]
+ 142 001e 9869     		ldrne	r0, [r3, #24]
+ 143 0020 C043     		mvns	r0, r0
+ 144 0022 80B2     		uxth	r0, r0
+ 145 0024 2842     		tst	r0, r5
+ 146 0026 14BF     		ite	ne
+ 147 0028 0120     		movne	r0, #1
+ 148 002a 0020     		moveq	r0, #0
+ 149 002c 38B3     		cbz	r0, .L46
+ 150 002e 5A69     		ldr	r2, [r3, #20]
+ 151 0030 5205     		lsls	r2, r2, #21
+ 152 0032 12D5     		bpl	.L35
+ 153 0034 1A68     		ldr	r2, [r3]
+ 154 0036 0120     		movs	r0, #1
+ 155 0038 42F40072 		orr	r2, r2, #512
+ 156 003c 1A60     		str	r2, [r3]
+ 157 003e 5A69     		ldr	r2, [r3, #20]
+ 158 0040 22F48062 		bic	r2, r2, #1024
+ 159 0044 5A61     		str	r2, [r3, #20]
+ 160 0046 0423     		movs	r3, #4
+ 161 0048 A363     		str	r3, [r4, #56]
+ 162 004a 2023     		movs	r3, #32
+ 163 004c 84F83530 		strb	r3, [r4, #53]
+ 164 0050 0023     		movs	r3, #0
+ 165 0052 84F83430 		strb	r3, [r4, #52]
+ 166 0056 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 167              	.L35:
+ 168 005a 731C     		adds	r3, r6, #1
+ 169 005c DAD0     		beq	.L37
+ 170 005e 46B9     		cbnz	r6, .L38
+ 171              	.L39:
+ 172 0060 2023     		movs	r3, #32
+ 173 0062 84F83530 		strb	r3, [r4, #53]
+ 174 0066 0023     		movs	r3, #0
+ 175 0068 84F83430 		strb	r3, [r4, #52]
+ 176 006c 0320     		movs	r0, #3
+ARM GAS  /tmp/cccQ9HVm.s 			page 4
+
+
+ 177 006e BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 178              	.L38:
+ 179 0072 FFF7FEFF 		bl	HAL_GetTick
+ 180 0076 C01B     		subs	r0, r0, r7
+ 181 0078 B042     		cmp	r0, r6
+ 182 007a CBD9     		bls	.L37
+ 183 007c F0E7     		b	.L39
+ 184              	.L46:
+ 185 007e BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 187              		.section	.text.I2C_MasterRequestWrite,"ax",%progbits
+ 188              		.align	1
+ 189              		.thumb
+ 190              		.thumb_func
+ 192              	I2C_MasterRequestWrite:
+ 193              		@ args = 0, pretend = 0, frame = 0
+ 194              		@ frame_needed = 0, uses_anonymous_args = 0
+ 195 0000 70B5     		push	{r4, r5, r6, lr}
+ 196 0002 1646     		mov	r6, r2
+ 197 0004 0268     		ldr	r2, [r0]
+ 198 0006 0D46     		mov	r5, r1
+ 199 0008 1368     		ldr	r3, [r2]
+ 200 000a 4FF00111 		mov	r1, #65537
+ 201 000e 43F48073 		orr	r3, r3, #256
+ 202 0012 1360     		str	r3, [r2]
+ 203 0014 0022     		movs	r2, #0
+ 204 0016 3346     		mov	r3, r6
+ 205 0018 0446     		mov	r4, r0
+ 206 001a FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 207 001e 20BB     		cbnz	r0, .L54
+ 208 0020 2369     		ldr	r3, [r4, #16]
+ 209 0022 2268     		ldr	r2, [r4]
+ 210 0024 B3F5804F 		cmp	r3, #16384
+ 211 0028 03D1     		bne	.L49
+ 212 002a 05F0FE05 		and	r5, r5, #254
+ 213 002e 1561     		str	r5, [r2, #16]
+ 214 0030 13E0     		b	.L50
+ 215              	.L49:
+ 216 0032 05F44073 		and	r3, r5, #768
+ 217 0036 DB11     		asrs	r3, r3, #7
+ 218 0038 43F0F003 		orr	r3, r3, #240
+ 219 003c 1361     		str	r3, [r2, #16]
+ 220 003e 2046     		mov	r0, r4
+ 221 0040 0B49     		ldr	r1, .L63
+ 222 0042 3246     		mov	r2, r6
+ 223 0044 FFF7FEFF 		bl	I2C_WaitOnMasterAddressFlagUntilTimeout
+ 224 0048 20B1     		cbz	r0, .L51
+ 225              	.L62:
+ 226 004a A36B     		ldr	r3, [r4, #56]
+ 227 004c 042B     		cmp	r3, #4
+ 228 004e 0CD1     		bne	.L54
+ 229 0050 0120     		movs	r0, #1
+ 230 0052 70BD     		pop	{r4, r5, r6, pc}
+ 231              	.L51:
+ 232 0054 2368     		ldr	r3, [r4]
+ 233 0056 EDB2     		uxtb	r5, r5
+ 234 0058 1D61     		str	r5, [r3, #16]
+ 235              	.L50:
+ARM GAS  /tmp/cccQ9HVm.s 			page 5
+
+
+ 236 005a 2046     		mov	r0, r4
+ 237 005c 0549     		ldr	r1, .L63+4
+ 238 005e 3246     		mov	r2, r6
+ 239 0060 FFF7FEFF 		bl	I2C_WaitOnMasterAddressFlagUntilTimeout
+ 240 0064 0028     		cmp	r0, #0
+ 241 0066 F0D1     		bne	.L62
+ 242 0068 00E0     		b	.L48
+ 243              	.L54:
+ 244 006a 0320     		movs	r0, #3
+ 245              	.L48:
+ 246 006c 70BD     		pop	{r4, r5, r6, pc}
+ 247              	.L64:
+ 248 006e 00BF     		.align	2
+ 249              	.L63:
+ 250 0070 08000100 		.word	65544
+ 251 0074 02000100 		.word	65538
+ 253              		.section	.text.I2C_MasterRequestRead,"ax",%progbits
+ 254              		.align	1
+ 255              		.thumb
+ 256              		.thumb_func
+ 258              	I2C_MasterRequestRead:
+ 259              		@ args = 0, pretend = 0, frame = 8
+ 260              		@ frame_needed = 0, uses_anonymous_args = 0
+ 261 0000 F7B5     		push	{r0, r1, r2, r4, r5, r6, r7, lr}
+ 262 0002 1646     		mov	r6, r2
+ 263 0004 0368     		ldr	r3, [r0]
+ 264 0006 0D46     		mov	r5, r1
+ 265 0008 1A68     		ldr	r2, [r3]
+ 266 000a 4FF00111 		mov	r1, #65537
+ 267 000e 42F48062 		orr	r2, r2, #1024
+ 268 0012 1A60     		str	r2, [r3]
+ 269 0014 1A68     		ldr	r2, [r3]
+ 270 0016 0446     		mov	r4, r0
+ 271 0018 42F48072 		orr	r2, r2, #256
+ 272 001c 1A60     		str	r2, [r3]
+ 273 001e 0022     		movs	r2, #0
+ 274 0020 3346     		mov	r3, r6
+ 275 0022 FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 276 0026 D0B9     		cbnz	r0, .L71
+ 277 0028 2369     		ldr	r3, [r4, #16]
+ 278 002a 2268     		ldr	r2, [r4]
+ 279 002c B3F5804F 		cmp	r3, #16384
+ 280 0030 04D1     		bne	.L68
+ 281 0032 45F00105 		orr	r5, r5, #1
+ 282 0036 EDB2     		uxtb	r5, r5
+ 283 0038 1561     		str	r5, [r2, #16]
+ 284 003a 33E0     		b	.L69
+ 285              	.L68:
+ 286 003c 05F44073 		and	r3, r5, #768
+ 287 0040 DF09     		lsrs	r7, r3, #7
+ 288 0042 47F0F003 		orr	r3, r7, #240
+ 289 0046 1361     		str	r3, [r2, #16]
+ 290 0048 2046     		mov	r0, r4
+ 291 004a 1B49     		ldr	r1, .L87
+ 292 004c 3246     		mov	r2, r6
+ 293 004e FFF7FEFF 		bl	I2C_WaitOnMasterAddressFlagUntilTimeout
+ 294 0052 30B1     		cbz	r0, .L70
+ARM GAS  /tmp/cccQ9HVm.s 			page 6
+
+
+ 295              	.L85:
+ 296 0054 A36B     		ldr	r3, [r4, #56]
+ 297 0056 042B     		cmp	r3, #4
+ 298 0058 01D1     		bne	.L71
+ 299 005a 0120     		movs	r0, #1
+ 300 005c 29E0     		b	.L67
+ 301              	.L71:
+ 302 005e 0320     		movs	r0, #3
+ 303 0060 27E0     		b	.L67
+ 304              	.L70:
+ 305 0062 2368     		ldr	r3, [r4]
+ 306 0064 EDB2     		uxtb	r5, r5
+ 307 0066 3246     		mov	r2, r6
+ 308 0068 1D61     		str	r5, [r3, #16]
+ 309 006a 2046     		mov	r0, r4
+ 310 006c 1349     		ldr	r1, .L87+4
+ 311 006e FFF7FEFF 		bl	I2C_WaitOnMasterAddressFlagUntilTimeout
+ 312 0072 0246     		mov	r2, r0
+ 313 0074 0028     		cmp	r0, #0
+ 314 0076 EDD1     		bne	.L85
+ 315 0078 2368     		ldr	r3, [r4]
+ 316 007a 2046     		mov	r0, r4
+ 317 007c 5969     		ldr	r1, [r3, #20]
+ 318 007e 0191     		str	r1, [sp, #4]
+ 319 0080 9969     		ldr	r1, [r3, #24]
+ 320 0082 0191     		str	r1, [sp, #4]
+ 321 0084 0199     		ldr	r1, [sp, #4]
+ 322 0086 1968     		ldr	r1, [r3]
+ 323 0088 41F48071 		orr	r1, r1, #256
+ 324 008c 1960     		str	r1, [r3]
+ 325 008e 4FF00111 		mov	r1, #65537
+ 326 0092 3346     		mov	r3, r6
+ 327 0094 FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 328 0098 0028     		cmp	r0, #0
+ 329 009a E0D1     		bne	.L71
+ 330 009c 2268     		ldr	r2, [r4]
+ 331 009e 47F0F103 		orr	r3, r7, #241
+ 332 00a2 1361     		str	r3, [r2, #16]
+ 333              	.L69:
+ 334 00a4 2046     		mov	r0, r4
+ 335 00a6 0549     		ldr	r1, .L87+4
+ 336 00a8 3246     		mov	r2, r6
+ 337 00aa FFF7FEFF 		bl	I2C_WaitOnMasterAddressFlagUntilTimeout
+ 338 00ae 0028     		cmp	r0, #0
+ 339 00b0 D0D1     		bne	.L85
+ 340              	.L67:
+ 341 00b2 03B0     		add	sp, sp, #12
+ 342              		@ sp needed
+ 343 00b4 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 344              	.L88:
+ 345 00b6 00BF     		.align	2
+ 346              	.L87:
+ 347 00b8 08000100 		.word	65544
+ 348 00bc 02000100 		.word	65538
+ 350              		.section	.text.I2C_WaitOnTXEFlagUntilTimeout,"ax",%progbits
+ 351              		.align	1
+ 352              		.thumb
+ARM GAS  /tmp/cccQ9HVm.s 			page 7
+
+
+ 353              		.thumb_func
+ 355              	I2C_WaitOnTXEFlagUntilTimeout:
+ 356              		@ args = 0, pretend = 0, frame = 0
+ 357              		@ frame_needed = 0, uses_anonymous_args = 0
+ 358 0000 70B5     		push	{r4, r5, r6, lr}
+ 359 0002 0446     		mov	r4, r0
+ 360 0004 0D46     		mov	r5, r1
+ 361 0006 FFF7FEFF 		bl	HAL_GetTick
+ 362 000a 0646     		mov	r6, r0
+ 363              	.L92:
+ 364 000c 2368     		ldr	r3, [r4]
+ 365 000e 5B69     		ldr	r3, [r3, #20]
+ 366 0010 1B06     		lsls	r3, r3, #24
+ 367 0012 18D4     		bmi	.L99
+ 368 0014 2046     		mov	r0, r4
+ 369 0016 FFF7FEFF 		bl	I2C_IsAcknowledgeFailed
+ 370 001a B0B9     		cbnz	r0, .L96
+ 371 001c 6A1C     		adds	r2, r5, #1
+ 372 001e F5D0     		beq	.L92
+ 373 0020 5DB9     		cbnz	r5, .L93
+ 374              	.L94:
+ 375 0022 A36B     		ldr	r3, [r4, #56]
+ 376 0024 0320     		movs	r0, #3
+ 377 0026 43F02003 		orr	r3, r3, #32
+ 378 002a A363     		str	r3, [r4, #56]
+ 379 002c 2023     		movs	r3, #32
+ 380 002e 84F83530 		strb	r3, [r4, #53]
+ 381 0032 0023     		movs	r3, #0
+ 382 0034 84F83430 		strb	r3, [r4, #52]
+ 383 0038 70BD     		pop	{r4, r5, r6, pc}
+ 384              	.L93:
+ 385 003a FFF7FEFF 		bl	HAL_GetTick
+ 386 003e 801B     		subs	r0, r0, r6
+ 387 0040 A842     		cmp	r0, r5
+ 388 0042 E3D9     		bls	.L92
+ 389 0044 EDE7     		b	.L94
+ 390              	.L99:
+ 391 0046 0020     		movs	r0, #0
+ 392 0048 70BD     		pop	{r4, r5, r6, pc}
+ 393              	.L96:
+ 394 004a 0120     		movs	r0, #1
+ 395 004c 70BD     		pop	{r4, r5, r6, pc}
+ 397              		.section	.text.I2C_RequestMemoryWrite,"ax",%progbits
+ 398              		.align	1
+ 399              		.thumb
+ 400              		.thumb_func
+ 402              	I2C_RequestMemoryWrite:
+ 403              		@ args = 4, pretend = 0, frame = 8
+ 404              		@ frame_needed = 0, uses_anonymous_args = 0
+ 405 0000 F7B5     		push	{r0, r1, r2, r4, r5, r6, r7, lr}
+ 406 0002 1546     		mov	r5, r2
+ 407 0004 0268     		ldr	r2, [r0]
+ 408 0006 1F46     		mov	r7, r3
+ 409 0008 1368     		ldr	r3, [r2]
+ 410 000a 0E46     		mov	r6, r1
+ 411 000c 43F48073 		orr	r3, r3, #256
+ 412 0010 1360     		str	r3, [r2]
+ARM GAS  /tmp/cccQ9HVm.s 			page 8
+
+
+ 413 0012 4FF00111 		mov	r1, #65537
+ 414 0016 0022     		movs	r2, #0
+ 415 0018 089B     		ldr	r3, [sp, #32]
+ 416 001a 0446     		mov	r4, r0
+ 417 001c FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 418 0020 08B1     		cbz	r0, .L101
+ 419              	.L105:
+ 420 0022 0320     		movs	r0, #3
+ 421 0024 31E0     		b	.L102
+ 422              	.L101:
+ 423 0026 2368     		ldr	r3, [r4]
+ 424 0028 06F0FE06 		and	r6, r6, #254
+ 425 002c 1E61     		str	r6, [r3, #16]
+ 426 002e 2046     		mov	r0, r4
+ 427 0030 1749     		ldr	r1, .L113
+ 428 0032 089A     		ldr	r2, [sp, #32]
+ 429 0034 FFF7FEFF 		bl	I2C_WaitOnMasterAddressFlagUntilTimeout
+ 430 0038 28B1     		cbz	r0, .L103
+ 431 003a A36B     		ldr	r3, [r4, #56]
+ 432 003c 042B     		cmp	r3, #4
+ 433 003e 0CBF     		ite	eq
+ 434 0040 0120     		moveq	r0, #1
+ 435 0042 0320     		movne	r0, #3
+ 436 0044 21E0     		b	.L102
+ 437              	.L103:
+ 438 0046 2368     		ldr	r3, [r4]
+ 439 0048 2046     		mov	r0, r4
+ 440 004a 5A69     		ldr	r2, [r3, #20]
+ 441 004c 0899     		ldr	r1, [sp, #32]
+ 442 004e 0192     		str	r2, [sp, #4]
+ 443 0050 9B69     		ldr	r3, [r3, #24]
+ 444 0052 0193     		str	r3, [sp, #4]
+ 445 0054 019B     		ldr	r3, [sp, #4]
+ 446 0056 FFF7FEFF 		bl	I2C_WaitOnTXEFlagUntilTimeout
+ 447 005a 48B9     		cbnz	r0, .L112
+ 448 005c 012F     		cmp	r7, #1
+ 449 005e 2368     		ldr	r3, [r4]
+ 450 0060 11D0     		beq	.L109
+ 451 0062 2A0A     		lsrs	r2, r5, #8
+ 452 0064 1A61     		str	r2, [r3, #16]
+ 453 0066 2046     		mov	r0, r4
+ 454 0068 0899     		ldr	r1, [sp, #32]
+ 455 006a FFF7FEFF 		bl	I2C_WaitOnTXEFlagUntilTimeout
+ 456 006e 48B1     		cbz	r0, .L107
+ 457              	.L112:
+ 458 0070 A36B     		ldr	r3, [r4, #56]
+ 459 0072 042B     		cmp	r3, #4
+ 460 0074 D5D1     		bne	.L105
+ 461 0076 2268     		ldr	r2, [r4]
+ 462 0078 0120     		movs	r0, #1
+ 463 007a 1368     		ldr	r3, [r2]
+ 464 007c 43F40073 		orr	r3, r3, #512
+ 465 0080 1360     		str	r3, [r2]
+ 466 0082 02E0     		b	.L102
+ 467              	.L107:
+ 468 0084 2368     		ldr	r3, [r4]
+ 469              	.L109:
+ARM GAS  /tmp/cccQ9HVm.s 			page 9
+
+
+ 470 0086 EDB2     		uxtb	r5, r5
+ 471 0088 1D61     		str	r5, [r3, #16]
+ 472              	.L102:
+ 473 008a 03B0     		add	sp, sp, #12
+ 474              		@ sp needed
+ 475 008c F0BD     		pop	{r4, r5, r6, r7, pc}
+ 476              	.L114:
+ 477 008e 00BF     		.align	2
+ 478              	.L113:
+ 479 0090 02000100 		.word	65538
+ 481              		.section	.text.I2C_RequestMemoryRead,"ax",%progbits
+ 482              		.align	1
+ 483              		.thumb
+ 484              		.thumb_func
+ 486              	I2C_RequestMemoryRead:
+ 487              		@ args = 4, pretend = 0, frame = 8
+ 488              		@ frame_needed = 0, uses_anonymous_args = 0
+ 489 0000 F7B5     		push	{r0, r1, r2, r4, r5, r6, r7, lr}
+ 490 0002 1F46     		mov	r7, r3
+ 491 0004 0368     		ldr	r3, [r0]
+ 492 0006 1546     		mov	r5, r2
+ 493 0008 1A68     		ldr	r2, [r3]
+ 494 000a 0E46     		mov	r6, r1
+ 495 000c 42F48062 		orr	r2, r2, #1024
+ 496 0010 1A60     		str	r2, [r3]
+ 497 0012 1A68     		ldr	r2, [r3]
+ 498 0014 4FF00111 		mov	r1, #65537
+ 499 0018 42F48072 		orr	r2, r2, #256
+ 500 001c 1A60     		str	r2, [r3]
+ 501 001e 0022     		movs	r2, #0
+ 502 0020 089B     		ldr	r3, [sp, #32]
+ 503 0022 0446     		mov	r4, r0
+ 504 0024 FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 505 0028 0028     		cmp	r0, #0
+ 506 002a 30D1     		bne	.L119
+ 507 002c 2368     		ldr	r3, [r4]
+ 508 002e F6B2     		uxtb	r6, r6
+ 509 0030 06F0FE02 		and	r2, r6, #254
+ 510 0034 1A61     		str	r2, [r3, #16]
+ 511 0036 2046     		mov	r0, r4
+ 512 0038 2649     		ldr	r1, .L143
+ 513 003a 089A     		ldr	r2, [sp, #32]
+ 514 003c FFF7FEFF 		bl	I2C_WaitOnMasterAddressFlagUntilTimeout
+ 515 0040 18B1     		cbz	r0, .L118
+ 516              	.L134:
+ 517 0042 A36B     		ldr	r3, [r4, #56]
+ 518 0044 042B     		cmp	r3, #4
+ 519 0046 22D1     		bne	.L119
+ 520 0048 34E0     		b	.L137
+ 521              	.L118:
+ 522 004a 2368     		ldr	r3, [r4]
+ 523 004c 2046     		mov	r0, r4
+ 524 004e 5A69     		ldr	r2, [r3, #20]
+ 525 0050 0899     		ldr	r1, [sp, #32]
+ 526 0052 0192     		str	r2, [sp, #4]
+ 527 0054 9B69     		ldr	r3, [r3, #24]
+ 528 0056 0193     		str	r3, [sp, #4]
+ARM GAS  /tmp/cccQ9HVm.s 			page 10
+
+
+ 529 0058 019B     		ldr	r3, [sp, #4]
+ 530 005a FFF7FEFF 		bl	I2C_WaitOnTXEFlagUntilTimeout
+ 531 005e 08BB     		cbnz	r0, .L140
+ 532 0060 012F     		cmp	r7, #1
+ 533 0062 2368     		ldr	r3, [r4]
+ 534 0064 15D1     		bne	.L122
+ 535              	.L135:
+ 536 0066 EDB2     		uxtb	r5, r5
+ 537 0068 1D61     		str	r5, [r3, #16]
+ 538 006a 2046     		mov	r0, r4
+ 539 006c 0899     		ldr	r1, [sp, #32]
+ 540 006e FFF7FEFF 		bl	I2C_WaitOnTXEFlagUntilTimeout
+ 541 0072 0246     		mov	r2, r0
+ 542 0074 B0B9     		cbnz	r0, .L140
+ 543 0076 2168     		ldr	r1, [r4]
+ 544 0078 2046     		mov	r0, r4
+ 545 007a 0B68     		ldr	r3, [r1]
+ 546 007c 43F48073 		orr	r3, r3, #256
+ 547 0080 0B60     		str	r3, [r1]
+ 548 0082 4FF00111 		mov	r1, #65537
+ 549 0086 089B     		ldr	r3, [sp, #32]
+ 550 0088 FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 551 008c A0B1     		cbz	r0, .L142
+ 552              	.L119:
+ 553 008e 0320     		movs	r0, #3
+ 554 0090 1DE0     		b	.L117
+ 555              	.L122:
+ 556 0092 2A0A     		lsrs	r2, r5, #8
+ 557 0094 1A61     		str	r2, [r3, #16]
+ 558 0096 2046     		mov	r0, r4
+ 559 0098 0899     		ldr	r1, [sp, #32]
+ 560 009a FFF7FEFF 		bl	I2C_WaitOnTXEFlagUntilTimeout
+ 561 009e 08B9     		cbnz	r0, .L140
+ 562 00a0 2368     		ldr	r3, [r4]
+ 563 00a2 E0E7     		b	.L135
+ 564              	.L140:
+ 565 00a4 A36B     		ldr	r3, [r4, #56]
+ 566 00a6 042B     		cmp	r3, #4
+ 567 00a8 F1D1     		bne	.L119
+ 568 00aa 2268     		ldr	r2, [r4]
+ 569 00ac 1368     		ldr	r3, [r2]
+ 570 00ae 43F40073 		orr	r3, r3, #512
+ 571 00b2 1360     		str	r3, [r2]
+ 572              	.L137:
+ 573 00b4 0120     		movs	r0, #1
+ 574 00b6 0AE0     		b	.L117
+ 575              	.L142:
+ 576 00b8 2368     		ldr	r3, [r4]
+ 577 00ba 46F00106 		orr	r6, r6, #1
+ 578 00be 1E61     		str	r6, [r3, #16]
+ 579 00c0 2046     		mov	r0, r4
+ 580 00c2 0449     		ldr	r1, .L143
+ 581 00c4 089A     		ldr	r2, [sp, #32]
+ 582 00c6 FFF7FEFF 		bl	I2C_WaitOnMasterAddressFlagUntilTimeout
+ 583 00ca 0028     		cmp	r0, #0
+ 584 00cc B9D1     		bne	.L134
+ 585              	.L117:
+ARM GAS  /tmp/cccQ9HVm.s 			page 11
+
+
+ 586 00ce 03B0     		add	sp, sp, #12
+ 587              		@ sp needed
+ 588 00d0 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 589              	.L144:
+ 590 00d2 00BF     		.align	2
+ 591              	.L143:
+ 592 00d4 02000100 		.word	65538
+ 594              		.section	.text.I2C_WaitOnRXNEFlagUntilTimeout,"ax",%progbits
+ 595              		.align	1
+ 596              		.thumb
+ 597              		.thumb_func
+ 599              	I2C_WaitOnRXNEFlagUntilTimeout:
+ 600              		@ args = 0, pretend = 0, frame = 0
+ 601              		@ frame_needed = 0, uses_anonymous_args = 0
+ 602 0000 70B5     		push	{r4, r5, r6, lr}
+ 603 0002 0446     		mov	r4, r0
+ 604 0004 0D46     		mov	r5, r1
+ 605 0006 FFF7FEFF 		bl	HAL_GetTick
+ 606 000a 0646     		mov	r6, r0
+ 607              	.L146:
+ 608 000c 2268     		ldr	r2, [r4]
+ 609 000e 5369     		ldr	r3, [r2, #20]
+ 610 0010 13F04003 		ands	r3, r3, #64
+ 611 0014 21D1     		bne	.L152
+ 612 0016 5169     		ldr	r1, [r2, #20]
+ 613 0018 C906     		lsls	r1, r1, #27
+ 614 001a 0BD5     		bpl	.L147
+ 615 001c 5169     		ldr	r1, [r2, #20]
+ 616 001e 0120     		movs	r0, #1
+ 617 0020 21F01001 		bic	r1, r1, #16
+ 618 0024 5161     		str	r1, [r2, #20]
+ 619 0026 2022     		movs	r2, #32
+ 620 0028 A363     		str	r3, [r4, #56]
+ 621 002a 84F83430 		strb	r3, [r4, #52]
+ 622 002e 84F83520 		strb	r2, [r4, #53]
+ 623 0032 70BD     		pop	{r4, r5, r6, pc}
+ 624              	.L147:
+ 625 0034 5DB9     		cbnz	r5, .L149
+ 626              	.L150:
+ 627 0036 A36B     		ldr	r3, [r4, #56]
+ 628 0038 0320     		movs	r0, #3
+ 629 003a 43F02003 		orr	r3, r3, #32
+ 630 003e A363     		str	r3, [r4, #56]
+ 631 0040 2023     		movs	r3, #32
+ 632 0042 84F83530 		strb	r3, [r4, #53]
+ 633 0046 0023     		movs	r3, #0
+ 634 0048 84F83430 		strb	r3, [r4, #52]
+ 635 004c 70BD     		pop	{r4, r5, r6, pc}
+ 636              	.L149:
+ 637 004e FFF7FEFF 		bl	HAL_GetTick
+ 638 0052 801B     		subs	r0, r0, r6
+ 639 0054 A842     		cmp	r0, r5
+ 640 0056 D9D9     		bls	.L146
+ 641 0058 EDE7     		b	.L150
+ 642              	.L152:
+ 643 005a 0020     		movs	r0, #0
+ 644 005c 70BD     		pop	{r4, r5, r6, pc}
+ARM GAS  /tmp/cccQ9HVm.s 			page 12
+
+
+ 646              		.section	.text.I2C_WaitOnSTOPFlagUntilTimeout.constprop.7,"ax",%progbits
+ 647              		.align	1
+ 648              		.thumb
+ 649              		.thumb_func
+ 651              	I2C_WaitOnSTOPFlagUntilTimeout.constprop.7:
+ 652              		@ args = 0, pretend = 0, frame = 0
+ 653              		@ frame_needed = 0, uses_anonymous_args = 0
+ 654 0000 70B5     		push	{r4, r5, r6, lr}
+ 655 0002 0446     		mov	r4, r0
+ 656 0004 FFF7FEFF 		bl	HAL_GetTick
+ 657 0008 0646     		mov	r6, r0
+ 658              	.L154:
+ 659 000a 2368     		ldr	r3, [r4]
+ 660 000c 5B69     		ldr	r3, [r3, #20]
+ 661 000e DB06     		lsls	r3, r3, #27
+ 662 0010 14D4     		bmi	.L159
+ 663 0012 2046     		mov	r0, r4
+ 664 0014 FFF7FEFF 		bl	I2C_IsAcknowledgeFailed
+ 665 0018 0546     		mov	r5, r0
+ 666 001a 88B9     		cbnz	r0, .L157
+ 667 001c FFF7FEFF 		bl	HAL_GetTick
+ 668 0020 801B     		subs	r0, r0, r6
+ 669 0022 2328     		cmp	r0, #35
+ 670 0024 F1D9     		bls	.L154
+ 671 0026 A36B     		ldr	r3, [r4, #56]
+ 672 0028 84F83450 		strb	r5, [r4, #52]
+ 673 002c 43F02003 		orr	r3, r3, #32
+ 674 0030 A363     		str	r3, [r4, #56]
+ 675 0032 2023     		movs	r3, #32
+ 676 0034 84F83530 		strb	r3, [r4, #53]
+ 677 0038 0320     		movs	r0, #3
+ 678 003a 70BD     		pop	{r4, r5, r6, pc}
+ 679              	.L159:
+ 680 003c 0020     		movs	r0, #0
+ 681 003e 70BD     		pop	{r4, r5, r6, pc}
+ 682              	.L157:
+ 683 0040 0120     		movs	r0, #1
+ 684 0042 70BD     		pop	{r4, r5, r6, pc}
+ 686              		.section	.text.HAL_I2C_MspInit,"ax",%progbits
+ 687              		.align	1
+ 688              		.weak	HAL_I2C_MspInit
+ 689              		.thumb
+ 690              		.thumb_func
+ 692              	HAL_I2C_MspInit:
+ 693              		@ args = 0, pretend = 0, frame = 0
+ 694              		@ frame_needed = 0, uses_anonymous_args = 0
+ 695              		@ link register save eliminated.
+ 696 0000 7047     		bx	lr
+ 698              		.section	.text.HAL_I2C_Init,"ax",%progbits
+ 699              		.align	1
+ 700              		.global	HAL_I2C_Init
+ 701              		.thumb
+ 702              		.thumb_func
+ 704              	HAL_I2C_Init:
+ 705              		@ args = 0, pretend = 0, frame = 0
+ 706              		@ frame_needed = 0, uses_anonymous_args = 0
+ 707 0000 70B5     		push	{r4, r5, r6, lr}
+ARM GAS  /tmp/cccQ9HVm.s 			page 13
+
+
+ 708 0002 0446     		mov	r4, r0
+ 709 0004 0028     		cmp	r0, #0
+ 710 0006 5FD0     		beq	.L170
+ 711 0008 90F83530 		ldrb	r3, [r0, #53]	@ zero_extendqisi2
+ 712 000c 03F0FF02 		and	r2, r3, #255
+ 713 0010 1BB9     		cbnz	r3, .L163
+ 714 0012 80F83420 		strb	r2, [r0, #52]
+ 715 0016 FFF7FEFF 		bl	HAL_I2C_MspInit
+ 716              	.L163:
+ 717 001a 2268     		ldr	r2, [r4]
+ 718 001c 2423     		movs	r3, #36
+ 719 001e 84F83530 		strb	r3, [r4, #53]
+ 720 0022 1368     		ldr	r3, [r2]
+ 721 0024 294D     		ldr	r5, .L174
+ 722 0026 23F00103 		bic	r3, r3, #1
+ 723 002a 1360     		str	r3, [r2]
+ 724 002c FFF7FEFF 		bl	HAL_RCC_GetPCLK1Freq
+ 725 0030 2749     		ldr	r1, .L174+4
+ 726 0032 6368     		ldr	r3, [r4, #4]
+ 727 0034 B0FBF1F1 		udiv	r1, r0, r1
+ 728 0038 AB42     		cmp	r3, r5
+ 729 003a 2268     		ldr	r2, [r4]
+ 730 003c 2E46     		mov	r6, r5
+ 731 003e 88BF     		it	hi
+ 732 0040 4FF49675 		movhi	r5, #300
+ 733 0044 5160     		str	r1, [r2, #4]
+ 734 0046 82BF     		ittt	hi
+ 735 0048 6943     		mulhi	r1, r5, r1
+ 736 004a 4FF47A75 		movhi	r5, #1000
+ 737 004e B1FBF5F1 		udivhi	r1, r1, r5
+ 738 0052 B342     		cmp	r3, r6
+ 739 0054 01F10101 		add	r1, r1, #1
+ 740 0058 1162     		str	r1, [r2, #32]
+ 741 005a 08D8     		bhi	.L166
+ 742 005c 5B00     		lsls	r3, r3, #1
+ 743 005e B0FBF3F0 		udiv	r0, r0, r3
+ 744 0062 C0F30B03 		ubfx	r3, r0, #0, #12
+ 745 0066 042B     		cmp	r3, #4
+ 746 0068 38BF     		it	cc
+ 747 006a 0420     		movcc	r0, #4
+ 748 006c 13E0     		b	.L167
+ 749              	.L166:
+ 750 006e A168     		ldr	r1, [r4, #8]
+ 751 0070 31B9     		cbnz	r1, .L168
+ 752 0072 03EB4303 		add	r3, r3, r3, lsl #1
+ 753 0076 B0FBF3F0 		udiv	r0, r0, r3
+ 754 007a 40F40040 		orr	r0, r0, #32768
+ 755 007e 05E0     		b	.L169
+ 756              	.L168:
+ 757 0080 1921     		movs	r1, #25
+ 758 0082 4B43     		muls	r3, r1, r3
+ 759 0084 B0FBF3F0 		udiv	r0, r0, r3
+ 760 0088 40F44040 		orr	r0, r0, #49152
+ 761              	.L169:
+ 762 008c C0F30B03 		ubfx	r3, r0, #0, #12
+ 763 0090 002B     		cmp	r3, #0
+ 764 0092 08BF     		it	eq
+ARM GAS  /tmp/cccQ9HVm.s 			page 14
+
+
+ 765 0094 0120     		moveq	r0, #1
+ 766              	.L167:
+ 767 0096 216A     		ldr	r1, [r4, #32]
+ 768 0098 E369     		ldr	r3, [r4, #28]
+ 769 009a D061     		str	r0, [r2, #28]
+ 770 009c 0B43     		orrs	r3, r3, r1
+ 771 009e 1360     		str	r3, [r2]
+ 772 00a0 E168     		ldr	r1, [r4, #12]
+ 773 00a2 2369     		ldr	r3, [r4, #16]
+ 774 00a4 0020     		movs	r0, #0
+ 775 00a6 0B43     		orrs	r3, r3, r1
+ 776 00a8 9360     		str	r3, [r2, #8]
+ 777 00aa A169     		ldr	r1, [r4, #24]
+ 778 00ac 6369     		ldr	r3, [r4, #20]
+ 779 00ae 0B43     		orrs	r3, r3, r1
+ 780 00b0 D360     		str	r3, [r2, #12]
+ 781 00b2 1368     		ldr	r3, [r2]
+ 782 00b4 43F00103 		orr	r3, r3, #1
+ 783 00b8 1360     		str	r3, [r2]
+ 784 00ba 2023     		movs	r3, #32
+ 785 00bc A063     		str	r0, [r4, #56]
+ 786 00be 84F83530 		strb	r3, [r4, #53]
+ 787 00c2 84F83600 		strb	r0, [r4, #54]
+ 788 00c6 70BD     		pop	{r4, r5, r6, pc}
+ 789              	.L170:
+ 790 00c8 0120     		movs	r0, #1
+ 791 00ca 70BD     		pop	{r4, r5, r6, pc}
+ 792              	.L175:
+ 793              		.align	2
+ 794              	.L174:
+ 795 00cc A0860100 		.word	100000
+ 796 00d0 40420F00 		.word	1000000
+ 798              		.section	.text.HAL_I2C_MspDeInit,"ax",%progbits
+ 799              		.align	1
+ 800              		.weak	HAL_I2C_MspDeInit
+ 801              		.thumb
+ 802              		.thumb_func
+ 804              	HAL_I2C_MspDeInit:
+ 805              		@ args = 0, pretend = 0, frame = 0
+ 806              		@ frame_needed = 0, uses_anonymous_args = 0
+ 807              		@ link register save eliminated.
+ 808 0000 7047     		bx	lr
+ 810              		.section	.text.HAL_I2C_DeInit,"ax",%progbits
+ 811              		.align	1
+ 812              		.global	HAL_I2C_DeInit
+ 813              		.thumb
+ 814              		.thumb_func
+ 816              	HAL_I2C_DeInit:
+ 817              		@ args = 0, pretend = 0, frame = 0
+ 818              		@ frame_needed = 0, uses_anonymous_args = 0
+ 819 0000 10B5     		push	{r4, lr}
+ 820 0002 0446     		mov	r4, r0
+ 821 0004 90B1     		cbz	r0, .L179
+ 822 0006 0268     		ldr	r2, [r0]
+ 823 0008 2423     		movs	r3, #36
+ 824 000a 80F83530 		strb	r3, [r0, #53]
+ 825 000e 1368     		ldr	r3, [r2]
+ARM GAS  /tmp/cccQ9HVm.s 			page 15
+
+
+ 826 0010 23F00103 		bic	r3, r3, #1
+ 827 0014 1360     		str	r3, [r2]
+ 828 0016 FFF7FEFF 		bl	HAL_I2C_MspDeInit
+ 829 001a 0020     		movs	r0, #0
+ 830 001c A063     		str	r0, [r4, #56]
+ 831 001e 84F83400 		strb	r0, [r4, #52]
+ 832 0022 84F83500 		strb	r0, [r4, #53]
+ 833 0026 84F83600 		strb	r0, [r4, #54]
+ 834 002a 10BD     		pop	{r4, pc}
+ 835              	.L179:
+ 836 002c 0120     		movs	r0, #1
+ 837 002e 10BD     		pop	{r4, pc}
+ 839              		.section	.text.HAL_I2C_Master_Transmit,"ax",%progbits
+ 840              		.align	1
+ 841              		.global	HAL_I2C_Master_Transmit
+ 842              		.thumb
+ 843              		.thumb_func
+ 845              	HAL_I2C_Master_Transmit:
+ 846              		@ args = 4, pretend = 0, frame = 8
+ 847              		@ frame_needed = 0, uses_anonymous_args = 0
+ 848 0000 2DE9F347 		push	{r0, r1, r4, r5, r6, r7, r8, r9, r10, lr}
+ 849 0004 1E46     		mov	r6, r3
+ 850 0006 90F83530 		ldrb	r3, [r0, #53]	@ zero_extendqisi2
+ 851 000a 0446     		mov	r4, r0
+ 852 000c 202B     		cmp	r3, #32
+ 853 000e 8A46     		mov	r10, r1
+ 854 0010 1746     		mov	r7, r2
+ 855 0012 DDF82880 		ldr	r8, [sp, #40]
+ 856 0016 01D0     		beq	.L181
+ 857              	.L183:
+ 858 0018 0225     		movs	r5, #2
+ 859 001a 88E0     		b	.L210
+ 860              	.L181:
+ 861 001c 002A     		cmp	r2, #0
+ 862 001e 7AD0     		beq	.L203
+ 863 0020 002E     		cmp	r6, #0
+ 864 0022 78D0     		beq	.L203
+ 865 0024 4449     		ldr	r1, .L215
+ 866 0026 0122     		movs	r2, #1
+ 867 0028 42F21073 		movw	r3, #10000
+ 868 002c FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 869 0030 0546     		mov	r5, r0
+ 870 0032 0028     		cmp	r0, #0
+ 871 0034 F0D1     		bne	.L183
+ 872 0036 94F83430 		ldrb	r3, [r4, #52]	@ zero_extendqisi2
+ 873 003a 012B     		cmp	r3, #1
+ 874 003c ECD0     		beq	.L183
+ 875 003e 2268     		ldr	r2, [r4]
+ 876 0040 4FF00109 		mov	r9, #1
+ 877 0044 1368     		ldr	r3, [r2]
+ 878 0046 84F83490 		strb	r9, [r4, #52]
+ 879 004a 23F40063 		bic	r3, r3, #2048
+ 880 004e 1360     		str	r3, [r2]
+ 881 0050 2123     		movs	r3, #33
+ 882 0052 84F83530 		strb	r3, [r4, #53]
+ 883 0056 1023     		movs	r3, #16
+ 884 0058 84F83630 		strb	r3, [r4, #54]
+ARM GAS  /tmp/cccQ9HVm.s 			page 16
+
+
+ 885 005c 5146     		mov	r1, r10
+ 886 005e A063     		str	r0, [r4, #56]
+ 887 0060 4246     		mov	r2, r8
+ 888 0062 2046     		mov	r0, r4
+ 889 0064 FFF7FEFF 		bl	I2C_MasterRequestWrite
+ 890 0068 30B1     		cbz	r0, .L184
+ 891 006a A36B     		ldr	r3, [r4, #56]
+ 892 006c 84F83450 		strb	r5, [r4, #52]
+ 893 0070 042B     		cmp	r3, #4
+ 894 0072 10D1     		bne	.L201
+ 895 0074 4D46     		mov	r5, r9
+ 896 0076 5AE0     		b	.L210
+ 897              	.L184:
+ 898 0078 2368     		ldr	r3, [r4]
+ 899 007a 5A69     		ldr	r2, [r3, #20]
+ 900 007c 0192     		str	r2, [sp, #4]
+ 901 007e 9B69     		ldr	r3, [r3, #24]
+ 902 0080 0193     		str	r3, [sp, #4]
+ 903 0082 019B     		ldr	r3, [sp, #4]
+ 904              	.L192:
+ 905 0084 2046     		mov	r0, r4
+ 906 0086 4146     		mov	r1, r8
+ 907 0088 FFF7FEFF 		bl	I2C_WaitOnTXEFlagUntilTimeout
+ 908 008c 0546     		mov	r5, r0
+ 909 008e 20B1     		cbz	r0, .L186
+ 910              	.L212:
+ 911 0090 A36B     		ldr	r3, [r4, #56]
+ 912 0092 042B     		cmp	r3, #4
+ 913 0094 3AD0     		beq	.L200
+ 914              	.L201:
+ 915 0096 0325     		movs	r5, #3
+ 916 0098 49E0     		b	.L210
+ 917              	.L186:
+ 918 009a 2268     		ldr	r2, [r4]
+ 919 009c 3B78     		ldrb	r3, [r7]	@ zero_extendqisi2
+ 920 009e 1361     		str	r3, [r2, #16]
+ 921 00a0 5169     		ldr	r1, [r2, #20]
+ 922 00a2 731E     		subs	r3, r6, #1
+ 923 00a4 4907     		lsls	r1, r1, #29
+ 924 00a6 9BB2     		uxth	r3, r3
+ 925 00a8 02D4     		bmi	.L188
+ 926 00aa 0137     		adds	r7, r7, #1
+ 927 00ac 1E46     		mov	r6, r3
+ 928 00ae 09E0     		b	.L189
+ 929              	.L188:
+ 930 00b0 1BB9     		cbnz	r3, .L190
+ 931              	.L193:
+ 932 00b2 FFF7FEFF 		bl	HAL_GetTick
+ 933 00b6 0646     		mov	r6, r0
+ 934 00b8 0FE0     		b	.L195
+ 935              	.L190:
+ 936 00ba 7B78     		ldrb	r3, [r7, #1]	@ zero_extendqisi2
+ 937 00bc 023E     		subs	r6, r6, #2
+ 938 00be 1361     		str	r3, [r2, #16]
+ 939 00c0 B6B2     		uxth	r6, r6
+ 940 00c2 0237     		adds	r7, r7, #2
+ 941              	.L189:
+ARM GAS  /tmp/cccQ9HVm.s 			page 17
+
+
+ 942 00c4 002E     		cmp	r6, #0
+ 943 00c6 DDD1     		bne	.L192
+ 944 00c8 F3E7     		b	.L193
+ 945              	.L198:
+ 946 00ca 2046     		mov	r0, r4
+ 947 00cc FFF7FEFF 		bl	I2C_IsAcknowledgeFailed
+ 948 00d0 0028     		cmp	r0, #0
+ 949 00d2 DDD1     		bne	.L212
+ 950 00d4 B8F1FF3F 		cmp	r8, #-1
+ 951 00d8 04D1     		bne	.L213
+ 952              	.L195:
+ 953 00da 2368     		ldr	r3, [r4]
+ 954 00dc 5A69     		ldr	r2, [r3, #20]
+ 955 00de 5207     		lsls	r2, r2, #29
+ 956 00e0 F3D5     		bpl	.L198
+ 957 00e2 1AE0     		b	.L214
+ 958              	.L213:
+ 959 00e4 B8F1000F 		cmp	r8, #0
+ 960 00e8 0AD1     		bne	.L196
+ 961              	.L197:
+ 962 00ea A36B     		ldr	r3, [r4, #56]
+ 963 00ec 43F02003 		orr	r3, r3, #32
+ 964 00f0 A363     		str	r3, [r4, #56]
+ 965 00f2 2023     		movs	r3, #32
+ 966 00f4 84F83530 		strb	r3, [r4, #53]
+ 967 00f8 0023     		movs	r3, #0
+ 968 00fa 84F83430 		strb	r3, [r4, #52]
+ 969 00fe C7E7     		b	.L212
+ 970              	.L196:
+ 971 0100 FFF7FEFF 		bl	HAL_GetTick
+ 972 0104 801B     		subs	r0, r0, r6
+ 973 0106 4045     		cmp	r0, r8
+ 974 0108 E7D9     		bls	.L195
+ 975 010a EEE7     		b	.L197
+ 976              	.L200:
+ 977 010c 2268     		ldr	r2, [r4]
+ 978 010e 1368     		ldr	r3, [r2]
+ 979 0110 43F40073 		orr	r3, r3, #512
+ 980 0114 1360     		str	r3, [r2]
+ 981              	.L203:
+ 982 0116 0125     		movs	r5, #1
+ 983 0118 09E0     		b	.L210
+ 984              	.L214:
+ 985 011a 1A68     		ldr	r2, [r3]
+ 986 011c 42F40072 		orr	r2, r2, #512
+ 987 0120 1A60     		str	r2, [r3]
+ 988 0122 2023     		movs	r3, #32
+ 989 0124 84F83530 		strb	r3, [r4, #53]
+ 990 0128 0023     		movs	r3, #0
+ 991 012a 84F83430 		strb	r3, [r4, #52]
+ 992              	.L210:
+ 993 012e 2846     		mov	r0, r5
+ 994 0130 02B0     		add	sp, sp, #8
+ 995              		@ sp needed
+ 996 0132 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 997              	.L216:
+ 998 0136 00BF     		.align	2
+ARM GAS  /tmp/cccQ9HVm.s 			page 18
+
+
+ 999              	.L215:
+ 1000 0138 02001000 		.word	1048578
+ 1002              		.section	.text.HAL_I2C_Master_Receive,"ax",%progbits
+ 1003              		.align	1
+ 1004              		.global	HAL_I2C_Master_Receive
+ 1005              		.thumb
+ 1006              		.thumb_func
+ 1008              	HAL_I2C_Master_Receive:
+ 1009              		@ args = 4, pretend = 0, frame = 16
+ 1010              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1011 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 1012 0004 1D46     		mov	r5, r3
+ 1013 0006 90F83530 		ldrb	r3, [r0, #53]	@ zero_extendqisi2
+ 1014 000a 85B0     		sub	sp, sp, #20
+ 1015 000c 202B     		cmp	r3, #32
+ 1016 000e 0446     		mov	r4, r0
+ 1017 0010 0F46     		mov	r7, r1
+ 1018 0012 1646     		mov	r6, r2
+ 1019 0014 01D0     		beq	.L218
+ 1020              	.L220:
+ 1021 0016 0227     		movs	r7, #2
+ 1022 0018 C7E0     		b	.L245
+ 1023              	.L218:
+ 1024 001a 002A     		cmp	r2, #0
+ 1025 001c 00F0BB80 		beq	.L238
+ 1026 0020 002D     		cmp	r5, #0
+ 1027 0022 00F0B880 		beq	.L238
+ 1028 0026 6349     		ldr	r1, .L250
+ 1029 0028 0122     		movs	r2, #1
+ 1030 002a 42F21073 		movw	r3, #10000
+ 1031 002e FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 1032 0032 8046     		mov	r8, r0
+ 1033 0034 0028     		cmp	r0, #0
+ 1034 0036 EED1     		bne	.L220
+ 1035 0038 94F83430 		ldrb	r3, [r4, #52]	@ zero_extendqisi2
+ 1036 003c 012B     		cmp	r3, #1
+ 1037 003e EAD0     		beq	.L220
+ 1038 0040 2268     		ldr	r2, [r4]
+ 1039 0042 4FF00109 		mov	r9, #1
+ 1040 0046 1368     		ldr	r3, [r2]
+ 1041 0048 84F83490 		strb	r9, [r4, #52]
+ 1042 004c 23F40063 		bic	r3, r3, #2048
+ 1043 0050 1360     		str	r3, [r2]
+ 1044 0052 2223     		movs	r3, #34
+ 1045 0054 84F83530 		strb	r3, [r4, #53]
+ 1046 0058 1023     		movs	r3, #16
+ 1047 005a 84F83630 		strb	r3, [r4, #54]
+ 1048 005e 3946     		mov	r1, r7
+ 1049 0060 A063     		str	r0, [r4, #56]
+ 1050 0062 0C9A     		ldr	r2, [sp, #48]
+ 1051 0064 2046     		mov	r0, r4
+ 1052 0066 FFF7FEFF 		bl	I2C_MasterRequestRead
+ 1053 006a 0746     		mov	r7, r0
+ 1054 006c 30B1     		cbz	r0, .L221
+ 1055 006e A36B     		ldr	r3, [r4, #56]
+ 1056 0070 84F83480 		strb	r8, [r4, #52]
+ 1057 0074 042B     		cmp	r3, #4
+ARM GAS  /tmp/cccQ9HVm.s 			page 19
+
+
+ 1058 0076 39D1     		bne	.L232
+ 1059 0078 4F46     		mov	r7, r9
+ 1060 007a 96E0     		b	.L245
+ 1061              	.L221:
+ 1062 007c 2368     		ldr	r3, [r4]
+ 1063 007e 012D     		cmp	r5, #1
+ 1064 0080 1A68     		ldr	r2, [r3]
+ 1065 0082 0DD1     		bne	.L223
+ 1066 0084 22F48062 		bic	r2, r2, #1024
+ 1067 0088 1A60     		str	r2, [r3]
+ 1068              	@ 71 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 1069 008a 72B6     		cpsid i
+ 1070              	@ 0 "" 2
+ 1071              		.thumb
+ 1072 008c 2368     		ldr	r3, [r4]
+ 1073 008e 5A69     		ldr	r2, [r3, #20]
+ 1074 0090 0192     		str	r2, [sp, #4]
+ 1075 0092 9A69     		ldr	r2, [r3, #24]
+ 1076 0094 0192     		str	r2, [sp, #4]
+ 1077 0096 019A     		ldr	r2, [sp, #4]
+ 1078 0098 1A68     		ldr	r2, [r3]
+ 1079 009a 42F40072 		orr	r2, r2, #512
+ 1080 009e 0EE0     		b	.L246
+ 1081              	.L223:
+ 1082 00a0 022D     		cmp	r5, #2
+ 1083 00a2 0FD1     		bne	.L225
+ 1084 00a4 42F40062 		orr	r2, r2, #2048
+ 1085 00a8 1A60     		str	r2, [r3]
+ 1086              	@ 71 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 1087 00aa 72B6     		cpsid i
+ 1088              	@ 0 "" 2
+ 1089              		.thumb
+ 1090 00ac 2368     		ldr	r3, [r4]
+ 1091 00ae 5A69     		ldr	r2, [r3, #20]
+ 1092 00b0 0292     		str	r2, [sp, #8]
+ 1093 00b2 9A69     		ldr	r2, [r3, #24]
+ 1094 00b4 0292     		str	r2, [sp, #8]
+ 1095 00b6 029A     		ldr	r2, [sp, #8]
+ 1096 00b8 1A68     		ldr	r2, [r3]
+ 1097 00ba 22F48062 		bic	r2, r2, #1024
+ 1098              	.L246:
+ 1099 00be 1A60     		str	r2, [r3]
+ 1100              	@ 60 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 1101 00c0 62B6     		cpsie i
+ 1102              	@ 0 "" 2
+ 1103              		.thumb
+ 1104 00c2 07E0     		b	.L236
+ 1105              	.L225:
+ 1106 00c4 42F48062 		orr	r2, r2, #1024
+ 1107 00c8 1A60     		str	r2, [r3]
+ 1108 00ca 5A69     		ldr	r2, [r3, #20]
+ 1109 00cc 0392     		str	r2, [sp, #12]
+ 1110 00ce 9B69     		ldr	r3, [r3, #24]
+ 1111 00d0 0393     		str	r3, [sp, #12]
+ 1112 00d2 039B     		ldr	r3, [sp, #12]
+ 1113              	.L236:
+ 1114 00d4 032D     		cmp	r5, #3
+ARM GAS  /tmp/cccQ9HVm.s 			page 20
+
+
+ 1115 00d6 2046     		mov	r0, r4
+ 1116 00d8 46D8     		bhi	.L226
+ 1117 00da 012D     		cmp	r5, #1
+ 1118 00dc 0CD1     		bne	.L227
+ 1119 00de 0C99     		ldr	r1, [sp, #48]
+ 1120 00e0 FFF7FEFF 		bl	I2C_WaitOnRXNEFlagUntilTimeout
+ 1121 00e4 20B1     		cbz	r0, .L228
+ 1122              	.L248:
+ 1123 00e6 A36B     		ldr	r3, [r4, #56]
+ 1124 00e8 202B     		cmp	r3, #32
+ 1125 00ea 54D1     		bne	.L238
+ 1126              	.L232:
+ 1127 00ec 0327     		movs	r7, #3
+ 1128 00ee 5CE0     		b	.L245
+ 1129              	.L228:
+ 1130 00f0 2368     		ldr	r3, [r4]
+ 1131 00f2 1B69     		ldr	r3, [r3, #16]
+ 1132 00f4 3370     		strb	r3, [r6]
+ 1133 00f6 50E0     		b	.L230
+ 1134              	.L227:
+ 1135 00f8 022D     		cmp	r5, #2
+ 1136 00fa 2F49     		ldr	r1, .L250+4
+ 1137 00fc 4FF00002 		mov	r2, #0
+ 1138 0100 0C9B     		ldr	r3, [sp, #48]
+ 1139 0102 10D1     		bne	.L231
+ 1140 0104 FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 1141 0108 0028     		cmp	r0, #0
+ 1142 010a EFD1     		bne	.L232
+ 1143              	@ 71 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 1144 010c 72B6     		cpsid i
+ 1145              	@ 0 "" 2
+ 1146              		.thumb
+ 1147 010e 2368     		ldr	r3, [r4]
+ 1148 0110 1A68     		ldr	r2, [r3]
+ 1149 0112 42F40072 		orr	r2, r2, #512
+ 1150 0116 1A60     		str	r2, [r3]
+ 1151 0118 1B69     		ldr	r3, [r3, #16]
+ 1152 011a 3370     		strb	r3, [r6]
+ 1153              	@ 60 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 1154 011c 62B6     		cpsie i
+ 1155              	@ 0 "" 2
+ 1156              		.thumb
+ 1157 011e 2368     		ldr	r3, [r4]
+ 1158 0120 1B69     		ldr	r3, [r3, #16]
+ 1159 0122 7370     		strb	r3, [r6, #1]
+ 1160 0124 39E0     		b	.L230
+ 1161              	.L231:
+ 1162 0126 FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 1163 012a 0246     		mov	r2, r0
+ 1164 012c 0028     		cmp	r0, #0
+ 1165 012e DDD1     		bne	.L232
+ 1166 0130 2168     		ldr	r1, [r4]
+ 1167 0132 0B68     		ldr	r3, [r1]
+ 1168 0134 23F48063 		bic	r3, r3, #1024
+ 1169 0138 0B60     		str	r3, [r1]
+ 1170              	@ 71 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 1171 013a 72B6     		cpsid i
+ARM GAS  /tmp/cccQ9HVm.s 			page 21
+
+
+ 1172              	@ 0 "" 2
+ 1173              		.thumb
+ 1174 013c 2368     		ldr	r3, [r4]
+ 1175 013e 2046     		mov	r0, r4
+ 1176 0140 1B69     		ldr	r3, [r3, #16]
+ 1177 0142 1D49     		ldr	r1, .L250+4
+ 1178 0144 3370     		strb	r3, [r6]
+ 1179 0146 0C9B     		ldr	r3, [sp, #48]
+ 1180 0148 FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 1181 014c 0028     		cmp	r0, #0
+ 1182 014e CDD1     		bne	.L232
+ 1183 0150 2368     		ldr	r3, [r4]
+ 1184 0152 1A68     		ldr	r2, [r3]
+ 1185 0154 42F40072 		orr	r2, r2, #512
+ 1186 0158 1A60     		str	r2, [r3]
+ 1187 015a 1B69     		ldr	r3, [r3, #16]
+ 1188 015c 7370     		strb	r3, [r6, #1]
+ 1189              	@ 60 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 1190 015e 62B6     		cpsie i
+ 1191              	@ 0 "" 2
+ 1192              		.thumb
+ 1193 0160 2368     		ldr	r3, [r4]
+ 1194 0162 1B69     		ldr	r3, [r3, #16]
+ 1195 0164 B370     		strb	r3, [r6, #2]
+ 1196 0166 18E0     		b	.L230
+ 1197              	.L226:
+ 1198 0168 0C99     		ldr	r1, [sp, #48]
+ 1199 016a FFF7FEFF 		bl	I2C_WaitOnRXNEFlagUntilTimeout
+ 1200 016e 0028     		cmp	r0, #0
+ 1201 0170 B9D1     		bne	.L248
+ 1202 0172 2368     		ldr	r3, [r4]
+ 1203 0174 1B69     		ldr	r3, [r3, #16]
+ 1204 0176 3370     		strb	r3, [r6]
+ 1205 0178 2268     		ldr	r2, [r4]
+ 1206 017a 5369     		ldr	r3, [r2, #20]
+ 1207 017c 5B07     		lsls	r3, r3, #29
+ 1208 017e 4DBF     		iteet	mi
+ 1209 0180 1269     		ldrmi	r2, [r2, #16]
+ 1210 0182 731C     		addpl	r3, r6, #1
+ 1211 0184 05F1FF35 		addpl	r5, r5, #-1
+ 1212 0188 B31C     		addmi	r3, r6, #2
+ 1213 018a 44BF     		itt	mi
+ 1214 018c 023D     		submi	r5, r5, #2
+ 1215 018e 7270     		strbmi	r2, [r6, #1]
+ 1216 0190 ADB2     		uxth	r5, r5
+ 1217 0192 1E46     		mov	r6, r3
+ 1218 0194 9EE7     		b	.L236
+ 1219              	.L238:
+ 1220 0196 0127     		movs	r7, #1
+ 1221 0198 07E0     		b	.L245
+ 1222              	.L230:
+ 1223 019a 2023     		movs	r3, #32
+ 1224 019c 84F83530 		strb	r3, [r4, #53]
+ 1225 01a0 0023     		movs	r3, #0
+ 1226 01a2 84F83630 		strb	r3, [r4, #54]
+ 1227 01a6 84F83430 		strb	r3, [r4, #52]
+ 1228              	.L245:
+ARM GAS  /tmp/cccQ9HVm.s 			page 22
+
+
+ 1229 01aa 3846     		mov	r0, r7
+ 1230 01ac 05B0     		add	sp, sp, #20
+ 1231              		@ sp needed
+ 1232 01ae BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 1233              	.L251:
+ 1234 01b2 00BF     		.align	2
+ 1235              	.L250:
+ 1236 01b4 02001000 		.word	1048578
+ 1237 01b8 04000100 		.word	65540
+ 1239              		.section	.text.HAL_I2C_Slave_Transmit,"ax",%progbits
+ 1240              		.align	1
+ 1241              		.global	HAL_I2C_Slave_Transmit
+ 1242              		.thumb
+ 1243              		.thumb_func
+ 1245              	HAL_I2C_Slave_Transmit:
+ 1246              		@ args = 0, pretend = 0, frame = 8
+ 1247              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1248 0000 2DE9F341 		push	{r0, r1, r4, r5, r6, r7, r8, lr}
+ 1249 0004 90F83580 		ldrb	r8, [r0, #53]	@ zero_extendqisi2
+ 1250 0008 0446     		mov	r4, r0
+ 1251 000a 5FFA88F8 		uxtb	r8, r8
+ 1252 000e B8F1200F 		cmp	r8, #32
+ 1253 0012 0E46     		mov	r6, r1
+ 1254 0014 1546     		mov	r5, r2
+ 1255 0016 1F46     		mov	r7, r3
+ 1256 0018 01D0     		beq	.L253
+ 1257              	.L257:
+ 1258 001a 0220     		movs	r0, #2
+ 1259 001c 7CE0     		b	.L254
+ 1260              	.L253:
+ 1261 001e 09B9     		cbnz	r1, .L255
+ 1262              	.L256:
+ 1263 0020 0120     		movs	r0, #1
+ 1264 0022 79E0     		b	.L254
+ 1265              	.L255:
+ 1266 0024 002A     		cmp	r2, #0
+ 1267 0026 FBD0     		beq	.L256
+ 1268 0028 0122     		movs	r2, #1
+ 1269 002a 3D49     		ldr	r1, .L280
+ 1270 002c 42F21073 		movw	r3, #10000
+ 1271 0030 FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 1272 0034 0246     		mov	r2, r0
+ 1273 0036 0028     		cmp	r0, #0
+ 1274 0038 EFD1     		bne	.L257
+ 1275 003a 94F83430 		ldrb	r3, [r4, #52]	@ zero_extendqisi2
+ 1276 003e 012B     		cmp	r3, #1
+ 1277 0040 EBD0     		beq	.L257
+ 1278 0042 0123     		movs	r3, #1
+ 1279 0044 84F83430 		strb	r3, [r4, #52]
+ 1280 0048 2368     		ldr	r3, [r4]
+ 1281 004a 1968     		ldr	r1, [r3]
+ 1282 004c 21F40061 		bic	r1, r1, #2048
+ 1283 0050 1960     		str	r1, [r3]
+ 1284 0052 2121     		movs	r1, #33
+ 1285 0054 84F83510 		strb	r1, [r4, #53]
+ 1286 0058 84F83680 		strb	r8, [r4, #54]
+ 1287 005c A063     		str	r0, [r4, #56]
+ARM GAS  /tmp/cccQ9HVm.s 			page 23
+
+
+ 1288 005e 1968     		ldr	r1, [r3]
+ 1289 0060 2046     		mov	r0, r4
+ 1290 0062 41F48061 		orr	r1, r1, #1024
+ 1291 0066 1960     		str	r1, [r3]
+ 1292 0068 2E49     		ldr	r1, .L280+4
+ 1293 006a 3B46     		mov	r3, r7
+ 1294 006c FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 1295 0070 0246     		mov	r2, r0
+ 1296 0072 10BB     		cbnz	r0, .L279
+ 1297 0074 2368     		ldr	r3, [r4]
+ 1298 0076 5969     		ldr	r1, [r3, #20]
+ 1299 0078 0091     		str	r1, [sp]
+ 1300 007a 9B69     		ldr	r3, [r3, #24]
+ 1301 007c 0093     		str	r3, [sp]
+ 1302 007e 009B     		ldr	r3, [sp]
+ 1303 0080 2369     		ldr	r3, [r4, #16]
+ 1304 0082 B3F5404F 		cmp	r3, #49152
+ 1305 0086 0BD1     		bne	.L266
+ 1306 0088 2046     		mov	r0, r4
+ 1307 008a 2649     		ldr	r1, .L280+4
+ 1308 008c 3B46     		mov	r3, r7
+ 1309 008e FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 1310 0092 90B9     		cbnz	r0, .L279
+ 1311 0094 2368     		ldr	r3, [r4]
+ 1312 0096 5A69     		ldr	r2, [r3, #20]
+ 1313 0098 0192     		str	r2, [sp, #4]
+ 1314 009a 9B69     		ldr	r3, [r3, #24]
+ 1315 009c 0193     		str	r3, [sp, #4]
+ 1316 009e 019B     		ldr	r3, [sp, #4]
+ 1317              	.L266:
+ 1318 00a0 2046     		mov	r0, r4
+ 1319 00a2 3946     		mov	r1, r7
+ 1320 00a4 FFF7FEFF 		bl	I2C_WaitOnTXEFlagUntilTimeout
+ 1321 00a8 2368     		ldr	r3, [r4]
+ 1322 00aa 40B1     		cbz	r0, .L261
+ 1323 00ac 1A68     		ldr	r2, [r3]
+ 1324 00ae 22F48062 		bic	r2, r2, #1024
+ 1325 00b2 1A60     		str	r2, [r3]
+ 1326 00b4 A36B     		ldr	r3, [r4, #56]
+ 1327 00b6 042B     		cmp	r3, #4
+ 1328 00b8 B2D0     		beq	.L256
+ 1329              	.L279:
+ 1330 00ba 0320     		movs	r0, #3
+ 1331 00bc 2CE0     		b	.L254
+ 1332              	.L261:
+ 1333 00be 3278     		ldrb	r2, [r6]	@ zero_extendqisi2
+ 1334 00c0 1A61     		str	r2, [r3, #16]
+ 1335 00c2 5969     		ldr	r1, [r3, #20]
+ 1336 00c4 6A1E     		subs	r2, r5, #1
+ 1337 00c6 4907     		lsls	r1, r1, #29
+ 1338 00c8 92B2     		uxth	r2, r2
+ 1339 00ca 02D4     		bmi	.L262
+ 1340 00cc 0136     		adds	r6, r6, #1
+ 1341 00ce 1546     		mov	r5, r2
+ 1342 00d0 1FE0     		b	.L263
+ 1343              	.L262:
+ 1344 00d2 CAB9     		cbnz	r2, .L264
+ARM GAS  /tmp/cccQ9HVm.s 			page 24
+
+
+ 1345              	.L267:
+ 1346 00d4 2046     		mov	r0, r4
+ 1347 00d6 4FF48231 		mov	r1, #66560
+ 1348 00da 0022     		movs	r2, #0
+ 1349 00dc 3B46     		mov	r3, r7
+ 1350 00de FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 1351 00e2 0028     		cmp	r0, #0
+ 1352 00e4 E9D1     		bne	.L279
+ 1353 00e6 2368     		ldr	r3, [r4]
+ 1354 00e8 5A69     		ldr	r2, [r3, #20]
+ 1355 00ea 22F48062 		bic	r2, r2, #1024
+ 1356 00ee 5A61     		str	r2, [r3, #20]
+ 1357 00f0 1A68     		ldr	r2, [r3]
+ 1358 00f2 22F48062 		bic	r2, r2, #1024
+ 1359 00f6 1A60     		str	r2, [r3]
+ 1360 00f8 2023     		movs	r3, #32
+ 1361 00fa 84F83530 		strb	r3, [r4, #53]
+ 1362 00fe 84F83400 		strb	r0, [r4, #52]
+ 1363 0102 84F83600 		strb	r0, [r4, #54]
+ 1364 0106 07E0     		b	.L254
+ 1365              	.L264:
+ 1366 0108 7278     		ldrb	r2, [r6, #1]	@ zero_extendqisi2
+ 1367 010a 023D     		subs	r5, r5, #2
+ 1368 010c 1A61     		str	r2, [r3, #16]
+ 1369 010e ADB2     		uxth	r5, r5
+ 1370 0110 0236     		adds	r6, r6, #2
+ 1371              	.L263:
+ 1372 0112 002D     		cmp	r5, #0
+ 1373 0114 C4D1     		bne	.L266
+ 1374 0116 DDE7     		b	.L267
+ 1375              	.L254:
+ 1376 0118 02B0     		add	sp, sp, #8
+ 1377              		@ sp needed
+ 1378 011a BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 1379              	.L281:
+ 1380 011e 00BF     		.align	2
+ 1381              	.L280:
+ 1382 0120 02001000 		.word	1048578
+ 1383 0124 02000100 		.word	65538
+ 1385              		.section	.text.HAL_I2C_Slave_Receive,"ax",%progbits
+ 1386              		.align	1
+ 1387              		.global	HAL_I2C_Slave_Receive
+ 1388              		.thumb
+ 1389              		.thumb_func
+ 1391              	HAL_I2C_Slave_Receive:
+ 1392              		@ args = 0, pretend = 0, frame = 8
+ 1393              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1394 0000 2DE9F341 		push	{r0, r1, r4, r5, r6, r7, r8, lr}
+ 1395 0004 90F83570 		ldrb	r7, [r0, #53]	@ zero_extendqisi2
+ 1396 0008 0446     		mov	r4, r0
+ 1397 000a FFB2     		uxtb	r7, r7
+ 1398 000c 202F     		cmp	r7, #32
+ 1399 000e 0E46     		mov	r6, r1
+ 1400 0010 1546     		mov	r5, r2
+ 1401 0012 9846     		mov	r8, r3
+ 1402 0014 01D0     		beq	.L283
+ 1403              	.L287:
+ARM GAS  /tmp/cccQ9HVm.s 			page 25
+
+
+ 1404 0016 0220     		movs	r0, #2
+ 1405 0018 74E0     		b	.L284
+ 1406              	.L283:
+ 1407 001a 0029     		cmp	r1, #0
+ 1408 001c 3AD0     		beq	.L312
+ 1409 001e 002A     		cmp	r2, #0
+ 1410 0020 38D0     		beq	.L312
+ 1411 0022 0122     		movs	r2, #1
+ 1412 0024 3949     		ldr	r1, .L315
+ 1413 0026 42F21073 		movw	r3, #10000
+ 1414 002a FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 1415 002e 0246     		mov	r2, r0
+ 1416 0030 0028     		cmp	r0, #0
+ 1417 0032 F0D1     		bne	.L287
+ 1418 0034 94F83430 		ldrb	r3, [r4, #52]	@ zero_extendqisi2
+ 1419 0038 012B     		cmp	r3, #1
+ 1420 003a ECD0     		beq	.L287
+ 1421 003c 0123     		movs	r3, #1
+ 1422 003e 84F83430 		strb	r3, [r4, #52]
+ 1423 0042 2368     		ldr	r3, [r4]
+ 1424 0044 1968     		ldr	r1, [r3]
+ 1425 0046 21F40061 		bic	r1, r1, #2048
+ 1426 004a 1960     		str	r1, [r3]
+ 1427 004c 2221     		movs	r1, #34
+ 1428 004e 84F83510 		strb	r1, [r4, #53]
+ 1429 0052 84F83670 		strb	r7, [r4, #54]
+ 1430 0056 A063     		str	r0, [r4, #56]
+ 1431 0058 1968     		ldr	r1, [r3]
+ 1432 005a 2046     		mov	r0, r4
+ 1433 005c 41F48061 		orr	r1, r1, #1024
+ 1434 0060 1960     		str	r1, [r3]
+ 1435 0062 2B49     		ldr	r1, .L315+4
+ 1436 0064 4346     		mov	r3, r8
+ 1437 0066 FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 1438 006a 0028     		cmp	r0, #0
+ 1439 006c 35D1     		bne	.L313
+ 1440 006e 2368     		ldr	r3, [r4]
+ 1441 0070 5A69     		ldr	r2, [r3, #20]
+ 1442 0072 0092     		str	r2, [sp]
+ 1443 0074 9B69     		ldr	r3, [r3, #24]
+ 1444 0076 0093     		str	r3, [sp]
+ 1445 0078 009B     		ldr	r3, [sp]
+ 1446              	.L296:
+ 1447 007a 2046     		mov	r0, r4
+ 1448 007c 4146     		mov	r1, r8
+ 1449 007e FFF7FEFF 		bl	I2C_WaitOnRXNEFlagUntilTimeout
+ 1450 0082 2368     		ldr	r3, [r4]
+ 1451 0084 40B1     		cbz	r0, .L289
+ 1452 0086 1A68     		ldr	r2, [r3]
+ 1453 0088 22F48062 		bic	r2, r2, #1024
+ 1454 008c 1A60     		str	r2, [r3]
+ 1455 008e A36B     		ldr	r3, [r4, #56]
+ 1456 0090 202B     		cmp	r3, #32
+ 1457 0092 22D0     		beq	.L313
+ 1458              	.L312:
+ 1459 0094 0120     		movs	r0, #1
+ 1460 0096 35E0     		b	.L284
+ARM GAS  /tmp/cccQ9HVm.s 			page 26
+
+
+ 1461              	.L289:
+ 1462 0098 1B69     		ldr	r3, [r3, #16]
+ 1463 009a 3370     		strb	r3, [r6]
+ 1464 009c 2268     		ldr	r2, [r4]
+ 1465 009e 6B1E     		subs	r3, r5, #1
+ 1466 00a0 5169     		ldr	r1, [r2, #20]
+ 1467 00a2 9BB2     		uxth	r3, r3
+ 1468 00a4 4907     		lsls	r1, r1, #29
+ 1469 00a6 02D4     		bmi	.L291
+ 1470 00a8 0136     		adds	r6, r6, #1
+ 1471 00aa 1D46     		mov	r5, r3
+ 1472 00ac 0BE0     		b	.L292
+ 1473              	.L291:
+ 1474 00ae 2BB9     		cbnz	r3, .L293
+ 1475              	.L297:
+ 1476 00b0 2046     		mov	r0, r4
+ 1477 00b2 FFF7FEFF 		bl	I2C_WaitOnSTOPFlagUntilTimeout.constprop.7
+ 1478 00b6 2368     		ldr	r3, [r4]
+ 1479 00b8 40B9     		cbnz	r0, .L294
+ 1480 00ba 10E0     		b	.L314
+ 1481              	.L293:
+ 1482 00bc 1369     		ldr	r3, [r2, #16]
+ 1483 00be 023D     		subs	r5, r5, #2
+ 1484 00c0 7370     		strb	r3, [r6, #1]
+ 1485 00c2 ADB2     		uxth	r5, r5
+ 1486 00c4 0236     		adds	r6, r6, #2
+ 1487              	.L292:
+ 1488 00c6 002D     		cmp	r5, #0
+ 1489 00c8 D7D1     		bne	.L296
+ 1490 00ca F1E7     		b	.L297
+ 1491              	.L294:
+ 1492 00cc 1A68     		ldr	r2, [r3]
+ 1493 00ce 22F48062 		bic	r2, r2, #1024
+ 1494 00d2 1A60     		str	r2, [r3]
+ 1495 00d4 A36B     		ldr	r3, [r4, #56]
+ 1496 00d6 042B     		cmp	r3, #4
+ 1497 00d8 DCD0     		beq	.L312
+ 1498              	.L313:
+ 1499 00da 0320     		movs	r0, #3
+ 1500 00dc 12E0     		b	.L284
+ 1501              	.L314:
+ 1502 00de 5A69     		ldr	r2, [r3, #20]
+ 1503 00e0 0192     		str	r2, [sp, #4]
+ 1504 00e2 1A68     		ldr	r2, [r3]
+ 1505 00e4 42F00102 		orr	r2, r2, #1
+ 1506 00e8 1A60     		str	r2, [r3]
+ 1507 00ea 0192     		str	r2, [sp, #4]
+ 1508 00ec 019A     		ldr	r2, [sp, #4]
+ 1509 00ee 1A68     		ldr	r2, [r3]
+ 1510 00f0 22F48062 		bic	r2, r2, #1024
+ 1511 00f4 1A60     		str	r2, [r3]
+ 1512 00f6 2023     		movs	r3, #32
+ 1513 00f8 84F83530 		strb	r3, [r4, #53]
+ 1514 00fc 84F83400 		strb	r0, [r4, #52]
+ 1515 0100 84F83600 		strb	r0, [r4, #54]
+ 1516              	.L284:
+ 1517 0104 02B0     		add	sp, sp, #8
+ARM GAS  /tmp/cccQ9HVm.s 			page 27
+
+
+ 1518              		@ sp needed
+ 1519 0106 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 1520              	.L316:
+ 1521 010a 00BF     		.align	2
+ 1522              	.L315:
+ 1523 010c 02001000 		.word	1048578
+ 1524 0110 02000100 		.word	65538
+ 1526              		.section	.text.HAL_I2C_Master_Transmit_IT,"ax",%progbits
+ 1527              		.align	1
+ 1528              		.global	HAL_I2C_Master_Transmit_IT
+ 1529              		.thumb
+ 1530              		.thumb_func
+ 1532              	HAL_I2C_Master_Transmit_IT:
+ 1533              		@ args = 0, pretend = 0, frame = 8
+ 1534              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1535 0000 2DE9F743 		push	{r0, r1, r2, r4, r5, r6, r7, r8, r9, lr}
+ 1536 0004 1E46     		mov	r6, r3
+ 1537 0006 90F83530 		ldrb	r3, [r0, #53]	@ zero_extendqisi2
+ 1538 000a 0446     		mov	r4, r0
+ 1539 000c 202B     		cmp	r3, #32
+ 1540 000e 8946     		mov	r9, r1
+ 1541 0010 9046     		mov	r8, r2
+ 1542 0012 01D0     		beq	.L318
+ 1543              	.L320:
+ 1544 0014 0220     		movs	r0, #2
+ 1545 0016 3FE0     		b	.L319
+ 1546              	.L318:
+ 1547 0018 002A     		cmp	r2, #0
+ 1548 001a 3CD0     		beq	.L324
+ 1549 001c 002E     		cmp	r6, #0
+ 1550 001e 3AD0     		beq	.L324
+ 1551 0020 1F49     		ldr	r1, .L328
+ 1552 0022 0122     		movs	r2, #1
+ 1553 0024 42F21073 		movw	r3, #10000
+ 1554 0028 FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 1555 002c 0546     		mov	r5, r0
+ 1556 002e 0028     		cmp	r0, #0
+ 1557 0030 F0D1     		bne	.L320
+ 1558 0032 94F83430 		ldrb	r3, [r4, #52]	@ zero_extendqisi2
+ 1559 0036 012B     		cmp	r3, #1
+ 1560 0038 ECD0     		beq	.L320
+ 1561 003a 2268     		ldr	r2, [r4]
+ 1562 003c 0127     		movs	r7, #1
+ 1563 003e 1368     		ldr	r3, [r2]
+ 1564 0040 84F83470 		strb	r7, [r4, #52]
+ 1565 0044 23F40063 		bic	r3, r3, #2048
+ 1566 0048 1360     		str	r3, [r2]
+ 1567 004a 2123     		movs	r3, #33
+ 1568 004c 84F83530 		strb	r3, [r4, #53]
+ 1569 0050 1023     		movs	r3, #16
+ 1570 0052 84F83630 		strb	r3, [r4, #54]
+ 1571 0056 C4F82480 		str	r8, [r4, #36]
+ 1572 005a A063     		str	r0, [r4, #56]
+ 1573 005c 2685     		strh	r6, [r4, #40]	@ movhi
+ 1574 005e 6685     		strh	r6, [r4, #42]	@ movhi
+ 1575 0060 2046     		mov	r0, r4
+ 1576 0062 4946     		mov	r1, r9
+ARM GAS  /tmp/cccQ9HVm.s 			page 28
+
+
+ 1577 0064 2322     		movs	r2, #35
+ 1578 0066 FFF7FEFF 		bl	I2C_MasterRequestWrite
+ 1579 006a 38B1     		cbz	r0, .L321
+ 1580 006c A36B     		ldr	r3, [r4, #56]
+ 1581 006e 84F83450 		strb	r5, [r4, #52]
+ 1582 0072 042B     		cmp	r3, #4
+ 1583 0074 0CBF     		ite	eq
+ 1584 0076 3846     		moveq	r0, r7
+ 1585 0078 0320     		movne	r0, #3
+ 1586 007a 0DE0     		b	.L319
+ 1587              	.L321:
+ 1588 007c 2368     		ldr	r3, [r4]
+ 1589 007e 5A69     		ldr	r2, [r3, #20]
+ 1590 0080 0192     		str	r2, [sp, #4]
+ 1591 0082 9A69     		ldr	r2, [r3, #24]
+ 1592 0084 84F83400 		strb	r0, [r4, #52]
+ 1593 0088 0192     		str	r2, [sp, #4]
+ 1594 008a 019A     		ldr	r2, [sp, #4]
+ 1595 008c 5A68     		ldr	r2, [r3, #4]
+ 1596 008e 42F4E062 		orr	r2, r2, #1792
+ 1597 0092 5A60     		str	r2, [r3, #4]
+ 1598 0094 00E0     		b	.L319
+ 1599              	.L324:
+ 1600 0096 0120     		movs	r0, #1
+ 1601              	.L319:
+ 1602 0098 03B0     		add	sp, sp, #12
+ 1603              		@ sp needed
+ 1604 009a BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 1605              	.L329:
+ 1606 009e 00BF     		.align	2
+ 1607              	.L328:
+ 1608 00a0 02001000 		.word	1048578
+ 1610              		.section	.text.HAL_I2C_Master_Receive_IT,"ax",%progbits
+ 1611              		.align	1
+ 1612              		.global	HAL_I2C_Master_Receive_IT
+ 1613              		.thumb
+ 1614              		.thumb_func
+ 1616              	HAL_I2C_Master_Receive_IT:
+ 1617              		@ args = 0, pretend = 0, frame = 16
+ 1618              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1619 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 1620 0004 1E46     		mov	r6, r3
+ 1621 0006 90F83530 		ldrb	r3, [r0, #53]	@ zero_extendqisi2
+ 1622 000a 85B0     		sub	sp, sp, #20
+ 1623 000c 202B     		cmp	r3, #32
+ 1624 000e 0446     		mov	r4, r0
+ 1625 0010 8946     		mov	r9, r1
+ 1626 0012 9046     		mov	r8, r2
+ 1627 0014 01D0     		beq	.L331
+ 1628              	.L333:
+ 1629 0016 0220     		movs	r0, #2
+ 1630 0018 66E0     		b	.L332
+ 1631              	.L331:
+ 1632 001a 002A     		cmp	r2, #0
+ 1633 001c 63D0     		beq	.L340
+ 1634 001e 002E     		cmp	r6, #0
+ 1635 0020 61D0     		beq	.L340
+ARM GAS  /tmp/cccQ9HVm.s 			page 29
+
+
+ 1636 0022 3349     		ldr	r1, .L345
+ 1637 0024 0122     		movs	r2, #1
+ 1638 0026 42F21073 		movw	r3, #10000
+ 1639 002a FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 1640 002e 0546     		mov	r5, r0
+ 1641 0030 0028     		cmp	r0, #0
+ 1642 0032 F0D1     		bne	.L333
+ 1643 0034 94F83430 		ldrb	r3, [r4, #52]	@ zero_extendqisi2
+ 1644 0038 012B     		cmp	r3, #1
+ 1645 003a ECD0     		beq	.L333
+ 1646 003c 2268     		ldr	r2, [r4]
+ 1647 003e 0127     		movs	r7, #1
+ 1648 0040 1368     		ldr	r3, [r2]
+ 1649 0042 84F83470 		strb	r7, [r4, #52]
+ 1650 0046 23F40063 		bic	r3, r3, #2048
+ 1651 004a 1360     		str	r3, [r2]
+ 1652 004c 2223     		movs	r3, #34
+ 1653 004e 84F83530 		strb	r3, [r4, #53]
+ 1654 0052 1023     		movs	r3, #16
+ 1655 0054 84F83630 		strb	r3, [r4, #54]
+ 1656 0058 C4F82480 		str	r8, [r4, #36]
+ 1657 005c A063     		str	r0, [r4, #56]
+ 1658 005e 2685     		strh	r6, [r4, #40]	@ movhi
+ 1659 0060 6685     		strh	r6, [r4, #42]	@ movhi
+ 1660 0062 2046     		mov	r0, r4
+ 1661 0064 4946     		mov	r1, r9
+ 1662 0066 2322     		movs	r2, #35
+ 1663 0068 FFF7FEFF 		bl	I2C_MasterRequestRead
+ 1664 006c 38B1     		cbz	r0, .L334
+ 1665 006e A36B     		ldr	r3, [r4, #56]
+ 1666 0070 84F83450 		strb	r5, [r4, #52]
+ 1667 0074 042B     		cmp	r3, #4
+ 1668 0076 0CBF     		ite	eq
+ 1669 0078 3846     		moveq	r0, r7
+ 1670 007a 0320     		movne	r0, #3
+ 1671 007c 34E0     		b	.L332
+ 1672              	.L334:
+ 1673 007e 638D     		ldrh	r3, [r4, #42]
+ 1674 0080 9BB2     		uxth	r3, r3
+ 1675 0082 012B     		cmp	r3, #1
+ 1676 0084 2368     		ldr	r3, [r4]
+ 1677 0086 0CD1     		bne	.L336
+ 1678 0088 1A68     		ldr	r2, [r3]
+ 1679 008a 22F48062 		bic	r2, r2, #1024
+ 1680 008e 1A60     		str	r2, [r3]
+ 1681 0090 5A69     		ldr	r2, [r3, #20]
+ 1682 0092 0192     		str	r2, [sp, #4]
+ 1683 0094 9A69     		ldr	r2, [r3, #24]
+ 1684 0096 0192     		str	r2, [sp, #4]
+ 1685 0098 019A     		ldr	r2, [sp, #4]
+ 1686 009a 1A68     		ldr	r2, [r3]
+ 1687 009c 42F40072 		orr	r2, r2, #512
+ 1688 00a0 0FE0     		b	.L344
+ 1689              	.L336:
+ 1690 00a2 628D     		ldrh	r2, [r4, #42]
+ 1691 00a4 92B2     		uxth	r2, r2
+ 1692 00a6 022A     		cmp	r2, #2
+ARM GAS  /tmp/cccQ9HVm.s 			page 30
+
+
+ 1693 00a8 1A68     		ldr	r2, [r3]
+ 1694 00aa 0CD1     		bne	.L338
+ 1695 00ac 42F40062 		orr	r2, r2, #2048
+ 1696 00b0 1A60     		str	r2, [r3]
+ 1697 00b2 5A69     		ldr	r2, [r3, #20]
+ 1698 00b4 0292     		str	r2, [sp, #8]
+ 1699 00b6 9A69     		ldr	r2, [r3, #24]
+ 1700 00b8 0292     		str	r2, [sp, #8]
+ 1701 00ba 029A     		ldr	r2, [sp, #8]
+ 1702 00bc 1A68     		ldr	r2, [r3]
+ 1703 00be 22F48062 		bic	r2, r2, #1024
+ 1704              	.L344:
+ 1705 00c2 1A60     		str	r2, [r3]
+ 1706 00c4 07E0     		b	.L337
+ 1707              	.L338:
+ 1708 00c6 42F48062 		orr	r2, r2, #1024
+ 1709 00ca 1A60     		str	r2, [r3]
+ 1710 00cc 5A69     		ldr	r2, [r3, #20]
+ 1711 00ce 0392     		str	r2, [sp, #12]
+ 1712 00d0 9A69     		ldr	r2, [r3, #24]
+ 1713 00d2 0392     		str	r2, [sp, #12]
+ 1714 00d4 039A     		ldr	r2, [sp, #12]
+ 1715              	.L337:
+ 1716 00d6 0022     		movs	r2, #0
+ 1717 00d8 84F83420 		strb	r2, [r4, #52]
+ 1718 00dc 5A68     		ldr	r2, [r3, #4]
+ 1719 00de 42F4E062 		orr	r2, r2, #1792
+ 1720 00e2 5A60     		str	r2, [r3, #4]
+ 1721 00e4 00E0     		b	.L332
+ 1722              	.L340:
+ 1723 00e6 0120     		movs	r0, #1
+ 1724              	.L332:
+ 1725 00e8 05B0     		add	sp, sp, #20
+ 1726              		@ sp needed
+ 1727 00ea BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 1728              	.L346:
+ 1729 00ee 00BF     		.align	2
+ 1730              	.L345:
+ 1731 00f0 02001000 		.word	1048578
+ 1733              		.section	.text.HAL_I2C_Slave_Transmit_IT,"ax",%progbits
+ 1734              		.align	1
+ 1735              		.global	HAL_I2C_Slave_Transmit_IT
+ 1736              		.thumb
+ 1737              		.thumb_func
+ 1739              	HAL_I2C_Slave_Transmit_IT:
+ 1740              		@ args = 0, pretend = 0, frame = 0
+ 1741              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1742 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 1743 0002 90F83550 		ldrb	r5, [r0, #53]	@ zero_extendqisi2
+ 1744 0006 0446     		mov	r4, r0
+ 1745 0008 EDB2     		uxtb	r5, r5
+ 1746 000a 202D     		cmp	r5, #32
+ 1747 000c 0F46     		mov	r7, r1
+ 1748 000e 1646     		mov	r6, r2
+ 1749 0010 01D0     		beq	.L348
+ 1750              	.L350:
+ 1751 0012 0220     		movs	r0, #2
+ARM GAS  /tmp/cccQ9HVm.s 			page 31
+
+
+ 1752 0014 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 1753              	.L348:
+ 1754 0016 29B3     		cbz	r1, .L352
+ 1755 0018 22B3     		cbz	r2, .L352
+ 1756 001a 1349     		ldr	r1, .L356
+ 1757 001c 0122     		movs	r2, #1
+ 1758 001e 42F21073 		movw	r3, #10000
+ 1759 0022 FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 1760 0026 0028     		cmp	r0, #0
+ 1761 0028 F3D1     		bne	.L350
+ 1762 002a 94F83430 		ldrb	r3, [r4, #52]	@ zero_extendqisi2
+ 1763 002e 012B     		cmp	r3, #1
+ 1764 0030 EFD0     		beq	.L350
+ 1765 0032 2368     		ldr	r3, [r4]
+ 1766 0034 1A68     		ldr	r2, [r3]
+ 1767 0036 22F40062 		bic	r2, r2, #2048
+ 1768 003a 1A60     		str	r2, [r3]
+ 1769 003c 2122     		movs	r2, #33
+ 1770 003e 84F83520 		strb	r2, [r4, #53]
+ 1771 0042 84F83650 		strb	r5, [r4, #54]
+ 1772 0046 A063     		str	r0, [r4, #56]
+ 1773 0048 6685     		strh	r6, [r4, #42]	@ movhi
+ 1774 004a 1A68     		ldr	r2, [r3]
+ 1775 004c 6762     		str	r7, [r4, #36]
+ 1776 004e 42F48062 		orr	r2, r2, #1024
+ 1777 0052 2685     		strh	r6, [r4, #40]	@ movhi
+ 1778 0054 1A60     		str	r2, [r3]
+ 1779 0056 5A68     		ldr	r2, [r3, #4]
+ 1780 0058 84F83400 		strb	r0, [r4, #52]
+ 1781 005c 42F4E062 		orr	r2, r2, #1792
+ 1782 0060 5A60     		str	r2, [r3, #4]
+ 1783 0062 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 1784              	.L352:
+ 1785 0064 0120     		movs	r0, #1
+ 1786 0066 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 1787              	.L357:
+ 1788              		.align	2
+ 1789              	.L356:
+ 1790 0068 02001000 		.word	1048578
+ 1792              		.section	.text.HAL_I2C_Slave_Receive_IT,"ax",%progbits
+ 1793              		.align	1
+ 1794              		.global	HAL_I2C_Slave_Receive_IT
+ 1795              		.thumb
+ 1796              		.thumb_func
+ 1798              	HAL_I2C_Slave_Receive_IT:
+ 1799              		@ args = 0, pretend = 0, frame = 0
+ 1800              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1801 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 1802 0002 90F83550 		ldrb	r5, [r0, #53]	@ zero_extendqisi2
+ 1803 0006 0446     		mov	r4, r0
+ 1804 0008 EDB2     		uxtb	r5, r5
+ 1805 000a 202D     		cmp	r5, #32
+ 1806 000c 0F46     		mov	r7, r1
+ 1807 000e 1646     		mov	r6, r2
+ 1808 0010 01D0     		beq	.L359
+ 1809              	.L361:
+ 1810 0012 0220     		movs	r0, #2
+ARM GAS  /tmp/cccQ9HVm.s 			page 32
+
+
+ 1811 0014 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 1812              	.L359:
+ 1813 0016 29B3     		cbz	r1, .L363
+ 1814 0018 22B3     		cbz	r2, .L363
+ 1815 001a 1349     		ldr	r1, .L367
+ 1816 001c 0122     		movs	r2, #1
+ 1817 001e 42F21073 		movw	r3, #10000
+ 1818 0022 FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 1819 0026 0028     		cmp	r0, #0
+ 1820 0028 F3D1     		bne	.L361
+ 1821 002a 94F83430 		ldrb	r3, [r4, #52]	@ zero_extendqisi2
+ 1822 002e 012B     		cmp	r3, #1
+ 1823 0030 EFD0     		beq	.L361
+ 1824 0032 2368     		ldr	r3, [r4]
+ 1825 0034 1A68     		ldr	r2, [r3]
+ 1826 0036 22F40062 		bic	r2, r2, #2048
+ 1827 003a 1A60     		str	r2, [r3]
+ 1828 003c 2222     		movs	r2, #34
+ 1829 003e 84F83520 		strb	r2, [r4, #53]
+ 1830 0042 84F83650 		strb	r5, [r4, #54]
+ 1831 0046 A063     		str	r0, [r4, #56]
+ 1832 0048 6685     		strh	r6, [r4, #42]	@ movhi
+ 1833 004a 1A68     		ldr	r2, [r3]
+ 1834 004c 6762     		str	r7, [r4, #36]
+ 1835 004e 42F48062 		orr	r2, r2, #1024
+ 1836 0052 2685     		strh	r6, [r4, #40]	@ movhi
+ 1837 0054 1A60     		str	r2, [r3]
+ 1838 0056 5A68     		ldr	r2, [r3, #4]
+ 1839 0058 84F83400 		strb	r0, [r4, #52]
+ 1840 005c 42F4E062 		orr	r2, r2, #1792
+ 1841 0060 5A60     		str	r2, [r3, #4]
+ 1842 0062 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 1843              	.L363:
+ 1844 0064 0120     		movs	r0, #1
+ 1845 0066 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 1846              	.L368:
+ 1847              		.align	2
+ 1848              	.L367:
+ 1849 0068 02001000 		.word	1048578
+ 1851              		.section	.text.HAL_I2C_Master_Transmit_DMA,"ax",%progbits
+ 1852              		.align	1
+ 1853              		.global	HAL_I2C_Master_Transmit_DMA
+ 1854              		.thumb
+ 1855              		.thumb_func
+ 1857              	HAL_I2C_Master_Transmit_DMA:
+ 1858              		@ args = 0, pretend = 0, frame = 8
+ 1859              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1860 0000 2DE9F743 		push	{r0, r1, r2, r4, r5, r6, r7, r8, r9, lr}
+ 1861 0004 1E46     		mov	r6, r3
+ 1862 0006 90F83530 		ldrb	r3, [r0, #53]	@ zero_extendqisi2
+ 1863 000a 0446     		mov	r4, r0
+ 1864 000c 202B     		cmp	r3, #32
+ 1865 000e 8946     		mov	r9, r1
+ 1866 0010 1746     		mov	r7, r2
+ 1867 0012 01D0     		beq	.L370
+ 1868              	.L372:
+ 1869 0014 0220     		movs	r0, #2
+ARM GAS  /tmp/cccQ9HVm.s 			page 33
+
+
+ 1870 0016 49E0     		b	.L371
+ 1871              	.L370:
+ 1872 0018 002A     		cmp	r2, #0
+ 1873 001a 46D0     		beq	.L376
+ 1874 001c 002E     		cmp	r6, #0
+ 1875 001e 44D0     		beq	.L376
+ 1876 0020 2449     		ldr	r1, .L380
+ 1877 0022 0122     		movs	r2, #1
+ 1878 0024 42F21073 		movw	r3, #10000
+ 1879 0028 FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 1880 002c 0546     		mov	r5, r0
+ 1881 002e 0028     		cmp	r0, #0
+ 1882 0030 F0D1     		bne	.L372
+ 1883 0032 94F83430 		ldrb	r3, [r4, #52]	@ zero_extendqisi2
+ 1884 0036 012B     		cmp	r3, #1
+ 1885 0038 ECD0     		beq	.L372
+ 1886 003a 2268     		ldr	r2, [r4]
+ 1887 003c 4FF00108 		mov	r8, #1
+ 1888 0040 1368     		ldr	r3, [r2]
+ 1889 0042 84F83480 		strb	r8, [r4, #52]
+ 1890 0046 23F40063 		bic	r3, r3, #2048
+ 1891 004a 42F8103B 		str	r3, [r2], #16
+ 1892 004e 2123     		movs	r3, #33
+ 1893 0050 84F83530 		strb	r3, [r4, #53]
+ 1894 0054 1023     		movs	r3, #16
+ 1895 0056 84F83630 		strb	r3, [r4, #54]
+ 1896 005a A063     		str	r0, [r4, #56]
+ 1897 005c 164B     		ldr	r3, .L380+4
+ 1898 005e E06A     		ldr	r0, [r4, #44]
+ 1899 0060 6762     		str	r7, [r4, #36]
+ 1900 0062 2685     		strh	r6, [r4, #40]	@ movhi
+ 1901 0064 6685     		strh	r6, [r4, #42]	@ movhi
+ 1902 0066 8362     		str	r3, [r0, #40]
+ 1903 0068 144B     		ldr	r3, .L380+8
+ 1904 006a 3946     		mov	r1, r7
+ 1905 006c 0363     		str	r3, [r0, #48]
+ 1906 006e 3346     		mov	r3, r6
+ 1907 0070 FFF7FEFF 		bl	HAL_DMA_Start_IT
+ 1908 0074 2046     		mov	r0, r4
+ 1909 0076 4946     		mov	r1, r9
+ 1910 0078 2322     		movs	r2, #35
+ 1911 007a FFF7FEFF 		bl	I2C_MasterRequestWrite
+ 1912 007e 38B1     		cbz	r0, .L373
+ 1913 0080 A36B     		ldr	r3, [r4, #56]
+ 1914 0082 84F83450 		strb	r5, [r4, #52]
+ 1915 0086 042B     		cmp	r3, #4
+ 1916 0088 0CBF     		ite	eq
+ 1917 008a 4046     		moveq	r0, r8
+ 1918 008c 0320     		movne	r0, #3
+ 1919 008e 0DE0     		b	.L371
+ 1920              	.L373:
+ 1921 0090 2368     		ldr	r3, [r4]
+ 1922 0092 5A68     		ldr	r2, [r3, #4]
+ 1923 0094 42F40062 		orr	r2, r2, #2048
+ 1924 0098 5A60     		str	r2, [r3, #4]
+ 1925 009a 5A69     		ldr	r2, [r3, #20]
+ 1926 009c 0192     		str	r2, [sp, #4]
+ARM GAS  /tmp/cccQ9HVm.s 			page 34
+
+
+ 1927 009e 9B69     		ldr	r3, [r3, #24]
+ 1928 00a0 84F83400 		strb	r0, [r4, #52]
+ 1929 00a4 0193     		str	r3, [sp, #4]
+ 1930 00a6 019B     		ldr	r3, [sp, #4]
+ 1931 00a8 00E0     		b	.L371
+ 1932              	.L376:
+ 1933 00aa 0120     		movs	r0, #1
+ 1934              	.L371:
+ 1935 00ac 03B0     		add	sp, sp, #12
+ 1936              		@ sp needed
+ 1937 00ae BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 1938              	.L381:
+ 1939 00b2 00BF     		.align	2
+ 1940              	.L380:
+ 1941 00b4 02001000 		.word	1048578
+ 1942 00b8 00000000 		.word	I2C_DMAMasterTransmitCplt
+ 1943 00bc 00000000 		.word	I2C_DMAError
+ 1945              		.section	.text.HAL_I2C_Master_Receive_DMA,"ax",%progbits
+ 1946              		.align	1
+ 1947              		.global	HAL_I2C_Master_Receive_DMA
+ 1948              		.thumb
+ 1949              		.thumb_func
+ 1951              	HAL_I2C_Master_Receive_DMA:
+ 1952              		@ args = 0, pretend = 0, frame = 8
+ 1953              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1954 0000 2DE9F743 		push	{r0, r1, r2, r4, r5, r6, r7, r8, r9, lr}
+ 1955 0004 1D46     		mov	r5, r3
+ 1956 0006 90F83530 		ldrb	r3, [r0, #53]	@ zero_extendqisi2
+ 1957 000a 0446     		mov	r4, r0
+ 1958 000c 202B     		cmp	r3, #32
+ 1959 000e 8946     		mov	r9, r1
+ 1960 0010 1746     		mov	r7, r2
+ 1961 0012 01D0     		beq	.L383
+ 1962              	.L385:
+ 1963 0014 0220     		movs	r0, #2
+ 1964 0016 55E0     		b	.L384
+ 1965              	.L383:
+ 1966 0018 002A     		cmp	r2, #0
+ 1967 001a 52D0     		beq	.L391
+ 1968 001c 002D     		cmp	r5, #0
+ 1969 001e 50D0     		beq	.L391
+ 1970 0020 2A49     		ldr	r1, .L395
+ 1971 0022 0122     		movs	r2, #1
+ 1972 0024 42F21073 		movw	r3, #10000
+ 1973 0028 FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 1974 002c 0646     		mov	r6, r0
+ 1975 002e 0028     		cmp	r0, #0
+ 1976 0030 F0D1     		bne	.L385
+ 1977 0032 94F83430 		ldrb	r3, [r4, #52]	@ zero_extendqisi2
+ 1978 0036 012B     		cmp	r3, #1
+ 1979 0038 ECD0     		beq	.L385
+ 1980 003a 2168     		ldr	r1, [r4]
+ 1981 003c 4FF00108 		mov	r8, #1
+ 1982 0040 0B68     		ldr	r3, [r1]
+ 1983 0042 84F83480 		strb	r8, [r4, #52]
+ 1984 0046 23F40063 		bic	r3, r3, #2048
+ 1985 004a 41F8103B 		str	r3, [r1], #16
+ARM GAS  /tmp/cccQ9HVm.s 			page 35
+
+
+ 1986 004e 2223     		movs	r3, #34
+ 1987 0050 84F83530 		strb	r3, [r4, #53]
+ 1988 0054 1023     		movs	r3, #16
+ 1989 0056 84F83630 		strb	r3, [r4, #54]
+ 1990 005a A063     		str	r0, [r4, #56]
+ 1991 005c 1C4B     		ldr	r3, .L395+4
+ 1992 005e 206B     		ldr	r0, [r4, #48]
+ 1993 0060 6762     		str	r7, [r4, #36]
+ 1994 0062 2585     		strh	r5, [r4, #40]	@ movhi
+ 1995 0064 6585     		strh	r5, [r4, #42]	@ movhi
+ 1996 0066 8362     		str	r3, [r0, #40]
+ 1997 0068 1A4B     		ldr	r3, .L395+8
+ 1998 006a 3A46     		mov	r2, r7
+ 1999 006c 0363     		str	r3, [r0, #48]
+ 2000 006e 2B46     		mov	r3, r5
+ 2001 0070 FFF7FEFF 		bl	HAL_DMA_Start_IT
+ 2002 0074 2046     		mov	r0, r4
+ 2003 0076 4946     		mov	r1, r9
+ 2004 0078 2322     		movs	r2, #35
+ 2005 007a FFF7FEFF 		bl	I2C_MasterRequestRead
+ 2006 007e 38B1     		cbz	r0, .L386
+ 2007 0080 A36B     		ldr	r3, [r4, #56]
+ 2008 0082 84F83460 		strb	r6, [r4, #52]
+ 2009 0086 042B     		cmp	r3, #4
+ 2010 0088 0CBF     		ite	eq
+ 2011 008a 4046     		moveq	r0, r8
+ 2012 008c 0320     		movne	r0, #3
+ 2013 008e 19E0     		b	.L384
+ 2014              	.L386:
+ 2015 0090 2368     		ldr	r3, [r4]
+ 2016 0092 012D     		cmp	r5, #1
+ 2017 0094 0BBF     		itete	eq
+ 2018 0096 1A68     		ldreq	r2, [r3]
+ 2019 0098 5A68     		ldrne	r2, [r3, #4]
+ 2020 009a 22F48062 		biceq	r2, r2, #1024
+ 2021 009e 42F48052 		orrne	r2, r2, #4096
+ 2022 00a2 0CBF     		ite	eq
+ 2023 00a4 1A60     		streq	r2, [r3]
+ 2024 00a6 5A60     		strne	r2, [r3, #4]
+ 2025 00a8 5A68     		ldr	r2, [r3, #4]
+ 2026 00aa 42F40062 		orr	r2, r2, #2048
+ 2027 00ae 5A60     		str	r2, [r3, #4]
+ 2028 00b0 5A69     		ldr	r2, [r3, #20]
+ 2029 00b2 0192     		str	r2, [sp, #4]
+ 2030 00b4 9B69     		ldr	r3, [r3, #24]
+ 2031 00b6 0193     		str	r3, [sp, #4]
+ 2032 00b8 019B     		ldr	r3, [sp, #4]
+ 2033 00ba 0023     		movs	r3, #0
+ 2034 00bc 84F83430 		strb	r3, [r4, #52]
+ 2035 00c0 00E0     		b	.L384
+ 2036              	.L391:
+ 2037 00c2 0120     		movs	r0, #1
+ 2038              	.L384:
+ 2039 00c4 03B0     		add	sp, sp, #12
+ 2040              		@ sp needed
+ 2041 00c6 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 2042              	.L396:
+ARM GAS  /tmp/cccQ9HVm.s 			page 36
+
+
+ 2043 00ca 00BF     		.align	2
+ 2044              	.L395:
+ 2045 00cc 02001000 		.word	1048578
+ 2046 00d0 00000000 		.word	I2C_DMAMasterReceiveCplt
+ 2047 00d4 00000000 		.word	I2C_DMAError
+ 2049              		.section	.text.HAL_I2C_Slave_Transmit_DMA,"ax",%progbits
+ 2050              		.align	1
+ 2051              		.global	HAL_I2C_Slave_Transmit_DMA
+ 2052              		.thumb
+ 2053              		.thumb_func
+ 2055              	HAL_I2C_Slave_Transmit_DMA:
+ 2056              		@ args = 0, pretend = 0, frame = 16
+ 2057              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2058 0000 2DE9FF41 		push	{r0, r1, r2, r3, r4, r5, r6, r7, r8, lr}
+ 2059 0004 90F83560 		ldrb	r6, [r0, #53]	@ zero_extendqisi2
+ 2060 0008 0446     		mov	r4, r0
+ 2061 000a F6B2     		uxtb	r6, r6
+ 2062 000c 202E     		cmp	r6, #32
+ 2063 000e 8846     		mov	r8, r1
+ 2064 0010 1546     		mov	r5, r2
+ 2065 0012 01D0     		beq	.L398
+ 2066              	.L400:
+ 2067 0014 0225     		movs	r5, #2
+ 2068 0016 63E0     		b	.L399
+ 2069              	.L398:
+ 2070 0018 0029     		cmp	r1, #0
+ 2071 001a 60D0     		beq	.L406
+ 2072 001c 002A     		cmp	r2, #0
+ 2073 001e 5ED0     		beq	.L406
+ 2074 0020 3149     		ldr	r1, .L410
+ 2075 0022 0122     		movs	r2, #1
+ 2076 0024 42F21073 		movw	r3, #10000
+ 2077 0028 FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 2078 002c 0746     		mov	r7, r0
+ 2079 002e 0028     		cmp	r0, #0
+ 2080 0030 F0D1     		bne	.L400
+ 2081 0032 94F83430 		ldrb	r3, [r4, #52]	@ zero_extendqisi2
+ 2082 0036 012B     		cmp	r3, #1
+ 2083 0038 ECD0     		beq	.L400
+ 2084 003a 2268     		ldr	r2, [r4]
+ 2085 003c 0123     		movs	r3, #1
+ 2086 003e 84F83430 		strb	r3, [r4, #52]
+ 2087 0042 1368     		ldr	r3, [r2]
+ 2088 0044 4146     		mov	r1, r8
+ 2089 0046 23F40063 		bic	r3, r3, #2048
+ 2090 004a 42F8103B 		str	r3, [r2], #16
+ 2091 004e 2123     		movs	r3, #33
+ 2092 0050 84F83530 		strb	r3, [r4, #53]
+ 2093 0054 84F83660 		strb	r6, [r4, #54]
+ 2094 0058 244B     		ldr	r3, .L410+4
+ 2095 005a A063     		str	r0, [r4, #56]
+ 2096 005c E06A     		ldr	r0, [r4, #44]
+ 2097 005e 2585     		strh	r5, [r4, #40]	@ movhi
+ 2098 0060 6585     		strh	r5, [r4, #42]	@ movhi
+ 2099 0062 C4F82480 		str	r8, [r4, #36]
+ 2100 0066 8362     		str	r3, [r0, #40]
+ 2101 0068 214B     		ldr	r3, .L410+8
+ARM GAS  /tmp/cccQ9HVm.s 			page 37
+
+
+ 2102 006a 0363     		str	r3, [r0, #48]
+ 2103 006c 2B46     		mov	r3, r5
+ 2104 006e FFF7FEFF 		bl	HAL_DMA_Start_IT
+ 2105 0072 2368     		ldr	r3, [r4]
+ 2106 0074 2046     		mov	r0, r4
+ 2107 0076 5A68     		ldr	r2, [r3, #4]
+ 2108 0078 1E49     		ldr	r1, .L410+12
+ 2109 007a 42F40062 		orr	r2, r2, #2048
+ 2110 007e 5A60     		str	r2, [r3, #4]
+ 2111 0080 1A68     		ldr	r2, [r3]
+ 2112 0082 42F48062 		orr	r2, r2, #1024
+ 2113 0086 1A60     		str	r2, [r3]
+ 2114 0088 3A46     		mov	r2, r7
+ 2115 008a 42F21073 		movw	r3, #10000
+ 2116 008e FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 2117 0092 0546     		mov	r5, r0
+ 2118 0094 08B1     		cbz	r0, .L401
+ 2119              	.L404:
+ 2120 0096 0325     		movs	r5, #3
+ 2121 0098 22E0     		b	.L399
+ 2122              	.L401:
+ 2123 009a 2369     		ldr	r3, [r4, #16]
+ 2124 009c B3F5804F 		cmp	r3, #16384
+ 2125 00a0 2368     		ldr	r3, [r4]
+ 2126 00a2 5A69     		ldr	r2, [r3, #20]
+ 2127 00a4 04D1     		bne	.L402
+ 2128 00a6 0192     		str	r2, [sp, #4]
+ 2129 00a8 9B69     		ldr	r3, [r3, #24]
+ 2130 00aa 0193     		str	r3, [sp, #4]
+ 2131 00ac 019B     		ldr	r3, [sp, #4]
+ 2132 00ae 12E0     		b	.L403
+ 2133              	.L402:
+ 2134 00b0 0292     		str	r2, [sp, #8]
+ 2135 00b2 9B69     		ldr	r3, [r3, #24]
+ 2136 00b4 2046     		mov	r0, r4
+ 2137 00b6 0293     		str	r3, [sp, #8]
+ 2138 00b8 029B     		ldr	r3, [sp, #8]
+ 2139 00ba 0E49     		ldr	r1, .L410+12
+ 2140 00bc 2A46     		mov	r2, r5
+ 2141 00be 42F21073 		movw	r3, #10000
+ 2142 00c2 FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 2143 00c6 0028     		cmp	r0, #0
+ 2144 00c8 E5D1     		bne	.L404
+ 2145 00ca 2368     		ldr	r3, [r4]
+ 2146 00cc 5A69     		ldr	r2, [r3, #20]
+ 2147 00ce 0392     		str	r2, [sp, #12]
+ 2148 00d0 9B69     		ldr	r3, [r3, #24]
+ 2149 00d2 0393     		str	r3, [sp, #12]
+ 2150 00d4 039B     		ldr	r3, [sp, #12]
+ 2151              	.L403:
+ 2152 00d6 0023     		movs	r3, #0
+ 2153 00d8 84F83430 		strb	r3, [r4, #52]
+ 2154 00dc 00E0     		b	.L399
+ 2155              	.L406:
+ 2156 00de 0125     		movs	r5, #1
+ 2157              	.L399:
+ 2158 00e0 2846     		mov	r0, r5
+ARM GAS  /tmp/cccQ9HVm.s 			page 38
+
+
+ 2159 00e2 04B0     		add	sp, sp, #16
+ 2160              		@ sp needed
+ 2161 00e4 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 2162              	.L411:
+ 2163              		.align	2
+ 2164              	.L410:
+ 2165 00e8 02001000 		.word	1048578
+ 2166 00ec 00000000 		.word	I2C_DMASlaveTransmitCplt
+ 2167 00f0 00000000 		.word	I2C_DMAError
+ 2168 00f4 02000100 		.word	65538
+ 2170              		.section	.text.HAL_I2C_Slave_Receive_DMA,"ax",%progbits
+ 2171              		.align	1
+ 2172              		.global	HAL_I2C_Slave_Receive_DMA
+ 2173              		.thumb
+ 2174              		.thumb_func
+ 2176              	HAL_I2C_Slave_Receive_DMA:
+ 2177              		@ args = 0, pretend = 0, frame = 8
+ 2178              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2179 0000 2DE9F341 		push	{r0, r1, r4, r5, r6, r7, r8, lr}
+ 2180 0004 90F83560 		ldrb	r6, [r0, #53]	@ zero_extendqisi2
+ 2181 0008 0446     		mov	r4, r0
+ 2182 000a F6B2     		uxtb	r6, r6
+ 2183 000c 202E     		cmp	r6, #32
+ 2184 000e 8846     		mov	r8, r1
+ 2185 0010 1546     		mov	r5, r2
+ 2186 0012 01D0     		beq	.L413
+ 2187              	.L415:
+ 2188 0014 0220     		movs	r0, #2
+ 2189 0016 49E0     		b	.L414
+ 2190              	.L413:
+ 2191 0018 0029     		cmp	r1, #0
+ 2192 001a 44D0     		beq	.L417
+ 2193 001c 002A     		cmp	r2, #0
+ 2194 001e 42D0     		beq	.L417
+ 2195 0020 2449     		ldr	r1, .L422
+ 2196 0022 0122     		movs	r2, #1
+ 2197 0024 42F21073 		movw	r3, #10000
+ 2198 0028 FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 2199 002c 0746     		mov	r7, r0
+ 2200 002e 0028     		cmp	r0, #0
+ 2201 0030 F0D1     		bne	.L415
+ 2202 0032 94F83430 		ldrb	r3, [r4, #52]	@ zero_extendqisi2
+ 2203 0036 012B     		cmp	r3, #1
+ 2204 0038 ECD0     		beq	.L415
+ 2205 003a 2168     		ldr	r1, [r4]
+ 2206 003c 0123     		movs	r3, #1
+ 2207 003e 84F83430 		strb	r3, [r4, #52]
+ 2208 0042 0B68     		ldr	r3, [r1]
+ 2209 0044 4246     		mov	r2, r8
+ 2210 0046 23F40063 		bic	r3, r3, #2048
+ 2211 004a 41F8103B 		str	r3, [r1], #16
+ 2212 004e 2223     		movs	r3, #34
+ 2213 0050 84F83530 		strb	r3, [r4, #53]
+ 2214 0054 84F83660 		strb	r6, [r4, #54]
+ 2215 0058 174B     		ldr	r3, .L422+4
+ 2216 005a A063     		str	r0, [r4, #56]
+ 2217 005c 206B     		ldr	r0, [r4, #48]
+ARM GAS  /tmp/cccQ9HVm.s 			page 39
+
+
+ 2218 005e C4F82480 		str	r8, [r4, #36]
+ 2219 0062 2585     		strh	r5, [r4, #40]	@ movhi
+ 2220 0064 6585     		strh	r5, [r4, #42]	@ movhi
+ 2221 0066 8362     		str	r3, [r0, #40]
+ 2222 0068 144B     		ldr	r3, .L422+8
+ 2223 006a 0363     		str	r3, [r0, #48]
+ 2224 006c 2B46     		mov	r3, r5
+ 2225 006e FFF7FEFF 		bl	HAL_DMA_Start_IT
+ 2226 0072 2368     		ldr	r3, [r4]
+ 2227 0074 2046     		mov	r0, r4
+ 2228 0076 5A68     		ldr	r2, [r3, #4]
+ 2229 0078 1149     		ldr	r1, .L422+12
+ 2230 007a 42F40062 		orr	r2, r2, #2048
+ 2231 007e 5A60     		str	r2, [r3, #4]
+ 2232 0080 1A68     		ldr	r2, [r3]
+ 2233 0082 42F48062 		orr	r2, r2, #1024
+ 2234 0086 1A60     		str	r2, [r3]
+ 2235 0088 3A46     		mov	r2, r7
+ 2236 008a 42F21073 		movw	r3, #10000
+ 2237 008e FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 2238 0092 50B9     		cbnz	r0, .L418
+ 2239 0094 2368     		ldr	r3, [r4]
+ 2240 0096 5A69     		ldr	r2, [r3, #20]
+ 2241 0098 0192     		str	r2, [sp, #4]
+ 2242 009a 9B69     		ldr	r3, [r3, #24]
+ 2243 009c 84F83400 		strb	r0, [r4, #52]
+ 2244 00a0 0193     		str	r3, [sp, #4]
+ 2245 00a2 019B     		ldr	r3, [sp, #4]
+ 2246 00a4 02E0     		b	.L414
+ 2247              	.L417:
+ 2248 00a6 0120     		movs	r0, #1
+ 2249 00a8 00E0     		b	.L414
+ 2250              	.L418:
+ 2251 00aa 0320     		movs	r0, #3
+ 2252              	.L414:
+ 2253 00ac 02B0     		add	sp, sp, #8
+ 2254              		@ sp needed
+ 2255 00ae BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 2256              	.L423:
+ 2257 00b2 00BF     		.align	2
+ 2258              	.L422:
+ 2259 00b4 02001000 		.word	1048578
+ 2260 00b8 00000000 		.word	I2C_DMASlaveReceiveCplt
+ 2261 00bc 00000000 		.word	I2C_DMAError
+ 2262 00c0 02000100 		.word	65538
+ 2264              		.section	.text.HAL_I2C_Mem_Write,"ax",%progbits
+ 2265              		.align	1
+ 2266              		.global	HAL_I2C_Mem_Write
+ 2267              		.thumb
+ 2268              		.thumb_func
+ 2270              	HAL_I2C_Mem_Write:
+ 2271              		@ args = 12, pretend = 0, frame = 0
+ 2272              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2273 0000 2DE9F74F 		push	{r0, r1, r2, r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 2274 0004 9A46     		mov	r10, r3
+ 2275 0006 90F83530 		ldrb	r3, [r0, #53]	@ zero_extendqisi2
+ 2276 000a 0446     		mov	r4, r0
+ARM GAS  /tmp/cccQ9HVm.s 			page 40
+
+
+ 2277 000c 202B     		cmp	r3, #32
+ 2278 000e 8946     		mov	r9, r1
+ 2279 0010 9346     		mov	fp, r2
+ 2280 0012 0C9F     		ldr	r7, [sp, #48]
+ 2281 0014 BDF83460 		ldrh	r6, [sp, #52]
+ 2282 0018 01D0     		beq	.L425
+ 2283              	.L427:
+ 2284 001a 0220     		movs	r0, #2
+ 2285 001c 65E0     		b	.L426
+ 2286              	.L425:
+ 2287 001e 002F     		cmp	r7, #0
+ 2288 0020 62D0     		beq	.L441
+ 2289 0022 002E     		cmp	r6, #0
+ 2290 0024 60D0     		beq	.L441
+ 2291 0026 3249     		ldr	r1, .L450
+ 2292 0028 0122     		movs	r2, #1
+ 2293 002a 42F21073 		movw	r3, #10000
+ 2294 002e FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 2295 0032 8046     		mov	r8, r0
+ 2296 0034 0028     		cmp	r0, #0
+ 2297 0036 F0D1     		bne	.L427
+ 2298 0038 94F83430 		ldrb	r3, [r4, #52]	@ zero_extendqisi2
+ 2299 003c 012B     		cmp	r3, #1
+ 2300 003e ECD0     		beq	.L427
+ 2301 0040 2268     		ldr	r2, [r4]
+ 2302 0042 0125     		movs	r5, #1
+ 2303 0044 1368     		ldr	r3, [r2]
+ 2304 0046 84F83450 		strb	r5, [r4, #52]
+ 2305 004a 23F40063 		bic	r3, r3, #2048
+ 2306 004e 1360     		str	r3, [r2]
+ 2307 0050 2123     		movs	r3, #33
+ 2308 0052 84F83530 		strb	r3, [r4, #53]
+ 2309 0056 4023     		movs	r3, #64
+ 2310 0058 84F83630 		strb	r3, [r4, #54]
+ 2311 005c 0E9B     		ldr	r3, [sp, #56]
+ 2312 005e A063     		str	r0, [r4, #56]
+ 2313 0060 0093     		str	r3, [sp]
+ 2314 0062 2046     		mov	r0, r4
+ 2315 0064 4946     		mov	r1, r9
+ 2316 0066 5A46     		mov	r2, fp
+ 2317 0068 5346     		mov	r3, r10
+ 2318 006a FFF7FEFF 		bl	I2C_RequestMemoryWrite
+ 2319 006e 88B1     		cbz	r0, .L437
+ 2320 0070 A36B     		ldr	r3, [r4, #56]
+ 2321 0072 84F83480 		strb	r8, [r4, #52]
+ 2322 0076 042B     		cmp	r3, #4
+ 2323 0078 15D1     		bne	.L439
+ 2324 007a 2846     		mov	r0, r5
+ 2325 007c 35E0     		b	.L426
+ 2326              	.L430:
+ 2327 007e 2268     		ldr	r2, [r4]
+ 2328 0080 3B78     		ldrb	r3, [r7]	@ zero_extendqisi2
+ 2329 0082 1361     		str	r3, [r2, #16]
+ 2330 0084 5169     		ldr	r1, [r2, #20]
+ 2331 0086 731E     		subs	r3, r6, #1
+ 2332 0088 4907     		lsls	r1, r1, #29
+ 2333 008a 9BB2     		uxth	r3, r3
+ARM GAS  /tmp/cccQ9HVm.s 			page 41
+
+
+ 2334 008c 0DD4     		bmi	.L432
+ 2335 008e 1E46     		mov	r6, r3
+ 2336 0090 0137     		adds	r7, r7, #1
+ 2337              	.L433:
+ 2338 0092 5EB1     		cbz	r6, .L438
+ 2339              	.L437:
+ 2340 0094 2046     		mov	r0, r4
+ 2341 0096 0E99     		ldr	r1, [sp, #56]
+ 2342 0098 FFF7FEFF 		bl	I2C_WaitOnTXEFlagUntilTimeout
+ 2343 009c 0028     		cmp	r0, #0
+ 2344 009e EED0     		beq	.L430
+ 2345              	.L449:
+ 2346 00a0 A36B     		ldr	r3, [r4, #56]
+ 2347 00a2 042B     		cmp	r3, #4
+ 2348 00a4 1BD0     		beq	.L448
+ 2349              	.L439:
+ 2350 00a6 0320     		movs	r0, #3
+ 2351 00a8 1FE0     		b	.L426
+ 2352              	.L432:
+ 2353 00aa 93B9     		cbnz	r3, .L434
+ 2354              	.L438:
+ 2355 00ac 2046     		mov	r0, r4
+ 2356 00ae 0E99     		ldr	r1, [sp, #56]
+ 2357 00b0 FFF7FEFF 		bl	I2C_WaitOnTXEFlagUntilTimeout
+ 2358 00b4 0028     		cmp	r0, #0
+ 2359 00b6 F3D1     		bne	.L449
+ 2360 00b8 2268     		ldr	r2, [r4]
+ 2361 00ba 1368     		ldr	r3, [r2]
+ 2362 00bc 43F40073 		orr	r3, r3, #512
+ 2363 00c0 1360     		str	r3, [r2]
+ 2364 00c2 2023     		movs	r3, #32
+ 2365 00c4 84F83530 		strb	r3, [r4, #53]
+ 2366 00c8 84F83400 		strb	r0, [r4, #52]
+ 2367 00cc 84F83600 		strb	r0, [r4, #54]
+ 2368 00d0 0BE0     		b	.L426
+ 2369              	.L434:
+ 2370 00d2 7B78     		ldrb	r3, [r7, #1]	@ zero_extendqisi2
+ 2371 00d4 023E     		subs	r6, r6, #2
+ 2372 00d6 1361     		str	r3, [r2, #16]
+ 2373 00d8 B6B2     		uxth	r6, r6
+ 2374 00da 0237     		adds	r7, r7, #2
+ 2375 00dc D9E7     		b	.L433
+ 2376              	.L448:
+ 2377 00de 2268     		ldr	r2, [r4]
+ 2378 00e0 1368     		ldr	r3, [r2]
+ 2379 00e2 43F40073 		orr	r3, r3, #512
+ 2380 00e6 1360     		str	r3, [r2]
+ 2381              	.L441:
+ 2382 00e8 0120     		movs	r0, #1
+ 2383              	.L426:
+ 2384 00ea 03B0     		add	sp, sp, #12
+ 2385              		@ sp needed
+ 2386 00ec BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 2387              	.L451:
+ 2388              		.align	2
+ 2389              	.L450:
+ 2390 00f0 02001000 		.word	1048578
+ARM GAS  /tmp/cccQ9HVm.s 			page 42
+
+
+ 2392              		.section	.text.HAL_I2C_Mem_Read,"ax",%progbits
+ 2393              		.align	1
+ 2394              		.global	HAL_I2C_Mem_Read
+ 2395              		.thumb
+ 2396              		.thumb_func
+ 2398              	HAL_I2C_Mem_Read:
+ 2399              		@ args = 12, pretend = 0, frame = 24
+ 2400              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2401 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 2402 0004 1F46     		mov	r7, r3
+ 2403 0006 90F83530 		ldrb	r3, [r0, #53]	@ zero_extendqisi2
+ 2404 000a 89B0     		sub	sp, sp, #36
+ 2405 000c 202B     		cmp	r3, #32
+ 2406 000e 0446     		mov	r4, r0
+ 2407 0010 9346     		mov	fp, r2
+ 2408 0012 129E     		ldr	r6, [sp, #72]
+ 2409 0014 BDF84C50 		ldrh	r5, [sp, #76]
+ 2410 0018 DDF85080 		ldr	r8, [sp, #80]
+ 2411 001c 01D0     		beq	.L453
+ 2412              	.L455:
+ 2413 001e 0227     		movs	r7, #2
+ 2414 0020 CDE0     		b	.L480
+ 2415              	.L453:
+ 2416 0022 002E     		cmp	r6, #0
+ 2417 0024 00F0C180 		beq	.L473
+ 2418 0028 002D     		cmp	r5, #0
+ 2419 002a 00F0BE80 		beq	.L473
+ 2420 002e 0391     		str	r1, [sp, #12]
+ 2421 0030 0122     		movs	r2, #1
+ 2422 0032 6549     		ldr	r1, .L485
+ 2423 0034 42F21073 		movw	r3, #10000
+ 2424 0038 FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 2425 003c DDF80CC0 		ldr	ip, [sp, #12]
+ 2426 0040 8146     		mov	r9, r0
+ 2427 0042 0028     		cmp	r0, #0
+ 2428 0044 EBD1     		bne	.L455
+ 2429 0046 94F83430 		ldrb	r3, [r4, #52]	@ zero_extendqisi2
+ 2430 004a 012B     		cmp	r3, #1
+ 2431 004c E7D0     		beq	.L455
+ 2432 004e 2268     		ldr	r2, [r4]
+ 2433 0050 4FF0010A 		mov	r10, #1
+ 2434 0054 1368     		ldr	r3, [r2]
+ 2435 0056 84F834A0 		strb	r10, [r4, #52]
+ 2436 005a 23F40063 		bic	r3, r3, #2048
+ 2437 005e 1360     		str	r3, [r2]
+ 2438 0060 2223     		movs	r3, #34
+ 2439 0062 84F83530 		strb	r3, [r4, #53]
+ 2440 0066 4023     		movs	r3, #64
+ 2441 0068 84F83630 		strb	r3, [r4, #54]
+ 2442 006c CDF80080 		str	r8, [sp]
+ 2443 0070 A063     		str	r0, [r4, #56]
+ 2444 0072 3B46     		mov	r3, r7
+ 2445 0074 2046     		mov	r0, r4
+ 2446 0076 6146     		mov	r1, ip
+ 2447 0078 5A46     		mov	r2, fp
+ 2448 007a FFF7FEFF 		bl	I2C_RequestMemoryRead
+ 2449 007e 0746     		mov	r7, r0
+ARM GAS  /tmp/cccQ9HVm.s 			page 43
+
+
+ 2450 0080 30B1     		cbz	r0, .L456
+ 2451 0082 A36B     		ldr	r3, [r4, #56]
+ 2452 0084 84F83490 		strb	r9, [r4, #52]
+ 2453 0088 042B     		cmp	r3, #4
+ 2454 008a 39D1     		bne	.L467
+ 2455 008c 5746     		mov	r7, r10
+ 2456 008e 96E0     		b	.L480
+ 2457              	.L456:
+ 2458 0090 2368     		ldr	r3, [r4]
+ 2459 0092 012D     		cmp	r5, #1
+ 2460 0094 1A68     		ldr	r2, [r3]
+ 2461 0096 0DD1     		bne	.L458
+ 2462 0098 22F48062 		bic	r2, r2, #1024
+ 2463 009c 1A60     		str	r2, [r3]
+ 2464              	@ 71 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 2465 009e 72B6     		cpsid i
+ 2466              	@ 0 "" 2
+ 2467              		.thumb
+ 2468 00a0 2368     		ldr	r3, [r4]
+ 2469 00a2 5A69     		ldr	r2, [r3, #20]
+ 2470 00a4 0592     		str	r2, [sp, #20]
+ 2471 00a6 9A69     		ldr	r2, [r3, #24]
+ 2472 00a8 0592     		str	r2, [sp, #20]
+ 2473 00aa 059A     		ldr	r2, [sp, #20]
+ 2474 00ac 1A68     		ldr	r2, [r3]
+ 2475 00ae 42F40072 		orr	r2, r2, #512
+ 2476 00b2 0EE0     		b	.L481
+ 2477              	.L458:
+ 2478 00b4 022D     		cmp	r5, #2
+ 2479 00b6 0FD1     		bne	.L460
+ 2480 00b8 42F40062 		orr	r2, r2, #2048
+ 2481 00bc 1A60     		str	r2, [r3]
+ 2482              	@ 71 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 2483 00be 72B6     		cpsid i
+ 2484              	@ 0 "" 2
+ 2485              		.thumb
+ 2486 00c0 2368     		ldr	r3, [r4]
+ 2487 00c2 5A69     		ldr	r2, [r3, #20]
+ 2488 00c4 0692     		str	r2, [sp, #24]
+ 2489 00c6 9A69     		ldr	r2, [r3, #24]
+ 2490 00c8 0692     		str	r2, [sp, #24]
+ 2491 00ca 069A     		ldr	r2, [sp, #24]
+ 2492 00cc 1A68     		ldr	r2, [r3]
+ 2493 00ce 22F48062 		bic	r2, r2, #1024
+ 2494              	.L481:
+ 2495 00d2 1A60     		str	r2, [r3]
+ 2496              	@ 60 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 2497 00d4 62B6     		cpsie i
+ 2498              	@ 0 "" 2
+ 2499              		.thumb
+ 2500 00d6 07E0     		b	.L471
+ 2501              	.L460:
+ 2502 00d8 42F48062 		orr	r2, r2, #1024
+ 2503 00dc 1A60     		str	r2, [r3]
+ 2504 00de 5A69     		ldr	r2, [r3, #20]
+ 2505 00e0 0792     		str	r2, [sp, #28]
+ 2506 00e2 9B69     		ldr	r3, [r3, #24]
+ARM GAS  /tmp/cccQ9HVm.s 			page 44
+
+
+ 2507 00e4 0793     		str	r3, [sp, #28]
+ 2508 00e6 079B     		ldr	r3, [sp, #28]
+ 2509              	.L471:
+ 2510 00e8 032D     		cmp	r5, #3
+ 2511 00ea 2046     		mov	r0, r4
+ 2512 00ec 46D8     		bhi	.L461
+ 2513 00ee 012D     		cmp	r5, #1
+ 2514 00f0 0CD1     		bne	.L462
+ 2515 00f2 4146     		mov	r1, r8
+ 2516 00f4 FFF7FEFF 		bl	I2C_WaitOnRXNEFlagUntilTimeout
+ 2517 00f8 20B1     		cbz	r0, .L463
+ 2518              	.L483:
+ 2519 00fa A36B     		ldr	r3, [r4, #56]
+ 2520 00fc 202B     		cmp	r3, #32
+ 2521 00fe 54D1     		bne	.L473
+ 2522              	.L467:
+ 2523 0100 0327     		movs	r7, #3
+ 2524 0102 5CE0     		b	.L480
+ 2525              	.L463:
+ 2526 0104 2368     		ldr	r3, [r4]
+ 2527 0106 1B69     		ldr	r3, [r3, #16]
+ 2528 0108 3370     		strb	r3, [r6]
+ 2529 010a 50E0     		b	.L465
+ 2530              	.L462:
+ 2531 010c 022D     		cmp	r5, #2
+ 2532 010e 2F49     		ldr	r1, .L485+4
+ 2533 0110 4FF00002 		mov	r2, #0
+ 2534 0114 4346     		mov	r3, r8
+ 2535 0116 10D1     		bne	.L466
+ 2536 0118 FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 2537 011c 0028     		cmp	r0, #0
+ 2538 011e EFD1     		bne	.L467
+ 2539              	@ 71 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 2540 0120 72B6     		cpsid i
+ 2541              	@ 0 "" 2
+ 2542              		.thumb
+ 2543 0122 2368     		ldr	r3, [r4]
+ 2544 0124 1A68     		ldr	r2, [r3]
+ 2545 0126 42F40072 		orr	r2, r2, #512
+ 2546 012a 1A60     		str	r2, [r3]
+ 2547 012c 1B69     		ldr	r3, [r3, #16]
+ 2548 012e 3370     		strb	r3, [r6]
+ 2549              	@ 60 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 2550 0130 62B6     		cpsie i
+ 2551              	@ 0 "" 2
+ 2552              		.thumb
+ 2553 0132 2368     		ldr	r3, [r4]
+ 2554 0134 1B69     		ldr	r3, [r3, #16]
+ 2555 0136 7370     		strb	r3, [r6, #1]
+ 2556 0138 39E0     		b	.L465
+ 2557              	.L466:
+ 2558 013a FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 2559 013e 0246     		mov	r2, r0
+ 2560 0140 0028     		cmp	r0, #0
+ 2561 0142 DDD1     		bne	.L467
+ 2562 0144 2168     		ldr	r1, [r4]
+ 2563 0146 0B68     		ldr	r3, [r1]
+ARM GAS  /tmp/cccQ9HVm.s 			page 45
+
+
+ 2564 0148 23F48063 		bic	r3, r3, #1024
+ 2565 014c 0B60     		str	r3, [r1]
+ 2566              	@ 71 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 2567 014e 72B6     		cpsid i
+ 2568              	@ 0 "" 2
+ 2569              		.thumb
+ 2570 0150 2368     		ldr	r3, [r4]
+ 2571 0152 2046     		mov	r0, r4
+ 2572 0154 1B69     		ldr	r3, [r3, #16]
+ 2573 0156 1D49     		ldr	r1, .L485+4
+ 2574 0158 3370     		strb	r3, [r6]
+ 2575 015a 4346     		mov	r3, r8
+ 2576 015c FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 2577 0160 0028     		cmp	r0, #0
+ 2578 0162 CDD1     		bne	.L467
+ 2579 0164 2368     		ldr	r3, [r4]
+ 2580 0166 1A68     		ldr	r2, [r3]
+ 2581 0168 42F40072 		orr	r2, r2, #512
+ 2582 016c 1A60     		str	r2, [r3]
+ 2583 016e 1B69     		ldr	r3, [r3, #16]
+ 2584 0170 7370     		strb	r3, [r6, #1]
+ 2585              	@ 60 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 2586 0172 62B6     		cpsie i
+ 2587              	@ 0 "" 2
+ 2588              		.thumb
+ 2589 0174 2368     		ldr	r3, [r4]
+ 2590 0176 1B69     		ldr	r3, [r3, #16]
+ 2591 0178 B370     		strb	r3, [r6, #2]
+ 2592 017a 18E0     		b	.L465
+ 2593              	.L461:
+ 2594 017c 4146     		mov	r1, r8
+ 2595 017e FFF7FEFF 		bl	I2C_WaitOnRXNEFlagUntilTimeout
+ 2596 0182 0028     		cmp	r0, #0
+ 2597 0184 B9D1     		bne	.L483
+ 2598 0186 2368     		ldr	r3, [r4]
+ 2599 0188 1B69     		ldr	r3, [r3, #16]
+ 2600 018a 3370     		strb	r3, [r6]
+ 2601 018c 2268     		ldr	r2, [r4]
+ 2602 018e 5369     		ldr	r3, [r2, #20]
+ 2603 0190 5B07     		lsls	r3, r3, #29
+ 2604 0192 4DBF     		iteet	mi
+ 2605 0194 1269     		ldrmi	r2, [r2, #16]
+ 2606 0196 731C     		addpl	r3, r6, #1
+ 2607 0198 05F1FF35 		addpl	r5, r5, #-1
+ 2608 019c B31C     		addmi	r3, r6, #2
+ 2609 019e 44BF     		itt	mi
+ 2610 01a0 023D     		submi	r5, r5, #2
+ 2611 01a2 7270     		strbmi	r2, [r6, #1]
+ 2612 01a4 ADB2     		uxth	r5, r5
+ 2613 01a6 1E46     		mov	r6, r3
+ 2614 01a8 9EE7     		b	.L471
+ 2615              	.L473:
+ 2616 01aa 0127     		movs	r7, #1
+ 2617 01ac 07E0     		b	.L480
+ 2618              	.L465:
+ 2619 01ae 2023     		movs	r3, #32
+ 2620 01b0 84F83530 		strb	r3, [r4, #53]
+ARM GAS  /tmp/cccQ9HVm.s 			page 46
+
+
+ 2621 01b4 0023     		movs	r3, #0
+ 2622 01b6 84F83630 		strb	r3, [r4, #54]
+ 2623 01ba 84F83430 		strb	r3, [r4, #52]
+ 2624              	.L480:
+ 2625 01be 3846     		mov	r0, r7
+ 2626 01c0 09B0     		add	sp, sp, #36
+ 2627              		@ sp needed
+ 2628 01c2 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 2629              	.L486:
+ 2630 01c6 00BF     		.align	2
+ 2631              	.L485:
+ 2632 01c8 02001000 		.word	1048578
+ 2633 01cc 04000100 		.word	65540
+ 2635              		.section	.text.HAL_I2C_Mem_Write_IT,"ax",%progbits
+ 2636              		.align	1
+ 2637              		.global	HAL_I2C_Mem_Write_IT
+ 2638              		.thumb
+ 2639              		.thumb_func
+ 2641              	HAL_I2C_Mem_Write_IT:
+ 2642              		@ args = 8, pretend = 0, frame = 0
+ 2643              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2644 0000 2DE9F74F 		push	{r0, r1, r2, r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 2645 0004 9946     		mov	r9, r3
+ 2646 0006 90F83530 		ldrb	r3, [r0, #53]	@ zero_extendqisi2
+ 2647 000a 0446     		mov	r4, r0
+ 2648 000c 202B     		cmp	r3, #32
+ 2649 000e 8B46     		mov	fp, r1
+ 2650 0010 9246     		mov	r10, r2
+ 2651 0012 DDF83080 		ldr	r8, [sp, #48]
+ 2652 0016 BDF83460 		ldrh	r6, [sp, #52]
+ 2653 001a 01D0     		beq	.L488
+ 2654              	.L490:
+ 2655 001c 0220     		movs	r0, #2
+ 2656 001e 3EE0     		b	.L489
+ 2657              	.L488:
+ 2658 0020 B8F1000F 		cmp	r8, #0
+ 2659 0024 3AD0     		beq	.L494
+ 2660 0026 002E     		cmp	r6, #0
+ 2661 0028 38D0     		beq	.L494
+ 2662 002a 1E49     		ldr	r1, .L498
+ 2663 002c 0122     		movs	r2, #1
+ 2664 002e 42F21073 		movw	r3, #10000
+ 2665 0032 FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 2666 0036 0546     		mov	r5, r0
+ 2667 0038 0028     		cmp	r0, #0
+ 2668 003a EFD1     		bne	.L490
+ 2669 003c 94F83430 		ldrb	r3, [r4, #52]	@ zero_extendqisi2
+ 2670 0040 012B     		cmp	r3, #1
+ 2671 0042 EBD0     		beq	.L490
+ 2672 0044 2268     		ldr	r2, [r4]
+ 2673 0046 0127     		movs	r7, #1
+ 2674 0048 1368     		ldr	r3, [r2]
+ 2675 004a 84F83470 		strb	r7, [r4, #52]
+ 2676 004e 23F40063 		bic	r3, r3, #2048
+ 2677 0052 1360     		str	r3, [r2]
+ 2678 0054 2123     		movs	r3, #33
+ 2679 0056 84F83530 		strb	r3, [r4, #53]
+ARM GAS  /tmp/cccQ9HVm.s 			page 47
+
+
+ 2680 005a 4023     		movs	r3, #64
+ 2681 005c 84F83630 		strb	r3, [r4, #54]
+ 2682 0060 2323     		movs	r3, #35
+ 2683 0062 A063     		str	r0, [r4, #56]
+ 2684 0064 0093     		str	r3, [sp]
+ 2685 0066 C4F82480 		str	r8, [r4, #36]
+ 2686 006a 2685     		strh	r6, [r4, #40]	@ movhi
+ 2687 006c 6685     		strh	r6, [r4, #42]	@ movhi
+ 2688 006e 2046     		mov	r0, r4
+ 2689 0070 5946     		mov	r1, fp
+ 2690 0072 5246     		mov	r2, r10
+ 2691 0074 4B46     		mov	r3, r9
+ 2692 0076 FFF7FEFF 		bl	I2C_RequestMemoryWrite
+ 2693 007a 38B1     		cbz	r0, .L491
+ 2694 007c A36B     		ldr	r3, [r4, #56]
+ 2695 007e 84F83450 		strb	r5, [r4, #52]
+ 2696 0082 042B     		cmp	r3, #4
+ 2697 0084 0CBF     		ite	eq
+ 2698 0086 3846     		moveq	r0, r7
+ 2699 0088 0320     		movne	r0, #3
+ 2700 008a 08E0     		b	.L489
+ 2701              	.L491:
+ 2702 008c 2268     		ldr	r2, [r4]
+ 2703 008e 84F83400 		strb	r0, [r4, #52]
+ 2704 0092 5368     		ldr	r3, [r2, #4]
+ 2705 0094 43F4E063 		orr	r3, r3, #1792
+ 2706 0098 5360     		str	r3, [r2, #4]
+ 2707 009a 00E0     		b	.L489
+ 2708              	.L494:
+ 2709 009c 0120     		movs	r0, #1
+ 2710              	.L489:
+ 2711 009e 03B0     		add	sp, sp, #12
+ 2712              		@ sp needed
+ 2713 00a0 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 2714              	.L499:
+ 2715              		.align	2
+ 2716              	.L498:
+ 2717 00a4 02001000 		.word	1048578
+ 2719              		.section	.text.HAL_I2C_Mem_Read_IT,"ax",%progbits
+ 2720              		.align	1
+ 2721              		.global	HAL_I2C_Mem_Read_IT
+ 2722              		.thumb
+ 2723              		.thumb_func
+ 2725              	HAL_I2C_Mem_Read_IT:
+ 2726              		@ args = 8, pretend = 0, frame = 16
+ 2727              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2728 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 2729 0004 9946     		mov	r9, r3
+ 2730 0006 90F83530 		ldrb	r3, [r0, #53]	@ zero_extendqisi2
+ 2731 000a 87B0     		sub	sp, sp, #28
+ 2732 000c 202B     		cmp	r3, #32
+ 2733 000e 0446     		mov	r4, r0
+ 2734 0010 8B46     		mov	fp, r1
+ 2735 0012 9246     		mov	r10, r2
+ 2736 0014 DDF84080 		ldr	r8, [sp, #64]
+ 2737 0018 BDF84460 		ldrh	r6, [sp, #68]
+ 2738 001c 01D0     		beq	.L501
+ARM GAS  /tmp/cccQ9HVm.s 			page 48
+
+
+ 2739              	.L503:
+ 2740 001e 0220     		movs	r0, #2
+ 2741 0020 6AE0     		b	.L502
+ 2742              	.L501:
+ 2743 0022 B8F1000F 		cmp	r8, #0
+ 2744 0026 66D0     		beq	.L510
+ 2745 0028 002E     		cmp	r6, #0
+ 2746 002a 64D0     		beq	.L510
+ 2747 002c 3449     		ldr	r1, .L515
+ 2748 002e 0122     		movs	r2, #1
+ 2749 0030 42F21073 		movw	r3, #10000
+ 2750 0034 FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 2751 0038 0546     		mov	r5, r0
+ 2752 003a 0028     		cmp	r0, #0
+ 2753 003c EFD1     		bne	.L503
+ 2754 003e 94F83430 		ldrb	r3, [r4, #52]	@ zero_extendqisi2
+ 2755 0042 012B     		cmp	r3, #1
+ 2756 0044 EBD0     		beq	.L503
+ 2757 0046 2268     		ldr	r2, [r4]
+ 2758 0048 0127     		movs	r7, #1
+ 2759 004a 1368     		ldr	r3, [r2]
+ 2760 004c 84F83470 		strb	r7, [r4, #52]
+ 2761 0050 23F40063 		bic	r3, r3, #2048
+ 2762 0054 1360     		str	r3, [r2]
+ 2763 0056 2223     		movs	r3, #34
+ 2764 0058 84F83530 		strb	r3, [r4, #53]
+ 2765 005c 4023     		movs	r3, #64
+ 2766 005e 84F83630 		strb	r3, [r4, #54]
+ 2767 0062 2323     		movs	r3, #35
+ 2768 0064 A063     		str	r0, [r4, #56]
+ 2769 0066 0093     		str	r3, [sp]
+ 2770 0068 C4F82480 		str	r8, [r4, #36]
+ 2771 006c 2685     		strh	r6, [r4, #40]	@ movhi
+ 2772 006e 6685     		strh	r6, [r4, #42]	@ movhi
+ 2773 0070 2046     		mov	r0, r4
+ 2774 0072 5946     		mov	r1, fp
+ 2775 0074 5246     		mov	r2, r10
+ 2776 0076 4B46     		mov	r3, r9
+ 2777 0078 FFF7FEFF 		bl	I2C_RequestMemoryRead
+ 2778 007c 38B1     		cbz	r0, .L504
+ 2779 007e A36B     		ldr	r3, [r4, #56]
+ 2780 0080 84F83450 		strb	r5, [r4, #52]
+ 2781 0084 042B     		cmp	r3, #4
+ 2782 0086 0CBF     		ite	eq
+ 2783 0088 3846     		moveq	r0, r7
+ 2784 008a 0320     		movne	r0, #3
+ 2785 008c 34E0     		b	.L502
+ 2786              	.L504:
+ 2787 008e 638D     		ldrh	r3, [r4, #42]
+ 2788 0090 9BB2     		uxth	r3, r3
+ 2789 0092 012B     		cmp	r3, #1
+ 2790 0094 2368     		ldr	r3, [r4]
+ 2791 0096 0CD1     		bne	.L506
+ 2792 0098 1A68     		ldr	r2, [r3]
+ 2793 009a 22F48062 		bic	r2, r2, #1024
+ 2794 009e 1A60     		str	r2, [r3]
+ 2795 00a0 5A69     		ldr	r2, [r3, #20]
+ARM GAS  /tmp/cccQ9HVm.s 			page 49
+
+
+ 2796 00a2 0392     		str	r2, [sp, #12]
+ 2797 00a4 9A69     		ldr	r2, [r3, #24]
+ 2798 00a6 0392     		str	r2, [sp, #12]
+ 2799 00a8 039A     		ldr	r2, [sp, #12]
+ 2800 00aa 1A68     		ldr	r2, [r3]
+ 2801 00ac 42F40072 		orr	r2, r2, #512
+ 2802 00b0 0FE0     		b	.L514
+ 2803              	.L506:
+ 2804 00b2 628D     		ldrh	r2, [r4, #42]
+ 2805 00b4 92B2     		uxth	r2, r2
+ 2806 00b6 022A     		cmp	r2, #2
+ 2807 00b8 1A68     		ldr	r2, [r3]
+ 2808 00ba 0CD1     		bne	.L508
+ 2809 00bc 42F40062 		orr	r2, r2, #2048
+ 2810 00c0 1A60     		str	r2, [r3]
+ 2811 00c2 5A69     		ldr	r2, [r3, #20]
+ 2812 00c4 0492     		str	r2, [sp, #16]
+ 2813 00c6 9A69     		ldr	r2, [r3, #24]
+ 2814 00c8 0492     		str	r2, [sp, #16]
+ 2815 00ca 049A     		ldr	r2, [sp, #16]
+ 2816 00cc 1A68     		ldr	r2, [r3]
+ 2817 00ce 22F48062 		bic	r2, r2, #1024
+ 2818              	.L514:
+ 2819 00d2 1A60     		str	r2, [r3]
+ 2820 00d4 07E0     		b	.L507
+ 2821              	.L508:
+ 2822 00d6 42F48062 		orr	r2, r2, #1024
+ 2823 00da 1A60     		str	r2, [r3]
+ 2824 00dc 5A69     		ldr	r2, [r3, #20]
+ 2825 00de 0592     		str	r2, [sp, #20]
+ 2826 00e0 9A69     		ldr	r2, [r3, #24]
+ 2827 00e2 0592     		str	r2, [sp, #20]
+ 2828 00e4 059A     		ldr	r2, [sp, #20]
+ 2829              	.L507:
+ 2830 00e6 0022     		movs	r2, #0
+ 2831 00e8 84F83420 		strb	r2, [r4, #52]
+ 2832 00ec 5A68     		ldr	r2, [r3, #4]
+ 2833 00ee 42F4E062 		orr	r2, r2, #1792
+ 2834 00f2 5A60     		str	r2, [r3, #4]
+ 2835 00f4 00E0     		b	.L502
+ 2836              	.L510:
+ 2837 00f6 0120     		movs	r0, #1
+ 2838              	.L502:
+ 2839 00f8 07B0     		add	sp, sp, #28
+ 2840              		@ sp needed
+ 2841 00fa BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 2842              	.L516:
+ 2843 00fe 00BF     		.align	2
+ 2844              	.L515:
+ 2845 0100 02001000 		.word	1048578
+ 2847              		.section	.text.HAL_I2C_Mem_Write_DMA,"ax",%progbits
+ 2848              		.align	1
+ 2849              		.global	HAL_I2C_Mem_Write_DMA
+ 2850              		.thumb
+ 2851              		.thumb_func
+ 2853              	HAL_I2C_Mem_Write_DMA:
+ 2854              		@ args = 8, pretend = 0, frame = 0
+ARM GAS  /tmp/cccQ9HVm.s 			page 50
+
+
+ 2855              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2856 0000 2DE9F74F 		push	{r0, r1, r2, r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 2857 0004 9846     		mov	r8, r3
+ 2858 0006 90F83530 		ldrb	r3, [r0, #53]	@ zero_extendqisi2
+ 2859 000a 0446     		mov	r4, r0
+ 2860 000c 202B     		cmp	r3, #32
+ 2861 000e 8A46     		mov	r10, r1
+ 2862 0010 9146     		mov	r9, r2
+ 2863 0012 0C9E     		ldr	r6, [sp, #48]
+ 2864 0014 BDF834B0 		ldrh	fp, [sp, #52]
+ 2865 0018 01D0     		beq	.L518
+ 2866              	.L520:
+ 2867 001a 0220     		movs	r0, #2
+ 2868 001c 49E0     		b	.L519
+ 2869              	.L518:
+ 2870 001e 002E     		cmp	r6, #0
+ 2871 0020 46D0     		beq	.L524
+ 2872 0022 BBF1000F 		cmp	fp, #0
+ 2873 0026 43D0     		beq	.L524
+ 2874 0028 2349     		ldr	r1, .L528
+ 2875 002a 0122     		movs	r2, #1
+ 2876 002c 42F21073 		movw	r3, #10000
+ 2877 0030 FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 2878 0034 0546     		mov	r5, r0
+ 2879 0036 0028     		cmp	r0, #0
+ 2880 0038 EFD1     		bne	.L520
+ 2881 003a 94F83430 		ldrb	r3, [r4, #52]	@ zero_extendqisi2
+ 2882 003e 012B     		cmp	r3, #1
+ 2883 0040 EBD0     		beq	.L520
+ 2884 0042 2268     		ldr	r2, [r4]
+ 2885 0044 0127     		movs	r7, #1
+ 2886 0046 1368     		ldr	r3, [r2]
+ 2887 0048 84F83470 		strb	r7, [r4, #52]
+ 2888 004c 23F40063 		bic	r3, r3, #2048
+ 2889 0050 42F8103B 		str	r3, [r2], #16
+ 2890 0054 2123     		movs	r3, #33
+ 2891 0056 84F83530 		strb	r3, [r4, #53]
+ 2892 005a 4023     		movs	r3, #64
+ 2893 005c 84F83630 		strb	r3, [r4, #54]
+ 2894 0060 A063     		str	r0, [r4, #56]
+ 2895 0062 164B     		ldr	r3, .L528+4
+ 2896 0064 E06A     		ldr	r0, [r4, #44]
+ 2897 0066 6662     		str	r6, [r4, #36]
+ 2898 0068 A4F828B0 		strh	fp, [r4, #40]	@ movhi
+ 2899 006c A4F82AB0 		strh	fp, [r4, #42]	@ movhi
+ 2900 0070 8362     		str	r3, [r0, #40]
+ 2901 0072 134B     		ldr	r3, .L528+8
+ 2902 0074 3146     		mov	r1, r6
+ 2903 0076 0363     		str	r3, [r0, #48]
+ 2904 0078 5B46     		mov	r3, fp
+ 2905 007a FFF7FEFF 		bl	HAL_DMA_Start_IT
+ 2906 007e 2323     		movs	r3, #35
+ 2907 0080 0093     		str	r3, [sp]
+ 2908 0082 2046     		mov	r0, r4
+ 2909 0084 5146     		mov	r1, r10
+ 2910 0086 4A46     		mov	r2, r9
+ 2911 0088 4346     		mov	r3, r8
+ARM GAS  /tmp/cccQ9HVm.s 			page 51
+
+
+ 2912 008a FFF7FEFF 		bl	I2C_RequestMemoryWrite
+ 2913 008e 38B1     		cbz	r0, .L521
+ 2914 0090 A36B     		ldr	r3, [r4, #56]
+ 2915 0092 84F83450 		strb	r5, [r4, #52]
+ 2916 0096 042B     		cmp	r3, #4
+ 2917 0098 0CBF     		ite	eq
+ 2918 009a 3846     		moveq	r0, r7
+ 2919 009c 0320     		movne	r0, #3
+ 2920 009e 08E0     		b	.L519
+ 2921              	.L521:
+ 2922 00a0 2268     		ldr	r2, [r4]
+ 2923 00a2 5368     		ldr	r3, [r2, #4]
+ 2924 00a4 43F40063 		orr	r3, r3, #2048
+ 2925 00a8 5360     		str	r3, [r2, #4]
+ 2926 00aa 84F83400 		strb	r0, [r4, #52]
+ 2927 00ae 00E0     		b	.L519
+ 2928              	.L524:
+ 2929 00b0 0120     		movs	r0, #1
+ 2930              	.L519:
+ 2931 00b2 03B0     		add	sp, sp, #12
+ 2932              		@ sp needed
+ 2933 00b4 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 2934              	.L529:
+ 2935              		.align	2
+ 2936              	.L528:
+ 2937 00b8 02001000 		.word	1048578
+ 2938 00bc 00000000 		.word	I2C_DMAMemTransmitCplt
+ 2939 00c0 00000000 		.word	I2C_DMAError
+ 2941              		.section	.text.HAL_I2C_Mem_Read_DMA,"ax",%progbits
+ 2942              		.align	1
+ 2943              		.global	HAL_I2C_Mem_Read_DMA
+ 2944              		.thumb
+ 2945              		.thumb_func
+ 2947              	HAL_I2C_Mem_Read_DMA:
+ 2948              		@ args = 8, pretend = 0, frame = 8
+ 2949              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2950 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 2951 0004 9946     		mov	r9, r3
+ 2952 0006 90F83530 		ldrb	r3, [r0, #53]	@ zero_extendqisi2
+ 2953 000a 85B0     		sub	sp, sp, #20
+ 2954 000c 202B     		cmp	r3, #32
+ 2955 000e 0446     		mov	r4, r0
+ 2956 0010 8B46     		mov	fp, r1
+ 2957 0012 9246     		mov	r10, r2
+ 2958 0014 0E9F     		ldr	r7, [sp, #56]
+ 2959 0016 BDF83C50 		ldrh	r5, [sp, #60]
+ 2960 001a 01D0     		beq	.L531
+ 2961              	.L533:
+ 2962 001c 0220     		movs	r0, #2
+ 2963 001e 58E0     		b	.L532
+ 2964              	.L531:
+ 2965 0020 002F     		cmp	r7, #0
+ 2966 0022 55D0     		beq	.L539
+ 2967 0024 002D     		cmp	r5, #0
+ 2968 0026 53D0     		beq	.L539
+ 2969 0028 2B49     		ldr	r1, .L543
+ 2970 002a 0122     		movs	r2, #1
+ARM GAS  /tmp/cccQ9HVm.s 			page 52
+
+
+ 2971 002c 42F21073 		movw	r3, #10000
+ 2972 0030 FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 2973 0034 0646     		mov	r6, r0
+ 2974 0036 0028     		cmp	r0, #0
+ 2975 0038 F0D1     		bne	.L533
+ 2976 003a 94F83430 		ldrb	r3, [r4, #52]	@ zero_extendqisi2
+ 2977 003e 012B     		cmp	r3, #1
+ 2978 0040 ECD0     		beq	.L533
+ 2979 0042 2168     		ldr	r1, [r4]
+ 2980 0044 4FF00108 		mov	r8, #1
+ 2981 0048 0B68     		ldr	r3, [r1]
+ 2982 004a 84F83480 		strb	r8, [r4, #52]
+ 2983 004e 23F40063 		bic	r3, r3, #2048
+ 2984 0052 41F8103B 		str	r3, [r1], #16
+ 2985 0056 2223     		movs	r3, #34
+ 2986 0058 84F83530 		strb	r3, [r4, #53]
+ 2987 005c 4023     		movs	r3, #64
+ 2988 005e 84F83630 		strb	r3, [r4, #54]
+ 2989 0062 A063     		str	r0, [r4, #56]
+ 2990 0064 1D4B     		ldr	r3, .L543+4
+ 2991 0066 206B     		ldr	r0, [r4, #48]
+ 2992 0068 6762     		str	r7, [r4, #36]
+ 2993 006a 2585     		strh	r5, [r4, #40]	@ movhi
+ 2994 006c 6585     		strh	r5, [r4, #42]	@ movhi
+ 2995 006e 8362     		str	r3, [r0, #40]
+ 2996 0070 1B4B     		ldr	r3, .L543+8
+ 2997 0072 3A46     		mov	r2, r7
+ 2998 0074 0363     		str	r3, [r0, #48]
+ 2999 0076 2B46     		mov	r3, r5
+ 3000 0078 FFF7FEFF 		bl	HAL_DMA_Start_IT
+ 3001 007c 2323     		movs	r3, #35
+ 3002 007e 0093     		str	r3, [sp]
+ 3003 0080 2046     		mov	r0, r4
+ 3004 0082 5946     		mov	r1, fp
+ 3005 0084 5246     		mov	r2, r10
+ 3006 0086 4B46     		mov	r3, r9
+ 3007 0088 FFF7FEFF 		bl	I2C_RequestMemoryRead
+ 3008 008c 38B1     		cbz	r0, .L534
+ 3009 008e A36B     		ldr	r3, [r4, #56]
+ 3010 0090 84F83460 		strb	r6, [r4, #52]
+ 3011 0094 042B     		cmp	r3, #4
+ 3012 0096 0CBF     		ite	eq
+ 3013 0098 4046     		moveq	r0, r8
+ 3014 009a 0320     		movne	r0, #3
+ 3015 009c 19E0     		b	.L532
+ 3016              	.L534:
+ 3017 009e 2368     		ldr	r3, [r4]
+ 3018 00a0 012D     		cmp	r5, #1
+ 3019 00a2 0BBF     		itete	eq
+ 3020 00a4 1A68     		ldreq	r2, [r3]
+ 3021 00a6 5A68     		ldrne	r2, [r3, #4]
+ 3022 00a8 22F48062 		biceq	r2, r2, #1024
+ 3023 00ac 42F48052 		orrne	r2, r2, #4096
+ 3024 00b0 0CBF     		ite	eq
+ 3025 00b2 1A60     		streq	r2, [r3]
+ 3026 00b4 5A60     		strne	r2, [r3, #4]
+ 3027 00b6 5A68     		ldr	r2, [r3, #4]
+ARM GAS  /tmp/cccQ9HVm.s 			page 53
+
+
+ 3028 00b8 42F40062 		orr	r2, r2, #2048
+ 3029 00bc 5A60     		str	r2, [r3, #4]
+ 3030 00be 5A69     		ldr	r2, [r3, #20]
+ 3031 00c0 0392     		str	r2, [sp, #12]
+ 3032 00c2 9B69     		ldr	r3, [r3, #24]
+ 3033 00c4 0393     		str	r3, [sp, #12]
+ 3034 00c6 039B     		ldr	r3, [sp, #12]
+ 3035 00c8 0023     		movs	r3, #0
+ 3036 00ca 84F83430 		strb	r3, [r4, #52]
+ 3037 00ce 00E0     		b	.L532
+ 3038              	.L539:
+ 3039 00d0 0120     		movs	r0, #1
+ 3040              	.L532:
+ 3041 00d2 05B0     		add	sp, sp, #20
+ 3042              		@ sp needed
+ 3043 00d4 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 3044              	.L544:
+ 3045              		.align	2
+ 3046              	.L543:
+ 3047 00d8 02001000 		.word	1048578
+ 3048 00dc 00000000 		.word	I2C_DMAMemReceiveCplt
+ 3049 00e0 00000000 		.word	I2C_DMAError
+ 3051              		.section	.text.HAL_I2C_IsDeviceReady,"ax",%progbits
+ 3052              		.align	1
+ 3053              		.global	HAL_I2C_IsDeviceReady
+ 3054              		.thumb
+ 3055              		.thumb_func
+ 3057              	HAL_I2C_IsDeviceReady:
+ 3058              		@ args = 0, pretend = 0, frame = 8
+ 3059              		@ frame_needed = 0, uses_anonymous_args = 0
+ 3060 0000 2DE9F743 		push	{r0, r1, r2, r4, r5, r6, r7, r8, r9, lr}
+ 3061 0004 1E46     		mov	r6, r3
+ 3062 0006 90F83530 		ldrb	r3, [r0, #53]	@ zero_extendqisi2
+ 3063 000a 0446     		mov	r4, r0
+ 3064 000c 202B     		cmp	r3, #32
+ 3065 000e 8846     		mov	r8, r1
+ 3066 0010 1746     		mov	r7, r2
+ 3067 0012 01D0     		beq	.L546
+ 3068              	.L548:
+ 3069 0014 0220     		movs	r0, #2
+ 3070 0016 7CE0     		b	.L547
+ 3071              	.L546:
+ 3072 0018 3F49     		ldr	r1, .L563
+ 3073 001a 0122     		movs	r2, #1
+ 3074 001c 42F21073 		movw	r3, #10000
+ 3075 0020 FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 3076 0024 0028     		cmp	r0, #0
+ 3077 0026 F5D1     		bne	.L548
+ 3078 0028 94F83430 		ldrb	r3, [r4, #52]	@ zero_extendqisi2
+ 3079 002c 012B     		cmp	r3, #1
+ 3080 002e F1D0     		beq	.L548
+ 3081 0030 0546     		mov	r5, r0
+ 3082 0032 2268     		ldr	r2, [r4]
+ 3083 0034 0123     		movs	r3, #1
+ 3084 0036 84F83430 		strb	r3, [r4, #52]
+ 3085 003a 1368     		ldr	r3, [r2]
+ 3086 003c 23F40063 		bic	r3, r3, #2048
+ARM GAS  /tmp/cccQ9HVm.s 			page 54
+
+
+ 3087 0040 1360     		str	r3, [r2]
+ 3088 0042 2423     		movs	r3, #36
+ 3089 0044 84F83530 		strb	r3, [r4, #53]
+ 3090 0048 A063     		str	r0, [r4, #56]
+ 3091              	.L558:
+ 3092 004a 2268     		ldr	r2, [r4]
+ 3093 004c 2046     		mov	r0, r4
+ 3094 004e 1368     		ldr	r3, [r2]
+ 3095 0050 4FF00111 		mov	r1, #65537
+ 3096 0054 43F48073 		orr	r3, r3, #256
+ 3097 0058 1360     		str	r3, [r2]
+ 3098 005a 0022     		movs	r2, #0
+ 3099 005c 3346     		mov	r3, r6
+ 3100 005e FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 3101 0062 08B1     		cbz	r0, .L549
+ 3102              	.L557:
+ 3103 0064 0320     		movs	r0, #3
+ 3104 0066 54E0     		b	.L547
+ 3105              	.L549:
+ 3106 0068 2368     		ldr	r3, [r4]
+ 3107 006a 08F0FE02 		and	r2, r8, #254
+ 3108 006e 1A61     		str	r2, [r3, #16]
+ 3109 0070 FFF7FEFF 		bl	HAL_GetTick
+ 3110 0074 8146     		mov	r9, r0
+ 3111              	.L552:
+ 3112 0076 2368     		ldr	r3, [r4]
+ 3113 0078 5969     		ldr	r1, [r3, #20]
+ 3114 007a 5A69     		ldr	r2, [r3, #20]
+ 3115 007c 94F83530 		ldrb	r3, [r4, #53]	@ zero_extendqisi2
+ 3116 0080 C1F34001 		ubfx	r1, r1, #1, #1
+ 3117 0084 C2F38022 		ubfx	r2, r2, #10, #1
+ 3118 0088 DBB2     		uxtb	r3, r3
+ 3119 008a 71B9     		cbnz	r1, .L554
+ 3120 008c 6AB9     		cbnz	r2, .L554
+ 3121 008e A02B     		cmp	r3, #160
+ 3122 0090 0BD0     		beq	.L554
+ 3123 0092 1EB9     		cbnz	r6, .L551
+ 3124              	.L553:
+ 3125 0094 A023     		movs	r3, #160
+ 3126 0096 84F83530 		strb	r3, [r4, #53]
+ 3127 009a ECE7     		b	.L552
+ 3128              	.L551:
+ 3129 009c FFF7FEFF 		bl	HAL_GetTick
+ 3130 00a0 C9EB0000 		rsb	r0, r9, r0
+ 3131 00a4 B042     		cmp	r0, r6
+ 3132 00a6 F5D8     		bhi	.L553
+ 3133 00a8 E5E7     		b	.L552
+ 3134              	.L554:
+ 3135 00aa 2368     		ldr	r3, [r4]
+ 3136 00ac 4FF02009 		mov	r9, #32
+ 3137 00b0 84F83590 		strb	r9, [r4, #53]
+ 3138 00b4 5A69     		ldr	r2, [r3, #20]
+ 3139 00b6 12F0020F 		tst	r2, #2
+ 3140 00ba 1A68     		ldr	r2, [r3]
+ 3141 00bc 42F40072 		orr	r2, r2, #512
+ 3142 00c0 1A60     		str	r2, [r3]
+ 3143 00c2 5A69     		ldr	r2, [r3, #20]
+ARM GAS  /tmp/cccQ9HVm.s 			page 55
+
+
+ 3144 00c4 11D0     		beq	.L556
+ 3145 00c6 0192     		str	r2, [sp, #4]
+ 3146 00c8 9B69     		ldr	r3, [r3, #24]
+ 3147 00ca 2046     		mov	r0, r4
+ 3148 00cc 0193     		str	r3, [sp, #4]
+ 3149 00ce 019B     		ldr	r3, [sp, #4]
+ 3150 00d0 1149     		ldr	r1, .L563
+ 3151 00d2 0122     		movs	r2, #1
+ 3152 00d4 42F21073 		movw	r3, #10000
+ 3153 00d8 FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 3154 00dc 0028     		cmp	r0, #0
+ 3155 00de C1D1     		bne	.L557
+ 3156 00e0 84F83590 		strb	r9, [r4, #53]
+ 3157 00e4 84F83400 		strb	r0, [r4, #52]
+ 3158 00e8 13E0     		b	.L547
+ 3159              	.L556:
+ 3160 00ea 22F48062 		bic	r2, r2, #1024
+ 3161 00ee 5A61     		str	r2, [r3, #20]
+ 3162 00f0 2046     		mov	r0, r4
+ 3163 00f2 0949     		ldr	r1, .L563
+ 3164 00f4 0122     		movs	r2, #1
+ 3165 00f6 42F21073 		movw	r3, #10000
+ 3166 00fa FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 3167 00fe 0028     		cmp	r0, #0
+ 3168 0100 B0D1     		bne	.L557
+ 3169 0102 0135     		adds	r5, r5, #1
+ 3170 0104 BD42     		cmp	r5, r7
+ 3171 0106 A0D3     		bcc	.L558
+ 3172 0108 84F83400 		strb	r0, [r4, #52]
+ 3173 010c 84F83590 		strb	r9, [r4, #53]
+ 3174 0110 0120     		movs	r0, #1
+ 3175              	.L547:
+ 3176 0112 03B0     		add	sp, sp, #12
+ 3177              		@ sp needed
+ 3178 0114 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 3179              	.L564:
+ 3180              		.align	2
+ 3181              	.L563:
+ 3182 0118 02001000 		.word	1048578
+ 3184              		.section	.text.HAL_I2C_MasterTxCpltCallback,"ax",%progbits
+ 3185              		.align	1
+ 3186              		.weak	HAL_I2C_MasterTxCpltCallback
+ 3187              		.thumb
+ 3188              		.thumb_func
+ 3190              	HAL_I2C_MasterTxCpltCallback:
+ 3191              		@ args = 0, pretend = 0, frame = 0
+ 3192              		@ frame_needed = 0, uses_anonymous_args = 0
+ 3193              		@ link register save eliminated.
+ 3194 0000 7047     		bx	lr
+ 3196              		.section	.text.HAL_I2C_MasterRxCpltCallback,"ax",%progbits
+ 3197              		.align	1
+ 3198              		.weak	HAL_I2C_MasterRxCpltCallback
+ 3199              		.thumb
+ 3200              		.thumb_func
+ 3202              	HAL_I2C_MasterRxCpltCallback:
+ 3203              		@ args = 0, pretend = 0, frame = 0
+ 3204              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /tmp/cccQ9HVm.s 			page 56
+
+
+ 3205              		@ link register save eliminated.
+ 3206 0000 7047     		bx	lr
+ 3208              		.section	.text.HAL_I2C_SlaveTxCpltCallback,"ax",%progbits
+ 3209              		.align	1
+ 3210              		.weak	HAL_I2C_SlaveTxCpltCallback
+ 3211              		.thumb
+ 3212              		.thumb_func
+ 3214              	HAL_I2C_SlaveTxCpltCallback:
+ 3215              		@ args = 0, pretend = 0, frame = 0
+ 3216              		@ frame_needed = 0, uses_anonymous_args = 0
+ 3217              		@ link register save eliminated.
+ 3218 0000 7047     		bx	lr
+ 3220              		.section	.text.HAL_I2C_SlaveRxCpltCallback,"ax",%progbits
+ 3221              		.align	1
+ 3222              		.weak	HAL_I2C_SlaveRxCpltCallback
+ 3223              		.thumb
+ 3224              		.thumb_func
+ 3226              	HAL_I2C_SlaveRxCpltCallback:
+ 3227              		@ args = 0, pretend = 0, frame = 0
+ 3228              		@ frame_needed = 0, uses_anonymous_args = 0
+ 3229              		@ link register save eliminated.
+ 3230 0000 7047     		bx	lr
+ 3232              		.section	.text.HAL_I2C_MemTxCpltCallback,"ax",%progbits
+ 3233              		.align	1
+ 3234              		.weak	HAL_I2C_MemTxCpltCallback
+ 3235              		.thumb
+ 3236              		.thumb_func
+ 3238              	HAL_I2C_MemTxCpltCallback:
+ 3239              		@ args = 0, pretend = 0, frame = 0
+ 3240              		@ frame_needed = 0, uses_anonymous_args = 0
+ 3241              		@ link register save eliminated.
+ 3242 0000 7047     		bx	lr
+ 3244              		.section	.text.HAL_I2C_MemRxCpltCallback,"ax",%progbits
+ 3245              		.align	1
+ 3246              		.weak	HAL_I2C_MemRxCpltCallback
+ 3247              		.thumb
+ 3248              		.thumb_func
+ 3250              	HAL_I2C_MemRxCpltCallback:
+ 3251              		@ args = 0, pretend = 0, frame = 0
+ 3252              		@ frame_needed = 0, uses_anonymous_args = 0
+ 3253              		@ link register save eliminated.
+ 3254 0000 7047     		bx	lr
+ 3256              		.section	.text.HAL_I2C_EV_IRQHandler,"ax",%progbits
+ 3257              		.align	1
+ 3258              		.global	HAL_I2C_EV_IRQHandler
+ 3259              		.thumb
+ 3260              		.thumb_func
+ 3262              	HAL_I2C_EV_IRQHandler:
+ 3263              		@ args = 0, pretend = 0, frame = 8
+ 3264              		@ frame_needed = 0, uses_anonymous_args = 0
+ 3265 0000 90F83620 		ldrb	r2, [r0, #54]	@ zero_extendqisi2
+ 3266 0004 73B5     		push	{r0, r1, r4, r5, r6, lr}
+ 3267 0006 102A     		cmp	r2, #16
+ 3268 0008 0346     		mov	r3, r0
+ 3269 000a 0268     		ldr	r2, [r0]
+ 3270 000c 04D0     		beq	.L572
+ 3271 000e 90F83610 		ldrb	r1, [r0, #54]	@ zero_extendqisi2
+ARM GAS  /tmp/cccQ9HVm.s 			page 57
+
+
+ 3272 0012 4029     		cmp	r1, #64
+ 3273 0014 40F09080 		bne	.L573
+ 3274              	.L572:
+ 3275 0018 9169     		ldr	r1, [r2, #24]
+ 3276 001a 5569     		ldr	r5, [r2, #20]
+ 3277 001c 11F0040F 		tst	r1, #4
+ 3278 0020 5468     		ldr	r4, [r2, #4]
+ 3279 0022 5169     		ldr	r1, [r2, #20]
+ 3280 0024 5068     		ldr	r0, [r2, #4]
+ 3281 0026 C1F38001 		ubfx	r1, r1, #2, #1
+ 3282 002a 2CD0     		beq	.L574
+ 3283 002c 2D06     		lsls	r5, r5, #24
+ 3284 002e 08D5     		bpl	.L575
+ 3285 0030 6405     		lsls	r4, r4, #21
+ 3286 0032 06D5     		bpl	.L575
+ 3287 0034 41B9     		cbnz	r1, .L576
+ 3288 0036 598D     		ldrh	r1, [r3, #42]
+ 3289 0038 89B2     		uxth	r1, r1
+ 3290 003a 0029     		cmp	r1, #0
+ 3291 003c 40F0BA80 		bne	.L678
+ 3292 0040 2EE0     		b	.L668
+ 3293              	.L575:
+ 3294 0042 0029     		cmp	r1, #0
+ 3295 0044 00F0D680 		beq	.L571
+ 3296              	.L576:
+ 3297 0048 8605     		lsls	r6, r0, #22
+ 3298 004a 40F1D380 		bpl	.L571
+ 3299 004e 598D     		ldrh	r1, [r3, #42]
+ 3300 0050 89B2     		uxth	r1, r1
+ 3301 0052 0029     		cmp	r1, #0
+ 3302 0054 40F0AE80 		bne	.L678
+ 3303 0058 5168     		ldr	r1, [r2, #4]
+ 3304 005a 1846     		mov	r0, r3
+ 3305 005c 21F4E061 		bic	r1, r1, #1792
+ 3306 0060 5160     		str	r1, [r2, #4]
+ 3307 0062 1168     		ldr	r1, [r2]
+ 3308 0064 41F40071 		orr	r1, r1, #512
+ 3309 0068 1160     		str	r1, [r2]
+ 3310 006a 93F83620 		ldrb	r2, [r3, #54]	@ zero_extendqisi2
+ 3311 006e 402A     		cmp	r2, #64
+ 3312 0070 4FF02002 		mov	r2, #32
+ 3313 0074 83F83520 		strb	r2, [r3, #53]
+ 3314 0078 02D1     		bne	.L580
+ 3315 007a FFF7FEFF 		bl	HAL_I2C_MemTxCpltCallback
+ 3316 007e B9E0     		b	.L571
+ 3317              	.L580:
+ 3318 0080 FFF7FEFF 		bl	HAL_I2C_MasterTxCpltCallback
+ 3319 0084 B6E0     		b	.L571
+ 3320              	.L574:
+ 3321 0086 6D06     		lsls	r5, r5, #25
+ 3322 0088 19D5     		bpl	.L581
+ 3323 008a 6405     		lsls	r4, r4, #21
+ 3324 008c 17D5     		bpl	.L581
+ 3325 008e C9B9     		cbnz	r1, .L582
+ 3326 0090 598D     		ldrh	r1, [r3, #42]
+ 3327 0092 89B2     		uxth	r1, r1
+ 3328 0094 0329     		cmp	r1, #3
+ARM GAS  /tmp/cccQ9HVm.s 			page 58
+
+
+ 3329 0096 00F2A480 		bhi	.L669
+ 3330 009a 0239     		subs	r1, r1, #2
+ 3331 009c 0129     		cmp	r1, #1
+ 3332 009e 04D8     		bhi	.L584
+ 3333              	.L668:
+ 3334 00a0 5368     		ldr	r3, [r2, #4]
+ 3335 00a2 23F48063 		bic	r3, r3, #1024
+ 3336 00a6 5360     		str	r3, [r2, #4]
+ 3337 00a8 A4E0     		b	.L571
+ 3338              	.L584:
+ 3339 00aa 5168     		ldr	r1, [r2, #4]
+ 3340 00ac 21F4E061 		bic	r1, r1, #1792
+ 3341 00b0 5160     		str	r1, [r2, #4]
+ 3342 00b2 596A     		ldr	r1, [r3, #36]
+ 3343 00b4 1269     		ldr	r2, [r2, #16]
+ 3344 00b6 481C     		adds	r0, r1, #1
+ 3345 00b8 5862     		str	r0, [r3, #36]
+ 3346 00ba 0A70     		strb	r2, [r1]
+ 3347 00bc 29E0     		b	.L674
+ 3348              	.L581:
+ 3349 00be 0029     		cmp	r1, #0
+ 3350 00c0 00F09880 		beq	.L571
+ 3351              	.L582:
+ 3352 00c4 8105     		lsls	r1, r0, #22
+ 3353 00c6 40F19580 		bpl	.L571
+ 3354 00ca 598D     		ldrh	r1, [r3, #42]
+ 3355 00cc 89B2     		uxth	r1, r1
+ 3356 00ce 0329     		cmp	r1, #3
+ 3357 00d0 596A     		ldr	r1, [r3, #36]
+ 3358 00d2 04D1     		bne	.L586
+ 3359 00d4 1068     		ldr	r0, [r2]
+ 3360 00d6 20F48060 		bic	r0, r0, #1024
+ 3361 00da 1060     		str	r0, [r2]
+ 3362 00dc 82E0     		b	.L672
+ 3363              	.L586:
+ 3364 00de 588D     		ldrh	r0, [r3, #42]
+ 3365 00e0 80B2     		uxth	r0, r0
+ 3366 00e2 0228     		cmp	r0, #2
+ 3367 00e4 7ED1     		bne	.L672
+ 3368 00e6 5068     		ldr	r0, [r2, #4]
+ 3369 00e8 20F44070 		bic	r0, r0, #768
+ 3370 00ec 5060     		str	r0, [r2, #4]
+ 3371 00ee 1068     		ldr	r0, [r2]
+ 3372 00f0 40F40070 		orr	r0, r0, #512
+ 3373 00f4 1060     		str	r0, [r2]
+ 3374 00f6 1269     		ldr	r2, [r2, #16]
+ 3375 00f8 481C     		adds	r0, r1, #1
+ 3376 00fa 5862     		str	r0, [r3, #36]
+ 3377 00fc 0A70     		strb	r2, [r1]
+ 3378 00fe 5A8D     		ldrh	r2, [r3, #42]
+ 3379 0100 013A     		subs	r2, r2, #1
+ 3380 0102 92B2     		uxth	r2, r2
+ 3381 0104 5A85     		strh	r2, [r3, #42]	@ movhi
+ 3382 0106 5A6A     		ldr	r2, [r3, #36]
+ 3383 0108 511C     		adds	r1, r2, #1
+ 3384 010a 5962     		str	r1, [r3, #36]
+ 3385 010c 1968     		ldr	r1, [r3]
+ARM GAS  /tmp/cccQ9HVm.s 			page 59
+
+
+ 3386 010e 0969     		ldr	r1, [r1, #16]
+ 3387 0110 1170     		strb	r1, [r2]
+ 3388              	.L674:
+ 3389 0112 5A8D     		ldrh	r2, [r3, #42]
+ 3390 0114 1846     		mov	r0, r3
+ 3391 0116 013A     		subs	r2, r2, #1
+ 3392 0118 92B2     		uxth	r2, r2
+ 3393 011a 5A85     		strh	r2, [r3, #42]	@ movhi
+ 3394 011c 93F83620 		ldrb	r2, [r3, #54]	@ zero_extendqisi2
+ 3395 0120 402A     		cmp	r2, #64
+ 3396 0122 4FF02002 		mov	r2, #32
+ 3397 0126 83F83520 		strb	r2, [r3, #53]
+ 3398 012a 02D1     		bne	.L588
+ 3399 012c FFF7FEFF 		bl	HAL_I2C_MemRxCpltCallback
+ 3400 0130 60E0     		b	.L571
+ 3401              	.L588:
+ 3402 0132 FFF7FEFF 		bl	HAL_I2C_MasterRxCpltCallback
+ 3403 0136 5DE0     		b	.L571
+ 3404              	.L573:
+ 3405 0138 5669     		ldr	r6, [r2, #20]
+ 3406 013a 5168     		ldr	r1, [r2, #4]
+ 3407 013c 5569     		ldr	r5, [r2, #20]
+ 3408 013e 9469     		ldr	r4, [r2, #24]
+ 3409 0140 B607     		lsls	r6, r6, #30
+ 3410 0142 C1F34021 		ubfx	r1, r1, #9, #1
+ 3411 0146 05F01005 		and	r5, r5, #16
+ 3412 014a 04F00404 		and	r4, r4, #4
+ 3413 014e 06D5     		bpl	.L589
+ 3414 0150 E9B1     		cbz	r1, .L590
+ 3415 0152 5369     		ldr	r3, [r2, #20]
+ 3416 0154 0093     		str	r3, [sp]
+ 3417 0156 9369     		ldr	r3, [r2, #24]
+ 3418 0158 0093     		str	r3, [sp]
+ 3419 015a 009B     		ldr	r3, [sp]
+ 3420 015c 4AE0     		b	.L571
+ 3421              	.L589:
+ 3422 015e B5B1     		cbz	r5, .L590
+ 3423 0160 A9B1     		cbz	r1, .L590
+ 3424 0162 5168     		ldr	r1, [r2, #4]
+ 3425 0164 21F4E061 		bic	r1, r1, #1792
+ 3426 0168 5160     		str	r1, [r2, #4]
+ 3427 016a 5169     		ldr	r1, [r2, #20]
+ 3428 016c 0191     		str	r1, [sp, #4]
+ 3429 016e 1168     		ldr	r1, [r2]
+ 3430 0170 41F00101 		orr	r1, r1, #1
+ 3431 0174 1160     		str	r1, [r2]
+ 3432 0176 0191     		str	r1, [sp, #4]
+ 3433 0178 0199     		ldr	r1, [sp, #4]
+ 3434 017a 1168     		ldr	r1, [r2]
+ 3435 017c 21F48061 		bic	r1, r1, #1024
+ 3436 0180 1160     		str	r1, [r2]
+ 3437 0182 2022     		movs	r2, #32
+ 3438 0184 80F83520 		strb	r2, [r0, #53]
+ 3439 0188 FFF7FEFF 		bl	HAL_I2C_SlaveRxCpltCallback
+ 3440 018c 32E0     		b	.L571
+ 3441              	.L590:
+ 3442 018e 5569     		ldr	r5, [r2, #20]
+ARM GAS  /tmp/cccQ9HVm.s 			page 60
+
+
+ 3443 0190 B4B1     		cbz	r4, .L591
+ 3444 0192 5468     		ldr	r4, [r2, #4]
+ 3445 0194 5169     		ldr	r1, [r2, #20]
+ 3446 0196 2D06     		lsls	r5, r5, #24
+ 3447 0198 C1F38001 		ubfx	r1, r1, #2, #1
+ 3448 019c 5068     		ldr	r0, [r2, #4]
+ 3449 019e 03D5     		bpl	.L592
+ 3450 01a0 6405     		lsls	r4, r4, #21
+ 3451 01a2 01D5     		bpl	.L592
+ 3452 01a4 09B9     		cbnz	r1, .L593
+ 3453 01a6 02E0     		b	.L680
+ 3454              	.L592:
+ 3455 01a8 21B3     		cbz	r1, .L571
+ 3456              	.L593:
+ 3457 01aa 8605     		lsls	r6, r0, #22
+ 3458 01ac 22D5     		bpl	.L571
+ 3459              	.L680:
+ 3460 01ae 598D     		ldrh	r1, [r3, #42]
+ 3461 01b0 89B2     		uxth	r1, r1
+ 3462 01b2 F9B1     		cbz	r1, .L571
+ 3463              	.L678:
+ 3464 01b4 596A     		ldr	r1, [r3, #36]
+ 3465 01b6 481C     		adds	r0, r1, #1
+ 3466 01b8 5862     		str	r0, [r3, #36]
+ 3467 01ba 0978     		ldrb	r1, [r1]	@ zero_extendqisi2
+ 3468 01bc 1161     		str	r1, [r2, #16]
+ 3469 01be 15E0     		b	.L670
+ 3470              	.L591:
+ 3471 01c0 5468     		ldr	r4, [r2, #4]
+ 3472 01c2 5169     		ldr	r1, [r2, #20]
+ 3473 01c4 6D06     		lsls	r5, r5, #25
+ 3474 01c6 C1F38001 		ubfx	r1, r1, #2, #1
+ 3475 01ca 5068     		ldr	r0, [r2, #4]
+ 3476 01cc 03D5     		bpl	.L594
+ 3477 01ce 6405     		lsls	r4, r4, #21
+ 3478 01d0 01D5     		bpl	.L594
+ 3479 01d2 09B9     		cbnz	r1, .L595
+ 3480 01d4 02E0     		b	.L676
+ 3481              	.L594:
+ 3482 01d6 69B1     		cbz	r1, .L571
+ 3483              	.L595:
+ 3484 01d8 8105     		lsls	r1, r0, #22
+ 3485 01da 0BD5     		bpl	.L571
+ 3486              	.L676:
+ 3487 01dc 598D     		ldrh	r1, [r3, #42]
+ 3488 01de 89B2     		uxth	r1, r1
+ 3489 01e0 41B1     		cbz	r1, .L571
+ 3490              	.L669:
+ 3491 01e2 596A     		ldr	r1, [r3, #36]
+ 3492              	.L672:
+ 3493 01e4 1269     		ldr	r2, [r2, #16]
+ 3494 01e6 481C     		adds	r0, r1, #1
+ 3495 01e8 5862     		str	r0, [r3, #36]
+ 3496 01ea 0A70     		strb	r2, [r1]
+ 3497              	.L670:
+ 3498 01ec 5A8D     		ldrh	r2, [r3, #42]
+ 3499 01ee 013A     		subs	r2, r2, #1
+ARM GAS  /tmp/cccQ9HVm.s 			page 61
+
+
+ 3500 01f0 92B2     		uxth	r2, r2
+ 3501 01f2 5A85     		strh	r2, [r3, #42]	@ movhi
+ 3502              	.L571:
+ 3503 01f4 02B0     		add	sp, sp, #8
+ 3504              		@ sp needed
+ 3505 01f6 70BD     		pop	{r4, r5, r6, pc}
+ 3507              		.section	.text.HAL_I2C_ErrorCallback,"ax",%progbits
+ 3508              		.align	1
+ 3509              		.weak	HAL_I2C_ErrorCallback
+ 3510              		.thumb
+ 3511              		.thumb_func
+ 3513              	HAL_I2C_ErrorCallback:
+ 3514              		@ args = 0, pretend = 0, frame = 0
+ 3515              		@ frame_needed = 0, uses_anonymous_args = 0
+ 3516              		@ link register save eliminated.
+ 3517 0000 7047     		bx	lr
+ 3519              		.section	.text.I2C_DMAError,"ax",%progbits
+ 3520              		.align	1
+ 3521              		.thumb
+ 3522              		.thumb_func
+ 3524              	I2C_DMAError:
+ 3525              		@ args = 0, pretend = 0, frame = 0
+ 3526              		@ frame_needed = 0, uses_anonymous_args = 0
+ 3527 0000 406A     		ldr	r0, [r0, #36]
+ 3528 0002 08B5     		push	{r3, lr}
+ 3529 0004 0268     		ldr	r2, [r0]
+ 3530 0006 1368     		ldr	r3, [r2]
+ 3531 0008 23F48063 		bic	r3, r3, #1024
+ 3532 000c 1360     		str	r3, [r2]
+ 3533 000e 0023     		movs	r3, #0
+ 3534 0010 2022     		movs	r2, #32
+ 3535 0012 4385     		strh	r3, [r0, #42]	@ movhi
+ 3536 0014 80F83520 		strb	r2, [r0, #53]
+ 3537 0018 80F83630 		strb	r3, [r0, #54]
+ 3538 001c 836B     		ldr	r3, [r0, #56]
+ 3539 001e 43F01003 		orr	r3, r3, #16
+ 3540 0022 8363     		str	r3, [r0, #56]
+ 3541 0024 FFF7FEFF 		bl	HAL_I2C_ErrorCallback
+ 3542 0028 08BD     		pop	{r3, pc}
+ 3544              		.section	.text.I2C_DMAMasterTransmitCplt,"ax",%progbits
+ 3545              		.align	1
+ 3546              		.thumb
+ 3547              		.thumb_func
+ 3549              	I2C_DMAMasterTransmitCplt:
+ 3550              		@ args = 0, pretend = 0, frame = 0
+ 3551              		@ frame_needed = 0, uses_anonymous_args = 0
+ 3552 0000 10B5     		push	{r4, lr}
+ 3553 0002 446A     		ldr	r4, [r0, #36]
+ 3554 0004 1149     		ldr	r1, .L690
+ 3555 0006 2046     		mov	r0, r4
+ 3556 0008 0022     		movs	r2, #0
+ 3557 000a 2323     		movs	r3, #35
+ 3558 000c FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 3559 0010 18B1     		cbz	r0, .L684
+ 3560 0012 A36B     		ldr	r3, [r4, #56]
+ 3561 0014 43F02003 		orr	r3, r3, #32
+ 3562 0018 A363     		str	r3, [r4, #56]
+ARM GAS  /tmp/cccQ9HVm.s 			page 62
+
+
+ 3563              	.L684:
+ 3564 001a 2368     		ldr	r3, [r4]
+ 3565 001c 2046     		mov	r0, r4
+ 3566 001e 1A68     		ldr	r2, [r3]
+ 3567 0020 42F40072 		orr	r2, r2, #512
+ 3568 0024 1A60     		str	r2, [r3]
+ 3569 0026 5A68     		ldr	r2, [r3, #4]
+ 3570 0028 22F40062 		bic	r2, r2, #2048
+ 3571 002c 5A60     		str	r2, [r3, #4]
+ 3572 002e 0023     		movs	r3, #0
+ 3573 0030 2022     		movs	r2, #32
+ 3574 0032 6385     		strh	r3, [r4, #42]	@ movhi
+ 3575 0034 84F83520 		strb	r2, [r4, #53]
+ 3576 0038 84F83630 		strb	r3, [r4, #54]
+ 3577 003c A36B     		ldr	r3, [r4, #56]
+ 3578 003e 13B1     		cbz	r3, .L685
+ 3579 0040 FFF7FEFF 		bl	HAL_I2C_ErrorCallback
+ 3580 0044 10BD     		pop	{r4, pc}
+ 3581              	.L685:
+ 3582 0046 FFF7FEFF 		bl	HAL_I2C_MasterTxCpltCallback
+ 3583 004a 10BD     		pop	{r4, pc}
+ 3584              	.L691:
+ 3585              		.align	2
+ 3586              	.L690:
+ 3587 004c 04000100 		.word	65540
+ 3589              		.section	.text.I2C_DMAMasterReceiveCplt,"ax",%progbits
+ 3590              		.align	1
+ 3591              		.thumb
+ 3592              		.thumb_func
+ 3594              	I2C_DMAMasterReceiveCplt:
+ 3595              		@ args = 0, pretend = 0, frame = 0
+ 3596              		@ frame_needed = 0, uses_anonymous_args = 0
+ 3597 0000 406A     		ldr	r0, [r0, #36]
+ 3598 0002 08B5     		push	{r3, lr}
+ 3599 0004 0368     		ldr	r3, [r0]
+ 3600 0006 1A68     		ldr	r2, [r3]
+ 3601 0008 22F48062 		bic	r2, r2, #1024
+ 3602 000c 1A60     		str	r2, [r3]
+ 3603 000e 1A68     		ldr	r2, [r3]
+ 3604 0010 42F40072 		orr	r2, r2, #512
+ 3605 0014 1A60     		str	r2, [r3]
+ 3606 0016 5A68     		ldr	r2, [r3, #4]
+ 3607 0018 22F48052 		bic	r2, r2, #4096
+ 3608 001c 5A60     		str	r2, [r3, #4]
+ 3609 001e 5A68     		ldr	r2, [r3, #4]
+ 3610 0020 22F40062 		bic	r2, r2, #2048
+ 3611 0024 5A60     		str	r2, [r3, #4]
+ 3612 0026 0023     		movs	r3, #0
+ 3613 0028 2022     		movs	r2, #32
+ 3614 002a 4385     		strh	r3, [r0, #42]	@ movhi
+ 3615 002c 80F83520 		strb	r2, [r0, #53]
+ 3616 0030 80F83630 		strb	r3, [r0, #54]
+ 3617 0034 836B     		ldr	r3, [r0, #56]
+ 3618 0036 13B1     		cbz	r3, .L693
+ 3619 0038 FFF7FEFF 		bl	HAL_I2C_ErrorCallback
+ 3620 003c 08BD     		pop	{r3, pc}
+ 3621              	.L693:
+ARM GAS  /tmp/cccQ9HVm.s 			page 63
+
+
+ 3622 003e FFF7FEFF 		bl	HAL_I2C_MasterRxCpltCallback
+ 3623 0042 08BD     		pop	{r3, pc}
+ 3625              		.section	.text.I2C_DMASlaveTransmitCplt,"ax",%progbits
+ 3626              		.align	1
+ 3627              		.thumb
+ 3628              		.thumb_func
+ 3630              	I2C_DMASlaveTransmitCplt:
+ 3631              		@ args = 0, pretend = 0, frame = 0
+ 3632              		@ frame_needed = 0, uses_anonymous_args = 0
+ 3633 0000 10B5     		push	{r4, lr}
+ 3634 0002 446A     		ldr	r4, [r0, #36]
+ 3635 0004 4FF48231 		mov	r1, #66560
+ 3636 0008 2046     		mov	r0, r4
+ 3637 000a 0022     		movs	r2, #0
+ 3638 000c 2323     		movs	r3, #35
+ 3639 000e FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 3640 0012 18B1     		cbz	r0, .L696
+ 3641 0014 A36B     		ldr	r3, [r4, #56]
+ 3642 0016 43F02003 		orr	r3, r3, #32
+ 3643 001a A363     		str	r3, [r4, #56]
+ 3644              	.L696:
+ 3645 001c 2368     		ldr	r3, [r4]
+ 3646 001e 2046     		mov	r0, r4
+ 3647 0020 5A69     		ldr	r2, [r3, #20]
+ 3648 0022 22F48062 		bic	r2, r2, #1024
+ 3649 0026 5A61     		str	r2, [r3, #20]
+ 3650 0028 1A68     		ldr	r2, [r3]
+ 3651 002a 22F48062 		bic	r2, r2, #1024
+ 3652 002e 1A60     		str	r2, [r3]
+ 3653 0030 5A68     		ldr	r2, [r3, #4]
+ 3654 0032 22F40062 		bic	r2, r2, #2048
+ 3655 0036 5A60     		str	r2, [r3, #4]
+ 3656 0038 0023     		movs	r3, #0
+ 3657 003a 2022     		movs	r2, #32
+ 3658 003c 6385     		strh	r3, [r4, #42]	@ movhi
+ 3659 003e 84F83520 		strb	r2, [r4, #53]
+ 3660 0042 84F83630 		strb	r3, [r4, #54]
+ 3661 0046 A36B     		ldr	r3, [r4, #56]
+ 3662 0048 13B1     		cbz	r3, .L697
+ 3663 004a FFF7FEFF 		bl	HAL_I2C_ErrorCallback
+ 3664 004e 10BD     		pop	{r4, pc}
+ 3665              	.L697:
+ 3666 0050 FFF7FEFF 		bl	HAL_I2C_SlaveTxCpltCallback
+ 3667 0054 10BD     		pop	{r4, pc}
+ 3669              		.section	.text.I2C_DMASlaveReceiveCplt,"ax",%progbits
+ 3670              		.align	1
+ 3671              		.thumb
+ 3672              		.thumb_func
+ 3674              	I2C_DMASlaveReceiveCplt:
+ 3675              		@ args = 0, pretend = 0, frame = 8
+ 3676              		@ frame_needed = 0, uses_anonymous_args = 0
+ 3677 0000 13B5     		push	{r0, r1, r4, lr}
+ 3678 0002 446A     		ldr	r4, [r0, #36]
+ 3679 0004 2046     		mov	r0, r4
+ 3680 0006 FFF7FEFF 		bl	I2C_WaitOnSTOPFlagUntilTimeout.constprop.7
+ 3681 000a 40B1     		cbz	r0, .L703
+ 3682 000c A36B     		ldr	r3, [r4, #56]
+ARM GAS  /tmp/cccQ9HVm.s 			page 64
+
+
+ 3683 000e 042B     		cmp	r3, #4
+ 3684 0010 A36B     		ldr	r3, [r4, #56]
+ 3685 0012 0CBF     		ite	eq
+ 3686 0014 43F00403 		orreq	r3, r3, #4
+ 3687 0018 43F02003 		orrne	r3, r3, #32
+ 3688 001c A363     		str	r3, [r4, #56]
+ 3689              	.L703:
+ 3690 001e 2368     		ldr	r3, [r4]
+ 3691 0020 2046     		mov	r0, r4
+ 3692 0022 5A69     		ldr	r2, [r3, #20]
+ 3693 0024 0192     		str	r2, [sp, #4]
+ 3694 0026 1A68     		ldr	r2, [r3]
+ 3695 0028 42F00102 		orr	r2, r2, #1
+ 3696 002c 1A60     		str	r2, [r3]
+ 3697 002e 0192     		str	r2, [sp, #4]
+ 3698 0030 019A     		ldr	r2, [sp, #4]
+ 3699 0032 1A68     		ldr	r2, [r3]
+ 3700 0034 22F48062 		bic	r2, r2, #1024
+ 3701 0038 1A60     		str	r2, [r3]
+ 3702 003a 5A68     		ldr	r2, [r3, #4]
+ 3703 003c 22F40062 		bic	r2, r2, #2048
+ 3704 0040 5A60     		str	r2, [r3, #4]
+ 3705 0042 0023     		movs	r3, #0
+ 3706 0044 2022     		movs	r2, #32
+ 3707 0046 6385     		strh	r3, [r4, #42]	@ movhi
+ 3708 0048 84F83520 		strb	r2, [r4, #53]
+ 3709 004c 84F83630 		strb	r3, [r4, #54]
+ 3710 0050 A36B     		ldr	r3, [r4, #56]
+ 3711 0052 13B1     		cbz	r3, .L705
+ 3712 0054 FFF7FEFF 		bl	HAL_I2C_ErrorCallback
+ 3713 0058 01E0     		b	.L702
+ 3714              	.L705:
+ 3715 005a FFF7FEFF 		bl	HAL_I2C_SlaveRxCpltCallback
+ 3716              	.L702:
+ 3717 005e 02B0     		add	sp, sp, #8
+ 3718              		@ sp needed
+ 3719 0060 10BD     		pop	{r4, pc}
+ 3721              		.section	.text.I2C_DMAMemTransmitCplt,"ax",%progbits
+ 3722              		.align	1
+ 3723              		.thumb
+ 3724              		.thumb_func
+ 3726              	I2C_DMAMemTransmitCplt:
+ 3727              		@ args = 0, pretend = 0, frame = 0
+ 3728              		@ frame_needed = 0, uses_anonymous_args = 0
+ 3729 0000 10B5     		push	{r4, lr}
+ 3730 0002 446A     		ldr	r4, [r0, #36]
+ 3731 0004 1149     		ldr	r1, .L718
+ 3732 0006 2046     		mov	r0, r4
+ 3733 0008 0022     		movs	r2, #0
+ 3734 000a 2323     		movs	r3, #35
+ 3735 000c FFF7FEFF 		bl	I2C_WaitOnFlagUntilTimeout
+ 3736 0010 18B1     		cbz	r0, .L712
+ 3737 0012 A36B     		ldr	r3, [r4, #56]
+ 3738 0014 43F02003 		orr	r3, r3, #32
+ 3739 0018 A363     		str	r3, [r4, #56]
+ 3740              	.L712:
+ 3741 001a 2368     		ldr	r3, [r4]
+ARM GAS  /tmp/cccQ9HVm.s 			page 65
+
+
+ 3742 001c 2046     		mov	r0, r4
+ 3743 001e 1A68     		ldr	r2, [r3]
+ 3744 0020 42F40072 		orr	r2, r2, #512
+ 3745 0024 1A60     		str	r2, [r3]
+ 3746 0026 5A68     		ldr	r2, [r3, #4]
+ 3747 0028 22F40062 		bic	r2, r2, #2048
+ 3748 002c 5A60     		str	r2, [r3, #4]
+ 3749 002e 0023     		movs	r3, #0
+ 3750 0030 2022     		movs	r2, #32
+ 3751 0032 6385     		strh	r3, [r4, #42]	@ movhi
+ 3752 0034 84F83520 		strb	r2, [r4, #53]
+ 3753 0038 84F83630 		strb	r3, [r4, #54]
+ 3754 003c A36B     		ldr	r3, [r4, #56]
+ 3755 003e 13B1     		cbz	r3, .L713
+ 3756 0040 FFF7FEFF 		bl	HAL_I2C_ErrorCallback
+ 3757 0044 10BD     		pop	{r4, pc}
+ 3758              	.L713:
+ 3759 0046 FFF7FEFF 		bl	HAL_I2C_MemTxCpltCallback
+ 3760 004a 10BD     		pop	{r4, pc}
+ 3761              	.L719:
+ 3762              		.align	2
+ 3763              	.L718:
+ 3764 004c 04000100 		.word	65540
+ 3766              		.section	.text.I2C_DMAMemReceiveCplt,"ax",%progbits
+ 3767              		.align	1
+ 3768              		.thumb
+ 3769              		.thumb_func
+ 3771              	I2C_DMAMemReceiveCplt:
+ 3772              		@ args = 0, pretend = 0, frame = 0
+ 3773              		@ frame_needed = 0, uses_anonymous_args = 0
+ 3774 0000 406A     		ldr	r0, [r0, #36]
+ 3775 0002 08B5     		push	{r3, lr}
+ 3776 0004 0368     		ldr	r3, [r0]
+ 3777 0006 1A68     		ldr	r2, [r3]
+ 3778 0008 22F48062 		bic	r2, r2, #1024
+ 3779 000c 1A60     		str	r2, [r3]
+ 3780 000e 1A68     		ldr	r2, [r3]
+ 3781 0010 42F40072 		orr	r2, r2, #512
+ 3782 0014 1A60     		str	r2, [r3]
+ 3783 0016 5A68     		ldr	r2, [r3, #4]
+ 3784 0018 22F48052 		bic	r2, r2, #4096
+ 3785 001c 5A60     		str	r2, [r3, #4]
+ 3786 001e 5A68     		ldr	r2, [r3, #4]
+ 3787 0020 22F40062 		bic	r2, r2, #2048
+ 3788 0024 5A60     		str	r2, [r3, #4]
+ 3789 0026 0023     		movs	r3, #0
+ 3790 0028 2022     		movs	r2, #32
+ 3791 002a 4385     		strh	r3, [r0, #42]	@ movhi
+ 3792 002c 80F83520 		strb	r2, [r0, #53]
+ 3793 0030 80F83630 		strb	r3, [r0, #54]
+ 3794 0034 836B     		ldr	r3, [r0, #56]
+ 3795 0036 13B1     		cbz	r3, .L721
+ 3796 0038 FFF7FEFF 		bl	HAL_I2C_ErrorCallback
+ 3797 003c 08BD     		pop	{r3, pc}
+ 3798              	.L721:
+ 3799 003e FFF7FEFF 		bl	HAL_I2C_MemRxCpltCallback
+ 3800 0042 08BD     		pop	{r3, pc}
+ARM GAS  /tmp/cccQ9HVm.s 			page 66
+
+
+ 3802              		.section	.text.HAL_I2C_ER_IRQHandler,"ax",%progbits
+ 3803              		.align	1
+ 3804              		.global	HAL_I2C_ER_IRQHandler
+ 3805              		.thumb
+ 3806              		.thumb_func
+ 3808              	HAL_I2C_ER_IRQHandler:
+ 3809              		@ args = 0, pretend = 0, frame = 0
+ 3810              		@ frame_needed = 0, uses_anonymous_args = 0
+ 3811 0000 0368     		ldr	r3, [r0]
+ 3812 0002 10B5     		push	{r4, lr}
+ 3813 0004 5969     		ldr	r1, [r3, #20]
+ 3814 0006 0446     		mov	r4, r0
+ 3815 0008 C905     		lsls	r1, r1, #23
+ 3816 000a 5A68     		ldr	r2, [r3, #4]
+ 3817 000c 0DD5     		bpl	.L724
+ 3818 000e D005     		lsls	r0, r2, #23
+ 3819 0010 0BD5     		bpl	.L724
+ 3820 0012 A26B     		ldr	r2, [r4, #56]
+ 3821 0014 42F00102 		orr	r2, r2, #1
+ 3822 0018 A263     		str	r2, [r4, #56]
+ 3823 001a 5A69     		ldr	r2, [r3, #20]
+ 3824 001c 22F48072 		bic	r2, r2, #256
+ 3825 0020 5A61     		str	r2, [r3, #20]
+ 3826 0022 1A68     		ldr	r2, [r3]
+ 3827 0024 42F40042 		orr	r2, r2, #32768
+ 3828 0028 1A60     		str	r2, [r3]
+ 3829              	.L724:
+ 3830 002a 5969     		ldr	r1, [r3, #20]
+ 3831 002c 5A68     		ldr	r2, [r3, #4]
+ 3832 002e 8905     		lsls	r1, r1, #22
+ 3833 0030 0AD5     		bpl	.L725
+ 3834 0032 D005     		lsls	r0, r2, #23
+ 3835 0034 41BF     		itttt	mi
+ 3836 0036 A26B     		ldrmi	r2, [r4, #56]
+ 3837 0038 42F00202 		orrmi	r2, r2, #2
+ 3838 003c A263     		strmi	r2, [r4, #56]
+ 3839 003e 5A69     		ldrmi	r2, [r3, #20]
+ 3840 0040 44BF     		itt	mi
+ 3841 0042 22F40072 		bicmi	r2, r2, #512
+ 3842 0046 5A61     		strmi	r2, [r3, #20]
+ 3843              	.L725:
+ 3844 0048 5969     		ldr	r1, [r3, #20]
+ 3845 004a 5A68     		ldr	r2, [r3, #4]
+ 3846 004c 4905     		lsls	r1, r1, #21
+ 3847 004e 2CD5     		bpl	.L726
+ 3848 0050 D005     		lsls	r0, r2, #23
+ 3849 0052 2AD5     		bpl	.L726
+ 3850 0054 94F83620 		ldrb	r2, [r4, #54]	@ zero_extendqisi2
+ 3851 0058 608D     		ldrh	r0, [r4, #42]
+ 3852 005a D2B2     		uxtb	r2, r2
+ 3853 005c 94F83510 		ldrb	r1, [r4, #53]	@ zero_extendqisi2
+ 3854 0060 202A     		cmp	r2, #32
+ 3855 0062 80B2     		uxth	r0, r0
+ 3856 0064 C9B2     		uxtb	r1, r1
+ 3857 0066 14D1     		bne	.L727
+ 3858 0068 98B9     		cbnz	r0, .L727
+ 3859 006a 2129     		cmp	r1, #33
+ARM GAS  /tmp/cccQ9HVm.s 			page 67
+
+
+ 3860 006c 11D1     		bne	.L727
+ 3861 006e 5968     		ldr	r1, [r3, #4]
+ 3862 0070 2046     		mov	r0, r4
+ 3863 0072 21F4E061 		bic	r1, r1, #1792
+ 3864 0076 5960     		str	r1, [r3, #4]
+ 3865 0078 5969     		ldr	r1, [r3, #20]
+ 3866 007a 21F48061 		bic	r1, r1, #1024
+ 3867 007e 5961     		str	r1, [r3, #20]
+ 3868 0080 1968     		ldr	r1, [r3]
+ 3869 0082 21F48061 		bic	r1, r1, #1024
+ 3870 0086 1960     		str	r1, [r3]
+ 3871 0088 84F83520 		strb	r2, [r4, #53]
+ 3872 008c FFF7FEFF 		bl	HAL_I2C_SlaveTxCpltCallback
+ 3873 0090 0BE0     		b	.L726
+ 3874              	.L727:
+ 3875 0092 A26B     		ldr	r2, [r4, #56]
+ 3876 0094 42F00402 		orr	r2, r2, #4
+ 3877 0098 A263     		str	r2, [r4, #56]
+ 3878 009a 1A68     		ldr	r2, [r3]
+ 3879 009c 42F40072 		orr	r2, r2, #512
+ 3880 00a0 1A60     		str	r2, [r3]
+ 3881 00a2 5A69     		ldr	r2, [r3, #20]
+ 3882 00a4 22F48062 		bic	r2, r2, #1024
+ 3883 00a8 5A61     		str	r2, [r3, #20]
+ 3884              	.L726:
+ 3885 00aa 2368     		ldr	r3, [r4]
+ 3886 00ac 5969     		ldr	r1, [r3, #20]
+ 3887 00ae 5A68     		ldr	r2, [r3, #4]
+ 3888 00b0 0905     		lsls	r1, r1, #20
+ 3889 00b2 0AD5     		bpl	.L728
+ 3890 00b4 D205     		lsls	r2, r2, #23
+ 3891 00b6 41BF     		itttt	mi
+ 3892 00b8 A26B     		ldrmi	r2, [r4, #56]
+ 3893 00ba 42F00802 		orrmi	r2, r2, #8
+ 3894 00be A263     		strmi	r2, [r4, #56]
+ 3895 00c0 5A69     		ldrmi	r2, [r3, #20]
+ 3896 00c2 44BF     		itt	mi
+ 3897 00c4 22F40062 		bicmi	r2, r2, #2048
+ 3898 00c8 5A61     		strmi	r2, [r3, #20]
+ 3899              	.L728:
+ 3900 00ca A26B     		ldr	r2, [r4, #56]
+ 3901 00cc 4AB1     		cbz	r2, .L723
+ 3902 00ce 2022     		movs	r2, #32
+ 3903 00d0 84F83520 		strb	r2, [r4, #53]
+ 3904 00d4 1A68     		ldr	r2, [r3]
+ 3905 00d6 2046     		mov	r0, r4
+ 3906 00d8 22F40062 		bic	r2, r2, #2048
+ 3907 00dc 1A60     		str	r2, [r3]
+ 3908 00de FFF7FEFF 		bl	HAL_I2C_ErrorCallback
+ 3909              	.L723:
+ 3910 00e2 10BD     		pop	{r4, pc}
+ 3912              		.section	.text.HAL_I2C_GetState,"ax",%progbits
+ 3913              		.align	1
+ 3914              		.global	HAL_I2C_GetState
+ 3915              		.thumb
+ 3916              		.thumb_func
+ 3918              	HAL_I2C_GetState:
+ARM GAS  /tmp/cccQ9HVm.s 			page 68
+
+
+ 3919              		@ args = 0, pretend = 0, frame = 0
+ 3920              		@ frame_needed = 0, uses_anonymous_args = 0
+ 3921              		@ link register save eliminated.
+ 3922 0000 90F83500 		ldrb	r0, [r0, #53]	@ zero_extendqisi2
+ 3923 0004 7047     		bx	lr
+ 3925              		.section	.text.HAL_I2C_GetError,"ax",%progbits
+ 3926              		.align	1
+ 3927              		.global	HAL_I2C_GetError
+ 3928              		.thumb
+ 3929              		.thumb_func
+ 3931              	HAL_I2C_GetError:
+ 3932              		@ args = 0, pretend = 0, frame = 0
+ 3933              		@ frame_needed = 0, uses_anonymous_args = 0
+ 3934              		@ link register save eliminated.
+ 3935 0000 806B     		ldr	r0, [r0, #56]
+ 3936 0002 7047     		bx	lr
+ 3938              		.ident	"GCC: (4.9.2-10+14~bpo8+1) 4.9.2"
+ARM GAS  /tmp/cccQ9HVm.s 			page 69
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 stm32f1xx_hal_i2c.c
+     /tmp/cccQ9HVm.s:16     .text.I2C_IsAcknowledgeFailed:0000000000000000 $t
+     /tmp/cccQ9HVm.s:20     .text.I2C_IsAcknowledgeFailed:0000000000000000 I2C_IsAcknowledgeFailed
+     /tmp/cccQ9HVm.s:44     .text.I2C_WaitOnFlagUntilTimeout:0000000000000000 $t
+     /tmp/cccQ9HVm.s:48     .text.I2C_WaitOnFlagUntilTimeout:0000000000000000 I2C_WaitOnFlagUntilTimeout
+     /tmp/cccQ9HVm.s:123    .text.I2C_WaitOnMasterAddressFlagUntilTimeout:0000000000000000 $t
+     /tmp/cccQ9HVm.s:127    .text.I2C_WaitOnMasterAddressFlagUntilTimeout:0000000000000000 I2C_WaitOnMasterAddressFlagUntilTimeout
+     /tmp/cccQ9HVm.s:188    .text.I2C_MasterRequestWrite:0000000000000000 $t
+     /tmp/cccQ9HVm.s:192    .text.I2C_MasterRequestWrite:0000000000000000 I2C_MasterRequestWrite
+     /tmp/cccQ9HVm.s:250    .text.I2C_MasterRequestWrite:0000000000000070 $d
+     /tmp/cccQ9HVm.s:254    .text.I2C_MasterRequestRead:0000000000000000 $t
+     /tmp/cccQ9HVm.s:258    .text.I2C_MasterRequestRead:0000000000000000 I2C_MasterRequestRead
+     /tmp/cccQ9HVm.s:347    .text.I2C_MasterRequestRead:00000000000000b8 $d
+     /tmp/cccQ9HVm.s:351    .text.I2C_WaitOnTXEFlagUntilTimeout:0000000000000000 $t
+     /tmp/cccQ9HVm.s:355    .text.I2C_WaitOnTXEFlagUntilTimeout:0000000000000000 I2C_WaitOnTXEFlagUntilTimeout
+     /tmp/cccQ9HVm.s:398    .text.I2C_RequestMemoryWrite:0000000000000000 $t
+     /tmp/cccQ9HVm.s:402    .text.I2C_RequestMemoryWrite:0000000000000000 I2C_RequestMemoryWrite
+     /tmp/cccQ9HVm.s:479    .text.I2C_RequestMemoryWrite:0000000000000090 $d
+     /tmp/cccQ9HVm.s:482    .text.I2C_RequestMemoryRead:0000000000000000 $t
+     /tmp/cccQ9HVm.s:486    .text.I2C_RequestMemoryRead:0000000000000000 I2C_RequestMemoryRead
+     /tmp/cccQ9HVm.s:592    .text.I2C_RequestMemoryRead:00000000000000d4 $d
+     /tmp/cccQ9HVm.s:595    .text.I2C_WaitOnRXNEFlagUntilTimeout:0000000000000000 $t
+     /tmp/cccQ9HVm.s:599    .text.I2C_WaitOnRXNEFlagUntilTimeout:0000000000000000 I2C_WaitOnRXNEFlagUntilTimeout
+     /tmp/cccQ9HVm.s:647    .text.I2C_WaitOnSTOPFlagUntilTimeout.constprop.7:0000000000000000 $t
+     /tmp/cccQ9HVm.s:651    .text.I2C_WaitOnSTOPFlagUntilTimeout.constprop.7:0000000000000000 I2C_WaitOnSTOPFlagUntilTimeout.constprop.7
+     /tmp/cccQ9HVm.s:687    .text.HAL_I2C_MspInit:0000000000000000 $t
+     /tmp/cccQ9HVm.s:692    .text.HAL_I2C_MspInit:0000000000000000 HAL_I2C_MspInit
+     /tmp/cccQ9HVm.s:699    .text.HAL_I2C_Init:0000000000000000 $t
+     /tmp/cccQ9HVm.s:704    .text.HAL_I2C_Init:0000000000000000 HAL_I2C_Init
+     /tmp/cccQ9HVm.s:795    .text.HAL_I2C_Init:00000000000000cc $d
+     /tmp/cccQ9HVm.s:799    .text.HAL_I2C_MspDeInit:0000000000000000 $t
+     /tmp/cccQ9HVm.s:804    .text.HAL_I2C_MspDeInit:0000000000000000 HAL_I2C_MspDeInit
+     /tmp/cccQ9HVm.s:811    .text.HAL_I2C_DeInit:0000000000000000 $t
+     /tmp/cccQ9HVm.s:816    .text.HAL_I2C_DeInit:0000000000000000 HAL_I2C_DeInit
+     /tmp/cccQ9HVm.s:840    .text.HAL_I2C_Master_Transmit:0000000000000000 $t
+     /tmp/cccQ9HVm.s:845    .text.HAL_I2C_Master_Transmit:0000000000000000 HAL_I2C_Master_Transmit
+     /tmp/cccQ9HVm.s:1000   .text.HAL_I2C_Master_Transmit:0000000000000138 $d
+     /tmp/cccQ9HVm.s:1003   .text.HAL_I2C_Master_Receive:0000000000000000 $t
+     /tmp/cccQ9HVm.s:1008   .text.HAL_I2C_Master_Receive:0000000000000000 HAL_I2C_Master_Receive
+     /tmp/cccQ9HVm.s:1236   .text.HAL_I2C_Master_Receive:00000000000001b4 $d
+     /tmp/cccQ9HVm.s:1240   .text.HAL_I2C_Slave_Transmit:0000000000000000 $t
+     /tmp/cccQ9HVm.s:1245   .text.HAL_I2C_Slave_Transmit:0000000000000000 HAL_I2C_Slave_Transmit
+     /tmp/cccQ9HVm.s:1382   .text.HAL_I2C_Slave_Transmit:0000000000000120 $d
+     /tmp/cccQ9HVm.s:1386   .text.HAL_I2C_Slave_Receive:0000000000000000 $t
+     /tmp/cccQ9HVm.s:1391   .text.HAL_I2C_Slave_Receive:0000000000000000 HAL_I2C_Slave_Receive
+     /tmp/cccQ9HVm.s:1523   .text.HAL_I2C_Slave_Receive:000000000000010c $d
+     /tmp/cccQ9HVm.s:1527   .text.HAL_I2C_Master_Transmit_IT:0000000000000000 $t
+     /tmp/cccQ9HVm.s:1532   .text.HAL_I2C_Master_Transmit_IT:0000000000000000 HAL_I2C_Master_Transmit_IT
+     /tmp/cccQ9HVm.s:1608   .text.HAL_I2C_Master_Transmit_IT:00000000000000a0 $d
+     /tmp/cccQ9HVm.s:1611   .text.HAL_I2C_Master_Receive_IT:0000000000000000 $t
+     /tmp/cccQ9HVm.s:1616   .text.HAL_I2C_Master_Receive_IT:0000000000000000 HAL_I2C_Master_Receive_IT
+     /tmp/cccQ9HVm.s:1731   .text.HAL_I2C_Master_Receive_IT:00000000000000f0 $d
+     /tmp/cccQ9HVm.s:1734   .text.HAL_I2C_Slave_Transmit_IT:0000000000000000 $t
+     /tmp/cccQ9HVm.s:1739   .text.HAL_I2C_Slave_Transmit_IT:0000000000000000 HAL_I2C_Slave_Transmit_IT
+     /tmp/cccQ9HVm.s:1790   .text.HAL_I2C_Slave_Transmit_IT:0000000000000068 $d
+     /tmp/cccQ9HVm.s:1793   .text.HAL_I2C_Slave_Receive_IT:0000000000000000 $t
+ARM GAS  /tmp/cccQ9HVm.s 			page 70
+
+
+     /tmp/cccQ9HVm.s:1798   .text.HAL_I2C_Slave_Receive_IT:0000000000000000 HAL_I2C_Slave_Receive_IT
+     /tmp/cccQ9HVm.s:1849   .text.HAL_I2C_Slave_Receive_IT:0000000000000068 $d
+     /tmp/cccQ9HVm.s:1852   .text.HAL_I2C_Master_Transmit_DMA:0000000000000000 $t
+     /tmp/cccQ9HVm.s:1857   .text.HAL_I2C_Master_Transmit_DMA:0000000000000000 HAL_I2C_Master_Transmit_DMA
+     /tmp/cccQ9HVm.s:1941   .text.HAL_I2C_Master_Transmit_DMA:00000000000000b4 $d
+     /tmp/cccQ9HVm.s:3549   .text.I2C_DMAMasterTransmitCplt:0000000000000000 I2C_DMAMasterTransmitCplt
+     /tmp/cccQ9HVm.s:3524   .text.I2C_DMAError:0000000000000000 I2C_DMAError
+     /tmp/cccQ9HVm.s:1946   .text.HAL_I2C_Master_Receive_DMA:0000000000000000 $t
+     /tmp/cccQ9HVm.s:1951   .text.HAL_I2C_Master_Receive_DMA:0000000000000000 HAL_I2C_Master_Receive_DMA
+     /tmp/cccQ9HVm.s:2045   .text.HAL_I2C_Master_Receive_DMA:00000000000000cc $d
+     /tmp/cccQ9HVm.s:3594   .text.I2C_DMAMasterReceiveCplt:0000000000000000 I2C_DMAMasterReceiveCplt
+     /tmp/cccQ9HVm.s:2050   .text.HAL_I2C_Slave_Transmit_DMA:0000000000000000 $t
+     /tmp/cccQ9HVm.s:2055   .text.HAL_I2C_Slave_Transmit_DMA:0000000000000000 HAL_I2C_Slave_Transmit_DMA
+     /tmp/cccQ9HVm.s:2165   .text.HAL_I2C_Slave_Transmit_DMA:00000000000000e8 $d
+     /tmp/cccQ9HVm.s:3630   .text.I2C_DMASlaveTransmitCplt:0000000000000000 I2C_DMASlaveTransmitCplt
+     /tmp/cccQ9HVm.s:2171   .text.HAL_I2C_Slave_Receive_DMA:0000000000000000 $t
+     /tmp/cccQ9HVm.s:2176   .text.HAL_I2C_Slave_Receive_DMA:0000000000000000 HAL_I2C_Slave_Receive_DMA
+     /tmp/cccQ9HVm.s:2259   .text.HAL_I2C_Slave_Receive_DMA:00000000000000b4 $d
+     /tmp/cccQ9HVm.s:3674   .text.I2C_DMASlaveReceiveCplt:0000000000000000 I2C_DMASlaveReceiveCplt
+     /tmp/cccQ9HVm.s:2265   .text.HAL_I2C_Mem_Write:0000000000000000 $t
+     /tmp/cccQ9HVm.s:2270   .text.HAL_I2C_Mem_Write:0000000000000000 HAL_I2C_Mem_Write
+     /tmp/cccQ9HVm.s:2390   .text.HAL_I2C_Mem_Write:00000000000000f0 $d
+     /tmp/cccQ9HVm.s:2393   .text.HAL_I2C_Mem_Read:0000000000000000 $t
+     /tmp/cccQ9HVm.s:2398   .text.HAL_I2C_Mem_Read:0000000000000000 HAL_I2C_Mem_Read
+     /tmp/cccQ9HVm.s:2632   .text.HAL_I2C_Mem_Read:00000000000001c8 $d
+     /tmp/cccQ9HVm.s:2636   .text.HAL_I2C_Mem_Write_IT:0000000000000000 $t
+     /tmp/cccQ9HVm.s:2641   .text.HAL_I2C_Mem_Write_IT:0000000000000000 HAL_I2C_Mem_Write_IT
+     /tmp/cccQ9HVm.s:2717   .text.HAL_I2C_Mem_Write_IT:00000000000000a4 $d
+     /tmp/cccQ9HVm.s:2720   .text.HAL_I2C_Mem_Read_IT:0000000000000000 $t
+     /tmp/cccQ9HVm.s:2725   .text.HAL_I2C_Mem_Read_IT:0000000000000000 HAL_I2C_Mem_Read_IT
+     /tmp/cccQ9HVm.s:2845   .text.HAL_I2C_Mem_Read_IT:0000000000000100 $d
+     /tmp/cccQ9HVm.s:2848   .text.HAL_I2C_Mem_Write_DMA:0000000000000000 $t
+     /tmp/cccQ9HVm.s:2853   .text.HAL_I2C_Mem_Write_DMA:0000000000000000 HAL_I2C_Mem_Write_DMA
+     /tmp/cccQ9HVm.s:2937   .text.HAL_I2C_Mem_Write_DMA:00000000000000b8 $d
+     /tmp/cccQ9HVm.s:3726   .text.I2C_DMAMemTransmitCplt:0000000000000000 I2C_DMAMemTransmitCplt
+     /tmp/cccQ9HVm.s:2942   .text.HAL_I2C_Mem_Read_DMA:0000000000000000 $t
+     /tmp/cccQ9HVm.s:2947   .text.HAL_I2C_Mem_Read_DMA:0000000000000000 HAL_I2C_Mem_Read_DMA
+     /tmp/cccQ9HVm.s:3047   .text.HAL_I2C_Mem_Read_DMA:00000000000000d8 $d
+     /tmp/cccQ9HVm.s:3771   .text.I2C_DMAMemReceiveCplt:0000000000000000 I2C_DMAMemReceiveCplt
+     /tmp/cccQ9HVm.s:3052   .text.HAL_I2C_IsDeviceReady:0000000000000000 $t
+     /tmp/cccQ9HVm.s:3057   .text.HAL_I2C_IsDeviceReady:0000000000000000 HAL_I2C_IsDeviceReady
+     /tmp/cccQ9HVm.s:3182   .text.HAL_I2C_IsDeviceReady:0000000000000118 $d
+     /tmp/cccQ9HVm.s:3185   .text.HAL_I2C_MasterTxCpltCallback:0000000000000000 $t
+     /tmp/cccQ9HVm.s:3190   .text.HAL_I2C_MasterTxCpltCallback:0000000000000000 HAL_I2C_MasterTxCpltCallback
+     /tmp/cccQ9HVm.s:3197   .text.HAL_I2C_MasterRxCpltCallback:0000000000000000 $t
+     /tmp/cccQ9HVm.s:3202   .text.HAL_I2C_MasterRxCpltCallback:0000000000000000 HAL_I2C_MasterRxCpltCallback
+     /tmp/cccQ9HVm.s:3209   .text.HAL_I2C_SlaveTxCpltCallback:0000000000000000 $t
+     /tmp/cccQ9HVm.s:3214   .text.HAL_I2C_SlaveTxCpltCallback:0000000000000000 HAL_I2C_SlaveTxCpltCallback
+     /tmp/cccQ9HVm.s:3221   .text.HAL_I2C_SlaveRxCpltCallback:0000000000000000 $t
+     /tmp/cccQ9HVm.s:3226   .text.HAL_I2C_SlaveRxCpltCallback:0000000000000000 HAL_I2C_SlaveRxCpltCallback
+     /tmp/cccQ9HVm.s:3233   .text.HAL_I2C_MemTxCpltCallback:0000000000000000 $t
+     /tmp/cccQ9HVm.s:3238   .text.HAL_I2C_MemTxCpltCallback:0000000000000000 HAL_I2C_MemTxCpltCallback
+     /tmp/cccQ9HVm.s:3245   .text.HAL_I2C_MemRxCpltCallback:0000000000000000 $t
+     /tmp/cccQ9HVm.s:3250   .text.HAL_I2C_MemRxCpltCallback:0000000000000000 HAL_I2C_MemRxCpltCallback
+     /tmp/cccQ9HVm.s:3257   .text.HAL_I2C_EV_IRQHandler:0000000000000000 $t
+     /tmp/cccQ9HVm.s:3262   .text.HAL_I2C_EV_IRQHandler:0000000000000000 HAL_I2C_EV_IRQHandler
+     /tmp/cccQ9HVm.s:3508   .text.HAL_I2C_ErrorCallback:0000000000000000 $t
+ARM GAS  /tmp/cccQ9HVm.s 			page 71
+
+
+     /tmp/cccQ9HVm.s:3513   .text.HAL_I2C_ErrorCallback:0000000000000000 HAL_I2C_ErrorCallback
+     /tmp/cccQ9HVm.s:3520   .text.I2C_DMAError:0000000000000000 $t
+     /tmp/cccQ9HVm.s:3545   .text.I2C_DMAMasterTransmitCplt:0000000000000000 $t
+     /tmp/cccQ9HVm.s:3587   .text.I2C_DMAMasterTransmitCplt:000000000000004c $d
+     /tmp/cccQ9HVm.s:3590   .text.I2C_DMAMasterReceiveCplt:0000000000000000 $t
+     /tmp/cccQ9HVm.s:3626   .text.I2C_DMASlaveTransmitCplt:0000000000000000 $t
+     /tmp/cccQ9HVm.s:3670   .text.I2C_DMASlaveReceiveCplt:0000000000000000 $t
+     /tmp/cccQ9HVm.s:3722   .text.I2C_DMAMemTransmitCplt:0000000000000000 $t
+     /tmp/cccQ9HVm.s:3764   .text.I2C_DMAMemTransmitCplt:000000000000004c $d
+     /tmp/cccQ9HVm.s:3767   .text.I2C_DMAMemReceiveCplt:0000000000000000 $t
+     /tmp/cccQ9HVm.s:3803   .text.HAL_I2C_ER_IRQHandler:0000000000000000 $t
+     /tmp/cccQ9HVm.s:3808   .text.HAL_I2C_ER_IRQHandler:0000000000000000 HAL_I2C_ER_IRQHandler
+     /tmp/cccQ9HVm.s:3913   .text.HAL_I2C_GetState:0000000000000000 $t
+     /tmp/cccQ9HVm.s:3918   .text.HAL_I2C_GetState:0000000000000000 HAL_I2C_GetState
+     /tmp/cccQ9HVm.s:3926   .text.HAL_I2C_GetError:0000000000000000 $t
+     /tmp/cccQ9HVm.s:3931   .text.HAL_I2C_GetError:0000000000000000 HAL_I2C_GetError
+
+UNDEFINED SYMBOLS
+HAL_GetTick
+HAL_RCC_GetPCLK1Freq
+HAL_DMA_Start_IT

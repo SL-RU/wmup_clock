@@ -1,0 +1,184 @@
+ARM GAS  /tmp/ccYJ3WVY.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"tim.c"
+  15              		.section	.text.HAL_TIM_PWM_MspInit,"ax",%progbits
+  16              		.align	1
+  17              		.global	HAL_TIM_PWM_MspInit
+  18              		.thumb
+  19              		.thumb_func
+  21              	HAL_TIM_PWM_MspInit:
+  22              		@ args = 0, pretend = 0, frame = 8
+  23              		@ frame_needed = 0, uses_anonymous_args = 0
+  24              		@ link register save eliminated.
+  25 0000 0268     		ldr	r2, [r0]
+  26 0002 084B     		ldr	r3, .L4
+  27 0004 82B0     		sub	sp, sp, #8
+  28 0006 9A42     		cmp	r2, r3
+  29 0008 0AD1     		bne	.L1
+  30 000a 03F50333 		add	r3, r3, #134144
+  31 000e DA69     		ldr	r2, [r3, #28]
+  32 0010 42F00202 		orr	r2, r2, #2
+  33 0014 DA61     		str	r2, [r3, #28]
+  34 0016 DB69     		ldr	r3, [r3, #28]
+  35 0018 03F00203 		and	r3, r3, #2
+  36 001c 0193     		str	r3, [sp, #4]
+  37 001e 019B     		ldr	r3, [sp, #4]
+  38              	.L1:
+  39 0020 02B0     		add	sp, sp, #8
+  40              		@ sp needed
+  41 0022 7047     		bx	lr
+  42              	.L5:
+  43              		.align	2
+  44              	.L4:
+  45 0024 00040040 		.word	1073742848
+  47              		.section	.text.HAL_TIM_MspPostInit,"ax",%progbits
+  48              		.align	1
+  49              		.global	HAL_TIM_MspPostInit
+  50              		.thumb
+  51              		.thumb_func
+  53              	HAL_TIM_MspPostInit:
+  54              		@ args = 0, pretend = 0, frame = 16
+  55              		@ frame_needed = 0, uses_anonymous_args = 0
+  56 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+  57 0002 0268     		ldr	r2, [r0]
+  58 0004 074B     		ldr	r3, .L8
+  59 0006 9A42     		cmp	r2, r3
+  60 0008 08D1     		bne	.L6
+ARM GAS  /tmp/ccYJ3WVY.s 			page 2
+
+
+  61 000a 4023     		movs	r3, #64
+  62 000c 0093     		str	r3, [sp]
+  63 000e 0648     		ldr	r0, .L8+4
+  64 0010 0223     		movs	r3, #2
+  65 0012 6946     		mov	r1, sp
+  66 0014 0193     		str	r3, [sp, #4]
+  67 0016 0393     		str	r3, [sp, #12]
+  68 0018 FFF7FEFF 		bl	HAL_GPIO_Init
+  69              	.L6:
+  70 001c 05B0     		add	sp, sp, #20
+  71              		@ sp needed
+  72 001e 5DF804FB 		ldr	pc, [sp], #4
+  73              	.L9:
+  74 0022 00BF     		.align	2
+  75              	.L8:
+  76 0024 00040040 		.word	1073742848
+  77 0028 00080140 		.word	1073809408
+  79              		.section	.text.MX_TIM3_Init,"ax",%progbits
+  80              		.align	1
+  81              		.global	MX_TIM3_Init
+  82              		.thumb
+  83              		.thumb_func
+  85              	MX_TIM3_Init:
+  86              		@ args = 0, pretend = 0, frame = 40
+  87              		@ frame_needed = 0, uses_anonymous_args = 0
+  88 0000 10B5     		push	{r4, lr}
+  89 0002 1448     		ldr	r0, .L23
+  90 0004 144B     		ldr	r3, .L23+4
+  91 0006 0024     		movs	r4, #0
+  92 0008 8AB0     		sub	sp, sp, #40
+  93 000a 80E81800 		stmia	r0, {r3, r4}
+  94 000e 8460     		str	r4, [r0, #8]
+  95 0010 C460     		str	r4, [r0, #12]
+  96 0012 0461     		str	r4, [r0, #16]
+  97 0014 FFF7FEFF 		bl	HAL_TIM_PWM_Init
+  98 0018 08B1     		cbz	r0, .L11
+  99 001a FFF7FEFF 		bl	Error_Handler
+ 100              	.L11:
+ 101 001e 0D48     		ldr	r0, .L23
+ 102 0020 01A9     		add	r1, sp, #4
+ 103 0022 0194     		str	r4, [sp, #4]
+ 104 0024 0294     		str	r4, [sp, #8]
+ 105 0026 FFF7FEFF 		bl	HAL_TIMEx_MasterConfigSynchronization
+ 106 002a 08B1     		cbz	r0, .L12
+ 107 002c FFF7FEFF 		bl	Error_Handler
+ 108              	.L12:
+ 109 0030 0022     		movs	r2, #0
+ 110 0032 6023     		movs	r3, #96
+ 111 0034 0748     		ldr	r0, .L23
+ 112 0036 03A9     		add	r1, sp, #12
+ 113 0038 0393     		str	r3, [sp, #12]
+ 114 003a 0492     		str	r2, [sp, #16]
+ 115 003c 0592     		str	r2, [sp, #20]
+ 116 003e 0792     		str	r2, [sp, #28]
+ 117 0040 FFF7FEFF 		bl	HAL_TIM_PWM_ConfigChannel
+ 118 0044 08B1     		cbz	r0, .L13
+ 119 0046 FFF7FEFF 		bl	Error_Handler
+ARM GAS  /tmp/ccYJ3WVY.s 			page 3
+
+
+ 120              	.L13:
+ 121 004a 0248     		ldr	r0, .L23
+ 122 004c FFF7FEFF 		bl	HAL_TIM_MspPostInit
+ 123 0050 0AB0     		add	sp, sp, #40
+ 124              		@ sp needed
+ 125 0052 10BD     		pop	{r4, pc}
+ 126              	.L24:
+ 127              		.align	2
+ 128              	.L23:
+ 129 0054 00000000 		.word	htim3
+ 130 0058 00040040 		.word	1073742848
+ 132              		.section	.text.HAL_TIM_PWM_MspDeInit,"ax",%progbits
+ 133              		.align	1
+ 134              		.global	HAL_TIM_PWM_MspDeInit
+ 135              		.thumb
+ 136              		.thumb_func
+ 138              	HAL_TIM_PWM_MspDeInit:
+ 139              		@ args = 0, pretend = 0, frame = 0
+ 140              		@ frame_needed = 0, uses_anonymous_args = 0
+ 141              		@ link register save eliminated.
+ 142 0000 0268     		ldr	r2, [r0]
+ 143 0002 044B     		ldr	r3, .L27
+ 144 0004 9A42     		cmp	r2, r3
+ 145 0006 01BF     		itttt	eq
+ 146 0008 034A     		ldreq	r2, .L27+4
+ 147 000a D369     		ldreq	r3, [r2, #28]
+ 148 000c 23F00203 		biceq	r3, r3, #2
+ 149 0010 D361     		streq	r3, [r2, #28]
+ 150 0012 7047     		bx	lr
+ 151              	.L28:
+ 152              		.align	2
+ 153              	.L27:
+ 154 0014 00040040 		.word	1073742848
+ 155 0018 00100240 		.word	1073876992
+ 157              		.comm	htim3,60,4
+ 158              		.ident	"GCC: (4.9.2-10+14~bpo8+1) 4.9.2"
+ARM GAS  /tmp/ccYJ3WVY.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 tim.c
+     /tmp/ccYJ3WVY.s:16     .text.HAL_TIM_PWM_MspInit:0000000000000000 $t
+     /tmp/ccYJ3WVY.s:21     .text.HAL_TIM_PWM_MspInit:0000000000000000 HAL_TIM_PWM_MspInit
+     /tmp/ccYJ3WVY.s:45     .text.HAL_TIM_PWM_MspInit:0000000000000024 $d
+     /tmp/ccYJ3WVY.s:48     .text.HAL_TIM_MspPostInit:0000000000000000 $t
+     /tmp/ccYJ3WVY.s:53     .text.HAL_TIM_MspPostInit:0000000000000000 HAL_TIM_MspPostInit
+     /tmp/ccYJ3WVY.s:76     .text.HAL_TIM_MspPostInit:0000000000000024 $d
+     /tmp/ccYJ3WVY.s:80     .text.MX_TIM3_Init:0000000000000000 $t
+     /tmp/ccYJ3WVY.s:85     .text.MX_TIM3_Init:0000000000000000 MX_TIM3_Init
+     /tmp/ccYJ3WVY.s:129    .text.MX_TIM3_Init:0000000000000054 $d
+                            *COM*:000000000000003c htim3
+     /tmp/ccYJ3WVY.s:133    .text.HAL_TIM_PWM_MspDeInit:0000000000000000 $t
+     /tmp/ccYJ3WVY.s:138    .text.HAL_TIM_PWM_MspDeInit:0000000000000000 HAL_TIM_PWM_MspDeInit
+     /tmp/ccYJ3WVY.s:154    .text.HAL_TIM_PWM_MspDeInit:0000000000000014 $d
+
+UNDEFINED SYMBOLS
+HAL_GPIO_Init
+HAL_TIM_PWM_Init
+Error_Handler
+HAL_TIMEx_MasterConfigSynchronization
+HAL_TIM_PWM_ConfigChannel
