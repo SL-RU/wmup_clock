@@ -1,0 +1,8 @@
+#include "app_clock.h"
+
+void app_clock_update();
+void app_clock_draw();
+void app_clock_encoder(int16_t, int16_t);
+void app_clock_buttons(uint8_t, uint8_t);
+uint8_t app_clock_can_off() { return 1; }
+

@@ -1,0 +1,529 @@
+ARM GAS  /tmp/ccqDxFZC.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"clock.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.comm	clock_time,3,4
+  19              		.comm	clock_alarm,2,4
+  20              		.section	.text.clock_init,"ax",%progbits
+  21              		.align	2
+  22              		.global	clock_init
+  23              		.thumb
+  24              		.thumb_func
+  26              	clock_init:
+  27              	.LFB63:
+  28              		.file 1 "sys/clock.c"
+   1:sys/clock.c   **** #include "clock.h"
+   2:sys/clock.c   **** #include <string.h>
+   3:sys/clock.c   **** #include <stdio.h>
+   4:sys/clock.c   **** 
+   5:sys/clock.c   **** RTC_TimeTypeDef clock_time;
+   6:sys/clock.c   **** Clock_AlarmReg clock_alarm;
+   7:sys/clock.c   **** 
+   8:sys/clock.c   **** void clock_init(void)
+   9:sys/clock.c   **** {
+  29              		.loc 1 9 0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 1, uses_anonymous_args = 0
+  33 0000 80B5     		push	{r7, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 7, -8
+  37              		.cfi_offset 14, -4
+  38 0002 00AF     		add	r7, sp, #0
+  39              	.LCFI1:
+  40              		.cfi_def_cfa_register 7
+  10:sys/clock.c   ****     clock_alarm_read();
+  41              		.loc 1 10 0
+  42 0004 FFF7FEFF 		bl	clock_alarm_read
+  11:sys/clock.c   ****     //printf("%lu $ %lu\n", sizeof(Clock_AlarmReg), sizeof(uint32_t));
+  12:sys/clock.c   **** }
+  43              		.loc 1 12 0
+  44 0008 80BD     		pop	{r7, pc}
+  45              		.cfi_endproc
+  46              	.LFE63:
+ARM GAS  /tmp/ccqDxFZC.s 			page 2
+
+
+  48 000a 00BF     		.section	.text.clock_get_time,"ax",%progbits
+  49              		.align	2
+  50              		.global	clock_get_time
+  51              		.thumb
+  52              		.thumb_func
+  54              	clock_get_time:
+  55              	.LFB64:
+  13:sys/clock.c   **** 
+  14:sys/clock.c   **** RTC_TimeTypeDef * clock_get_time()
+  15:sys/clock.c   **** {
+  56              		.loc 1 15 0
+  57              		.cfi_startproc
+  58              		@ args = 0, pretend = 0, frame = 0
+  59              		@ frame_needed = 1, uses_anonymous_args = 0
+  60 0000 80B5     		push	{r7, lr}
+  61              	.LCFI2:
+  62              		.cfi_def_cfa_offset 8
+  63              		.cfi_offset 7, -8
+  64              		.cfi_offset 14, -4
+  65 0002 00AF     		add	r7, sp, #0
+  66              	.LCFI3:
+  67              		.cfi_def_cfa_register 7
+  16:sys/clock.c   ****     HAL_RTC_GetTime(&hrtc, &clock_time, RTC_FORMAT_BIN);
+  68              		.loc 1 16 0
+  69 0004 0348     		ldr	r0, .L4
+  70 0006 0449     		ldr	r1, .L4+4
+  71 0008 0022     		movs	r2, #0
+  72 000a FFF7FEFF 		bl	HAL_RTC_GetTime
+  17:sys/clock.c   ****     return &clock_time;
+  73              		.loc 1 17 0
+  74 000e 024B     		ldr	r3, .L4+4
+  18:sys/clock.c   **** }
+  75              		.loc 1 18 0
+  76 0010 1846     		mov	r0, r3
+  77 0012 80BD     		pop	{r7, pc}
+  78              	.L5:
+  79              		.align	2
+  80              	.L4:
+  81 0014 00000000 		.word	hrtc
+  82 0018 00000000 		.word	clock_time
+  83              		.cfi_endproc
+  84              	.LFE64:
+  86              		.section	.text.clock_set_time,"ax",%progbits
+  87              		.align	2
+  88              		.global	clock_set_time
+  89              		.thumb
+  90              		.thumb_func
+  92              	clock_set_time:
+  93              	.LFB65:
+  19:sys/clock.c   **** 
+  20:sys/clock.c   **** RTC_TimeTypeDef * clock_set_time(uint8_t h, uint8_t m, uint8_t s)
+  21:sys/clock.c   **** {
+  94              		.loc 1 21 0
+  95              		.cfi_startproc
+  96              		@ args = 0, pretend = 0, frame = 8
+  97              		@ frame_needed = 1, uses_anonymous_args = 0
+  98 0000 80B5     		push	{r7, lr}
+ARM GAS  /tmp/ccqDxFZC.s 			page 3
+
+
+  99              	.LCFI4:
+ 100              		.cfi_def_cfa_offset 8
+ 101              		.cfi_offset 7, -8
+ 102              		.cfi_offset 14, -4
+ 103 0002 82B0     		sub	sp, sp, #8
+ 104              	.LCFI5:
+ 105              		.cfi_def_cfa_offset 16
+ 106 0004 00AF     		add	r7, sp, #0
+ 107              	.LCFI6:
+ 108              		.cfi_def_cfa_register 7
+ 109 0006 0346     		mov	r3, r0
+ 110 0008 FB71     		strb	r3, [r7, #7]
+ 111 000a 0B46     		mov	r3, r1
+ 112 000c BB71     		strb	r3, [r7, #6]
+ 113 000e 1346     		mov	r3, r2
+ 114 0010 7B71     		strb	r3, [r7, #5]
+  22:sys/clock.c   ****     clock_time.Hours = h;
+ 115              		.loc 1 22 0
+ 116 0012 094A     		ldr	r2, .L8
+ 117 0014 FB79     		ldrb	r3, [r7, #7]
+ 118 0016 1370     		strb	r3, [r2]
+  23:sys/clock.c   ****     clock_time.Minutes = m;
+ 119              		.loc 1 23 0
+ 120 0018 074A     		ldr	r2, .L8
+ 121 001a BB79     		ldrb	r3, [r7, #6]
+ 122 001c 5370     		strb	r3, [r2, #1]
+  24:sys/clock.c   ****     clock_time.Seconds = s;
+ 123              		.loc 1 24 0
+ 124 001e 064A     		ldr	r2, .L8
+ 125 0020 7B79     		ldrb	r3, [r7, #5]
+ 126 0022 9370     		strb	r3, [r2, #2]
+  25:sys/clock.c   ****     HAL_RTC_SetTime(&hrtc, &clock_time, RTC_FORMAT_BIN);
+ 127              		.loc 1 25 0
+ 128 0024 0548     		ldr	r0, .L8+4
+ 129 0026 0449     		ldr	r1, .L8
+ 130 0028 0022     		movs	r2, #0
+ 131 002a FFF7FEFF 		bl	HAL_RTC_SetTime
+  26:sys/clock.c   ****     return &clock_time;
+ 132              		.loc 1 26 0
+ 133 002e 024B     		ldr	r3, .L8
+  27:sys/clock.c   **** }
+ 134              		.loc 1 27 0
+ 135 0030 1846     		mov	r0, r3
+ 136 0032 0837     		adds	r7, r7, #8
+ 137              	.LCFI7:
+ 138              		.cfi_def_cfa_offset 8
+ 139 0034 BD46     		mov	sp, r7
+ 140              	.LCFI8:
+ 141              		.cfi_def_cfa_register 13
+ 142              		@ sp needed
+ 143 0036 80BD     		pop	{r7, pc}
+ 144              	.L9:
+ 145              		.align	2
+ 146              	.L8:
+ 147 0038 00000000 		.word	clock_time
+ 148 003c 00000000 		.word	hrtc
+ 149              		.cfi_endproc
+ARM GAS  /tmp/ccqDxFZC.s 			page 4
+
+
+ 150              	.LFE65:
+ 152              		.section	.text.clock_reg_read,"ax",%progbits
+ 153              		.align	2
+ 154              		.global	clock_reg_read
+ 155              		.thumb
+ 156              		.thumb_func
+ 158              	clock_reg_read:
+ 159              	.LFB66:
+  28:sys/clock.c   **** 
+  29:sys/clock.c   **** uint32_t clock_reg_read(uint32_t reg)
+  30:sys/clock.c   **** {
+ 160              		.loc 1 30 0
+ 161              		.cfi_startproc
+ 162              		@ args = 0, pretend = 0, frame = 8
+ 163              		@ frame_needed = 1, uses_anonymous_args = 0
+ 164 0000 80B5     		push	{r7, lr}
+ 165              	.LCFI9:
+ 166              		.cfi_def_cfa_offset 8
+ 167              		.cfi_offset 7, -8
+ 168              		.cfi_offset 14, -4
+ 169 0002 82B0     		sub	sp, sp, #8
+ 170              	.LCFI10:
+ 171              		.cfi_def_cfa_offset 16
+ 172 0004 00AF     		add	r7, sp, #0
+ 173              	.LCFI11:
+ 174              		.cfi_def_cfa_register 7
+ 175 0006 7860     		str	r0, [r7, #4]
+  31:sys/clock.c   ****     return HAL_RTCEx_BKUPRead(&hrtc, reg);
+ 176              		.loc 1 31 0
+ 177 0008 0448     		ldr	r0, .L12
+ 178 000a 7968     		ldr	r1, [r7, #4]
+ 179 000c FFF7FEFF 		bl	HAL_RTCEx_BKUPRead
+ 180 0010 0346     		mov	r3, r0
+  32:sys/clock.c   **** }
+ 181              		.loc 1 32 0
+ 182 0012 1846     		mov	r0, r3
+ 183 0014 0837     		adds	r7, r7, #8
+ 184              	.LCFI12:
+ 185              		.cfi_def_cfa_offset 8
+ 186 0016 BD46     		mov	sp, r7
+ 187              	.LCFI13:
+ 188              		.cfi_def_cfa_register 13
+ 189              		@ sp needed
+ 190 0018 80BD     		pop	{r7, pc}
+ 191              	.L13:
+ 192 001a 00BF     		.align	2
+ 193              	.L12:
+ 194 001c 00000000 		.word	hrtc
+ 195              		.cfi_endproc
+ 196              	.LFE66:
+ 198              		.section	.text.clock_reg_write,"ax",%progbits
+ 199              		.align	2
+ 200              		.global	clock_reg_write
+ 201              		.thumb
+ 202              		.thumb_func
+ 204              	clock_reg_write:
+ 205              	.LFB67:
+ARM GAS  /tmp/ccqDxFZC.s 			page 5
+
+
+  33:sys/clock.c   **** void clock_reg_write(uint32_t reg, uint32_t data)
+  34:sys/clock.c   **** {
+ 206              		.loc 1 34 0
+ 207              		.cfi_startproc
+ 208              		@ args = 0, pretend = 0, frame = 8
+ 209              		@ frame_needed = 1, uses_anonymous_args = 0
+ 210 0000 80B5     		push	{r7, lr}
+ 211              	.LCFI14:
+ 212              		.cfi_def_cfa_offset 8
+ 213              		.cfi_offset 7, -8
+ 214              		.cfi_offset 14, -4
+ 215 0002 82B0     		sub	sp, sp, #8
+ 216              	.LCFI15:
+ 217              		.cfi_def_cfa_offset 16
+ 218 0004 00AF     		add	r7, sp, #0
+ 219              	.LCFI16:
+ 220              		.cfi_def_cfa_register 7
+ 221 0006 7860     		str	r0, [r7, #4]
+ 222 0008 3960     		str	r1, [r7]
+  35:sys/clock.c   ****     HAL_RTCEx_BKUPWrite(&hrtc, reg, data);
+ 223              		.loc 1 35 0
+ 224 000a 0448     		ldr	r0, .L15
+ 225 000c 7968     		ldr	r1, [r7, #4]
+ 226 000e 3A68     		ldr	r2, [r7]
+ 227 0010 FFF7FEFF 		bl	HAL_RTCEx_BKUPWrite
+  36:sys/clock.c   **** }
+ 228              		.loc 1 36 0
+ 229 0014 0837     		adds	r7, r7, #8
+ 230              	.LCFI17:
+ 231              		.cfi_def_cfa_offset 8
+ 232 0016 BD46     		mov	sp, r7
+ 233              	.LCFI18:
+ 234              		.cfi_def_cfa_register 13
+ 235              		@ sp needed
+ 236 0018 80BD     		pop	{r7, pc}
+ 237              	.L16:
+ 238 001a 00BF     		.align	2
+ 239              	.L15:
+ 240 001c 00000000 		.word	hrtc
+ 241              		.cfi_endproc
+ 242              	.LFE67:
+ 244              		.section	.text.clock_alarm_read,"ax",%progbits
+ 245              		.align	2
+ 246              		.global	clock_alarm_read
+ 247              		.thumb
+ 248              		.thumb_func
+ 250              	clock_alarm_read:
+ 251              	.LFB68:
+  37:sys/clock.c   **** 
+  38:sys/clock.c   **** void clock_alarm_read(void)
+  39:sys/clock.c   **** {
+ 252              		.loc 1 39 0
+ 253              		.cfi_startproc
+ 254              		@ args = 0, pretend = 0, frame = 8
+ 255              		@ frame_needed = 1, uses_anonymous_args = 0
+ 256 0000 80B5     		push	{r7, lr}
+ 257              	.LCFI19:
+ARM GAS  /tmp/ccqDxFZC.s 			page 6
+
+
+ 258              		.cfi_def_cfa_offset 8
+ 259              		.cfi_offset 7, -8
+ 260              		.cfi_offset 14, -4
+ 261 0002 82B0     		sub	sp, sp, #8
+ 262              	.LCFI20:
+ 263              		.cfi_def_cfa_offset 16
+ 264 0004 00AF     		add	r7, sp, #0
+ 265              	.LCFI21:
+ 266              		.cfi_def_cfa_register 7
+  40:sys/clock.c   ****     uint32_t a = clock_reg_read(CLOCK_ALARM_REG);
+ 267              		.loc 1 40 0
+ 268 0006 0320     		movs	r0, #3
+ 269 0008 FFF7FEFF 		bl	clock_reg_read
+ 270 000c 0346     		mov	r3, r0
+ 271 000e 7B60     		str	r3, [r7, #4]
+  41:sys/clock.c   ****     memcpy(&clock_alarm, &a, sizeof(Clock_AlarmReg));
+ 272              		.loc 1 41 0
+ 273 0010 034B     		ldr	r3, .L18
+ 274 0012 1A46     		mov	r2, r3
+ 275 0014 3B1D     		adds	r3, r7, #4
+ 276 0016 1B88     		ldrh	r3, [r3]	@ unaligned
+ 277 0018 1380     		strh	r3, [r2]	@ unaligned
+  42:sys/clock.c   **** }
+ 278              		.loc 1 42 0
+ 279 001a 0837     		adds	r7, r7, #8
+ 280              	.LCFI22:
+ 281              		.cfi_def_cfa_offset 8
+ 282 001c BD46     		mov	sp, r7
+ 283              	.LCFI23:
+ 284              		.cfi_def_cfa_register 13
+ 285              		@ sp needed
+ 286 001e 80BD     		pop	{r7, pc}
+ 287              	.L19:
+ 288              		.align	2
+ 289              	.L18:
+ 290 0020 00000000 		.word	clock_alarm
+ 291              		.cfi_endproc
+ 292              	.LFE68:
+ 294              		.section	.text.clock_alarm_get,"ax",%progbits
+ 295              		.align	2
+ 296              		.global	clock_alarm_get
+ 297              		.thumb
+ 298              		.thumb_func
+ 300              	clock_alarm_get:
+ 301              	.LFB69:
+  43:sys/clock.c   **** 
+  44:sys/clock.c   **** Clock_AlarmReg * clock_alarm_get()
+  45:sys/clock.c   **** {
+ 302              		.loc 1 45 0
+ 303              		.cfi_startproc
+ 304              		@ args = 0, pretend = 0, frame = 0
+ 305              		@ frame_needed = 1, uses_anonymous_args = 0
+ 306              		@ link register save eliminated.
+ 307 0000 80B4     		push	{r7}
+ 308              	.LCFI24:
+ 309              		.cfi_def_cfa_offset 4
+ 310              		.cfi_offset 7, -4
+ARM GAS  /tmp/ccqDxFZC.s 			page 7
+
+
+ 311 0002 00AF     		add	r7, sp, #0
+ 312              	.LCFI25:
+ 313              		.cfi_def_cfa_register 7
+  46:sys/clock.c   ****     return &clock_alarm;
+ 314              		.loc 1 46 0
+ 315 0004 024B     		ldr	r3, .L22
+  47:sys/clock.c   **** }
+ 316              		.loc 1 47 0
+ 317 0006 1846     		mov	r0, r3
+ 318 0008 BD46     		mov	sp, r7
+ 319              	.LCFI26:
+ 320              		.cfi_def_cfa_register 13
+ 321              		@ sp needed
+ 322 000a 5DF8047B 		ldr	r7, [sp], #4
+ 323              	.LCFI27:
+ 324              		.cfi_restore 7
+ 325              		.cfi_def_cfa_offset 0
+ 326 000e 7047     		bx	lr
+ 327              	.L23:
+ 328              		.align	2
+ 329              	.L22:
+ 330 0010 00000000 		.word	clock_alarm
+ 331              		.cfi_endproc
+ 332              	.LFE69:
+ 334              		.section	.text.clock_alarm_set,"ax",%progbits
+ 335              		.align	2
+ 336              		.global	clock_alarm_set
+ 337              		.thumb
+ 338              		.thumb_func
+ 340              	clock_alarm_set:
+ 341              	.LFB70:
+  48:sys/clock.c   **** 
+  49:sys/clock.c   **** void clock_alarm_set(uint8_t en, uint8_t hour, uint8_t minute)
+  50:sys/clock.c   **** {
+ 342              		.loc 1 50 0
+ 343              		.cfi_startproc
+ 344              		@ args = 0, pretend = 0, frame = 16
+ 345              		@ frame_needed = 1, uses_anonymous_args = 0
+ 346 0000 80B5     		push	{r7, lr}
+ 347              	.LCFI28:
+ 348              		.cfi_def_cfa_offset 8
+ 349              		.cfi_offset 7, -8
+ 350              		.cfi_offset 14, -4
+ 351 0002 84B0     		sub	sp, sp, #16
+ 352              	.LCFI29:
+ 353              		.cfi_def_cfa_offset 24
+ 354 0004 00AF     		add	r7, sp, #0
+ 355              	.LCFI30:
+ 356              		.cfi_def_cfa_register 7
+ 357 0006 0346     		mov	r3, r0
+ 358 0008 FB71     		strb	r3, [r7, #7]
+ 359 000a 0B46     		mov	r3, r1
+ 360 000c BB71     		strb	r3, [r7, #6]
+ 361 000e 1346     		mov	r3, r2
+ 362 0010 7B71     		strb	r3, [r7, #5]
+  51:sys/clock.c   ****     clock_alarm.enabled = en;
+ 363              		.loc 1 51 0
+ARM GAS  /tmp/ccqDxFZC.s 			page 8
+
+
+ 364 0012 FB79     		ldrb	r3, [r7, #7]
+ 365 0014 03F00103 		and	r3, r3, #1
+ 366 0018 D9B2     		uxtb	r1, r3
+ 367 001a 124A     		ldr	r2, .L25
+ 368 001c 1378     		ldrb	r3, [r2]
+ 369 001e 61F30003 		bfi	r3, r1, #0, #1
+ 370 0022 1370     		strb	r3, [r2]
+  52:sys/clock.c   ****     clock_alarm.hour = hour;
+ 371              		.loc 1 52 0
+ 372 0024 BB79     		ldrb	r3, [r7, #6]
+ 373 0026 03F01F03 		and	r3, r3, #31
+ 374 002a D9B2     		uxtb	r1, r3
+ 375 002c 0D4A     		ldr	r2, .L25
+ 376 002e 1378     		ldrb	r3, [r2]
+ 377 0030 61F34503 		bfi	r3, r1, #1, #5
+ 378 0034 1370     		strb	r3, [r2]
+  53:sys/clock.c   ****     clock_alarm.minute = minute;
+ 379              		.loc 1 53 0
+ 380 0036 7B79     		ldrb	r3, [r7, #5]
+ 381 0038 03F01F03 		and	r3, r3, #31
+ 382 003c D9B2     		uxtb	r1, r3
+ 383 003e 094A     		ldr	r2, .L25
+ 384 0040 5378     		ldrb	r3, [r2, #1]
+ 385 0042 61F30403 		bfi	r3, r1, #0, #5
+ 386 0046 5370     		strb	r3, [r2, #1]
+  54:sys/clock.c   ****     
+  55:sys/clock.c   ****     uint32_t a;
+  56:sys/clock.c   ****     memcpy(&a, &clock_alarm, sizeof(Clock_AlarmReg));
+ 387              		.loc 1 56 0
+ 388 0048 064A     		ldr	r2, .L25
+ 389 004a 07F10C03 		add	r3, r7, #12
+ 390 004e 1288     		ldrh	r2, [r2]	@ unaligned
+ 391 0050 1A80     		strh	r2, [r3]	@ unaligned
+  57:sys/clock.c   ****     clock_reg_write(CLOCK_ALARM_REG, a);
+ 392              		.loc 1 57 0
+ 393 0052 FB68     		ldr	r3, [r7, #12]
+ 394 0054 0320     		movs	r0, #3
+ 395 0056 1946     		mov	r1, r3
+ 396 0058 FFF7FEFF 		bl	clock_reg_write
+  58:sys/clock.c   **** }
+ 397              		.loc 1 58 0
+ 398 005c 1037     		adds	r7, r7, #16
+ 399              	.LCFI31:
+ 400              		.cfi_def_cfa_offset 8
+ 401 005e BD46     		mov	sp, r7
+ 402              	.LCFI32:
+ 403              		.cfi_def_cfa_register 13
+ 404              		@ sp needed
+ 405 0060 80BD     		pop	{r7, pc}
+ 406              	.L26:
+ 407 0062 00BF     		.align	2
+ 408              	.L25:
+ 409 0064 00000000 		.word	clock_alarm
+ 410              		.cfi_endproc
+ 411              	.LFE70:
+ 413              		.text
+ 414              	.Letext0:
+ARM GAS  /tmp/ccqDxFZC.s 			page 9
+
+
+ 415              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 416              		.file 3 "/usr/include/newlib/stdint.h"
+ 417              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
+ 418              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 419              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rtc.h"
+ 420              		.file 7 "sys/clock.h"
+ 421              		.file 8 "Drivers/CMSIS/Include/core_cm3.h"
+ 422              		.file 9 "Inc/rtc.h"
+ARM GAS  /tmp/ccqDxFZC.s 			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 clock.c
+                            *COM*:0000000000000003 clock_time
+                            *COM*:0000000000000002 clock_alarm
+     /tmp/ccqDxFZC.s:21     .text.clock_init:0000000000000000 $t
+     /tmp/ccqDxFZC.s:26     .text.clock_init:0000000000000000 clock_init
+     /tmp/ccqDxFZC.s:250    .text.clock_alarm_read:0000000000000000 clock_alarm_read
+     /tmp/ccqDxFZC.s:49     .text.clock_get_time:0000000000000000 $t
+     /tmp/ccqDxFZC.s:54     .text.clock_get_time:0000000000000000 clock_get_time
+     /tmp/ccqDxFZC.s:81     .text.clock_get_time:0000000000000014 $d
+     /tmp/ccqDxFZC.s:87     .text.clock_set_time:0000000000000000 $t
+     /tmp/ccqDxFZC.s:92     .text.clock_set_time:0000000000000000 clock_set_time
+     /tmp/ccqDxFZC.s:147    .text.clock_set_time:0000000000000038 $d
+     /tmp/ccqDxFZC.s:153    .text.clock_reg_read:0000000000000000 $t
+     /tmp/ccqDxFZC.s:158    .text.clock_reg_read:0000000000000000 clock_reg_read
+     /tmp/ccqDxFZC.s:194    .text.clock_reg_read:000000000000001c $d
+     /tmp/ccqDxFZC.s:199    .text.clock_reg_write:0000000000000000 $t
+     /tmp/ccqDxFZC.s:204    .text.clock_reg_write:0000000000000000 clock_reg_write
+     /tmp/ccqDxFZC.s:240    .text.clock_reg_write:000000000000001c $d
+     /tmp/ccqDxFZC.s:245    .text.clock_alarm_read:0000000000000000 $t
+     /tmp/ccqDxFZC.s:290    .text.clock_alarm_read:0000000000000020 $d
+     /tmp/ccqDxFZC.s:295    .text.clock_alarm_get:0000000000000000 $t
+     /tmp/ccqDxFZC.s:300    .text.clock_alarm_get:0000000000000000 clock_alarm_get
+     /tmp/ccqDxFZC.s:330    .text.clock_alarm_get:0000000000000010 $d
+     /tmp/ccqDxFZC.s:335    .text.clock_alarm_set:0000000000000000 $t
+     /tmp/ccqDxFZC.s:340    .text.clock_alarm_set:0000000000000000 clock_alarm_set
+     /tmp/ccqDxFZC.s:409    .text.clock_alarm_set:0000000000000064 $d
+                     .debug_frame:0000000000000010 $d
+
+UNDEFINED SYMBOLS
+HAL_RTC_GetTime
+hrtc
+HAL_RTC_SetTime
+HAL_RTCEx_BKUPRead
+HAL_RTCEx_BKUPWrite

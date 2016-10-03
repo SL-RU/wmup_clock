@@ -1,0 +1,13 @@
+#include "apps.h"
+
+void apps_init(void);
+
+void apps_update();
+
+void apps_preset_encoder(uint8_t preset);
+
+void apps_input_buttons(uint8_t button, uint8_t event);
+
+void apps_input_encoder(uint16_t value, uint16_t delta);
+
+

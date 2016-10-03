@@ -1,0 +1,14 @@
+#include "stm32f1xx_hal.h"
+#include "stm32f1xx_hal_gpio.h"
+
+//Buttons
+#define ButtonsCount 4
+#define BFrontRed    GPIOB, GPIO_Pin_3
+#define BFrontGreen  GPIOB, GPIO_Pin_4
+#define BTopBig      GPIOB, GPIO_Pin_5
+#define BTopSmall    GPIOB, GPIO_Pin_8
+
+//Leds
+#define LTopBig GPIOB, GPIO_Pin_11
+#define LTopSmall GPIOB, GPIO_Pin_13
+

@@ -1,0 +1,18 @@
+#include "speaker.h"
+
+uint8_t speaker_en = 0;
+uint16_t speaker_t = 0;
+void speaker_update(void)
+{
+    if(speaker_en)
+    {
+	speaker_t = 0;
+    }
+    else
+    {
+    }
+}
+
+void speaker_start(void);
+
+void speaker_stop(void);

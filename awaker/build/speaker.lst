@@ -1,0 +1,267 @@
+ARM GAS  /tmp/ccl5ZE9J.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"speaker.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.global	speaker_en
+  19              		.section	.bss.speaker_en,"aw",%nobits
+  22              	speaker_en:
+  23 0000 00       		.space	1
+  24              		.global	speaker_t
+  25              		.section	.bss.speaker_t,"aw",%nobits
+  26              		.align	1
+  29              	speaker_t:
+  30 0000 0000     		.space	2
+  31              		.section	.text.speaker_update,"ax",%progbits
+  32              		.align	2
+  33              		.global	speaker_update
+  34              		.thumb
+  35              		.thumb_func
+  37              	speaker_update:
+  38              	.LFB63:
+  39              		.file 1 "sys/speaker.c"
+   1:sys/speaker.c **** #include "speaker.h"
+   2:sys/speaker.c **** 
+   3:sys/speaker.c **** uint8_t speaker_en = 0;
+   4:sys/speaker.c **** uint16_t speaker_t = 0;
+   5:sys/speaker.c **** void speaker_update(void)
+   6:sys/speaker.c **** {
+  40              		.loc 1 6 0
+  41              		.cfi_startproc
+  42              		@ args = 0, pretend = 0, frame = 0
+  43              		@ frame_needed = 1, uses_anonymous_args = 0
+  44 0000 80B5     		push	{r7, lr}
+  45              	.LCFI0:
+  46              		.cfi_def_cfa_offset 8
+  47              		.cfi_offset 7, -8
+  48              		.cfi_offset 14, -4
+  49 0002 00AF     		add	r7, sp, #0
+  50              	.LCFI1:
+  51              		.cfi_def_cfa_register 7
+   7:sys/speaker.c ****     if(speaker_en)
+  52              		.loc 1 7 0
+  53 0004 174B     		ldr	r3, .L7
+  54 0006 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  55 0008 002B     		cmp	r3, #0
+ARM GAS  /tmp/ccl5ZE9J.s 			page 2
+
+
+  56 000a 24D0     		beq	.L2
+   8:sys/speaker.c ****     {
+   9:sys/speaker.c **** 	if((HAL_GetTick() / 1000) % 2 == 0)
+  57              		.loc 1 9 0
+  58 000c FFF7FEFF 		bl	HAL_GetTick
+  59 0010 0246     		mov	r2, r0
+  60 0012 154B     		ldr	r3, .L7+4
+  61 0014 A3FB0223 		umull	r2, r3, r3, r2
+  62 0018 9B09     		lsrs	r3, r3, #6
+  63 001a 03F00103 		and	r3, r3, #1
+  64 001e 002B     		cmp	r3, #0
+  65 0020 12D1     		bne	.L3
+  10:sys/speaker.c **** 	{
+  11:sys/speaker.c **** 	    speaker_t ++;
+  66              		.loc 1 11 0
+  67 0022 124B     		ldr	r3, .L7+8
+  68 0024 1B88     		ldrh	r3, [r3]
+  69 0026 0133     		adds	r3, r3, #1
+  70 0028 9AB2     		uxth	r2, r3
+  71 002a 104B     		ldr	r3, .L7+8
+  72 002c 1A80     		strh	r2, [r3]	@ movhi
+  12:sys/speaker.c **** 	    if(speaker_t >= 11)
+  73              		.loc 1 12 0
+  74 002e 0F4B     		ldr	r3, .L7+8
+  75 0030 1B88     		ldrh	r3, [r3]
+  76 0032 0A2B     		cmp	r3, #10
+  77 0034 15D9     		bls	.L1
+  13:sys/speaker.c **** 	    {
+  14:sys/speaker.c **** 		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_8);
+  78              		.loc 1 14 0
+  79 0036 0E48     		ldr	r0, .L7+12
+  80 0038 4FF48071 		mov	r1, #256
+  81 003c FFF7FEFF 		bl	HAL_GPIO_TogglePin
+  15:sys/speaker.c **** 		speaker_t = 0;
+  82              		.loc 1 15 0
+  83 0040 0A4B     		ldr	r3, .L7+8
+  84 0042 0022     		movs	r2, #0
+  85 0044 1A80     		strh	r2, [r3]	@ movhi
+  86 0046 0CE0     		b	.L1
+  87              	.L3:
+  16:sys/speaker.c **** 	    }
+  17:sys/speaker.c **** 	}
+  18:sys/speaker.c **** 	else
+  19:sys/speaker.c **** 	{
+  20:sys/speaker.c **** 	    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);    
+  88              		.loc 1 20 0
+  89 0048 0948     		ldr	r0, .L7+12
+  90 004a 4FF48071 		mov	r1, #256
+  91 004e 0022     		movs	r2, #0
+  92 0050 FFF7FEFF 		bl	HAL_GPIO_WritePin
+  93 0054 05E0     		b	.L1
+  94              	.L2:
+  21:sys/speaker.c **** 	}
+  22:sys/speaker.c ****     }
+  23:sys/speaker.c ****     else
+  24:sys/speaker.c ****     {
+  25:sys/speaker.c **** 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+ARM GAS  /tmp/ccl5ZE9J.s 			page 3
+
+
+  95              		.loc 1 25 0
+  96 0056 0648     		ldr	r0, .L7+12
+  97 0058 4FF48071 		mov	r1, #256
+  98 005c 0022     		movs	r2, #0
+  99 005e FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 100              	.L1:
+  26:sys/speaker.c ****     }
+  27:sys/speaker.c **** }
+ 101              		.loc 1 27 0
+ 102 0062 80BD     		pop	{r7, pc}
+ 103              	.L8:
+ 104              		.align	2
+ 105              	.L7:
+ 106 0064 00000000 		.word	speaker_en
+ 107 0068 D34D6210 		.word	274877907
+ 108 006c 00000000 		.word	speaker_t
+ 109 0070 00080140 		.word	1073809408
+ 110              		.cfi_endproc
+ 111              	.LFE63:
+ 113              		.section	.text.speaker_start,"ax",%progbits
+ 114              		.align	2
+ 115              		.global	speaker_start
+ 116              		.thumb
+ 117              		.thumb_func
+ 119              	speaker_start:
+ 120              	.LFB64:
+  28:sys/speaker.c **** 
+  29:sys/speaker.c **** void speaker_start(void)
+  30:sys/speaker.c **** {
+ 121              		.loc 1 30 0
+ 122              		.cfi_startproc
+ 123              		@ args = 0, pretend = 0, frame = 0
+ 124              		@ frame_needed = 1, uses_anonymous_args = 0
+ 125              		@ link register save eliminated.
+ 126 0000 80B4     		push	{r7}
+ 127              	.LCFI2:
+ 128              		.cfi_def_cfa_offset 4
+ 129              		.cfi_offset 7, -4
+ 130 0002 00AF     		add	r7, sp, #0
+ 131              	.LCFI3:
+ 132              		.cfi_def_cfa_register 7
+  31:sys/speaker.c ****     speaker_en = 1;
+ 133              		.loc 1 31 0
+ 134 0004 034B     		ldr	r3, .L10
+ 135 0006 0122     		movs	r2, #1
+ 136 0008 1A70     		strb	r2, [r3]
+  32:sys/speaker.c **** }
+ 137              		.loc 1 32 0
+ 138 000a BD46     		mov	sp, r7
+ 139              	.LCFI4:
+ 140              		.cfi_def_cfa_register 13
+ 141              		@ sp needed
+ 142 000c 5DF8047B 		ldr	r7, [sp], #4
+ 143              	.LCFI5:
+ 144              		.cfi_restore 7
+ 145              		.cfi_def_cfa_offset 0
+ 146 0010 7047     		bx	lr
+ARM GAS  /tmp/ccl5ZE9J.s 			page 4
+
+
+ 147              	.L11:
+ 148 0012 00BF     		.align	2
+ 149              	.L10:
+ 150 0014 00000000 		.word	speaker_en
+ 151              		.cfi_endproc
+ 152              	.LFE64:
+ 154              		.section	.text.speaker_stop,"ax",%progbits
+ 155              		.align	2
+ 156              		.global	speaker_stop
+ 157              		.thumb
+ 158              		.thumb_func
+ 160              	speaker_stop:
+ 161              	.LFB65:
+  33:sys/speaker.c **** 
+  34:sys/speaker.c **** void speaker_stop(void)
+  35:sys/speaker.c **** {
+ 162              		.loc 1 35 0
+ 163              		.cfi_startproc
+ 164              		@ args = 0, pretend = 0, frame = 0
+ 165              		@ frame_needed = 1, uses_anonymous_args = 0
+ 166              		@ link register save eliminated.
+ 167 0000 80B4     		push	{r7}
+ 168              	.LCFI6:
+ 169              		.cfi_def_cfa_offset 4
+ 170              		.cfi_offset 7, -4
+ 171 0002 00AF     		add	r7, sp, #0
+ 172              	.LCFI7:
+ 173              		.cfi_def_cfa_register 7
+  36:sys/speaker.c ****     speaker_en = 0;
+ 174              		.loc 1 36 0
+ 175 0004 034B     		ldr	r3, .L13
+ 176 0006 0022     		movs	r2, #0
+ 177 0008 1A70     		strb	r2, [r3]
+  37:sys/speaker.c **** }
+ 178              		.loc 1 37 0
+ 179 000a BD46     		mov	sp, r7
+ 180              	.LCFI8:
+ 181              		.cfi_def_cfa_register 13
+ 182              		@ sp needed
+ 183 000c 5DF8047B 		ldr	r7, [sp], #4
+ 184              	.LCFI9:
+ 185              		.cfi_restore 7
+ 186              		.cfi_def_cfa_offset 0
+ 187 0010 7047     		bx	lr
+ 188              	.L14:
+ 189 0012 00BF     		.align	2
+ 190              	.L13:
+ 191 0014 00000000 		.word	speaker_en
+ 192              		.cfi_endproc
+ 193              	.LFE65:
+ 195              		.text
+ 196              	.Letext0:
+ 197              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 198              		.file 3 "/usr/include/newlib/stdint.h"
+ 199              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
+ 200              		.file 5 "Drivers/CMSIS/Include/core_cm3.h"
+ 201              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h"
+ARM GAS  /tmp/ccl5ZE9J.s 			page 5
+
+
+ARM GAS  /tmp/ccl5ZE9J.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 speaker.c
+     /tmp/ccl5ZE9J.s:22     .bss.speaker_en:0000000000000000 speaker_en
+     /tmp/ccl5ZE9J.s:23     .bss.speaker_en:0000000000000000 $d
+     /tmp/ccl5ZE9J.s:29     .bss.speaker_t:0000000000000000 speaker_t
+     /tmp/ccl5ZE9J.s:26     .bss.speaker_t:0000000000000000 $d
+     /tmp/ccl5ZE9J.s:32     .text.speaker_update:0000000000000000 $t
+     /tmp/ccl5ZE9J.s:37     .text.speaker_update:0000000000000000 speaker_update
+     /tmp/ccl5ZE9J.s:106    .text.speaker_update:0000000000000064 $d
+     /tmp/ccl5ZE9J.s:114    .text.speaker_start:0000000000000000 $t
+     /tmp/ccl5ZE9J.s:119    .text.speaker_start:0000000000000000 speaker_start
+     /tmp/ccl5ZE9J.s:150    .text.speaker_start:0000000000000014 $d
+     /tmp/ccl5ZE9J.s:155    .text.speaker_stop:0000000000000000 $t
+     /tmp/ccl5ZE9J.s:160    .text.speaker_stop:0000000000000000 speaker_stop
+     /tmp/ccl5ZE9J.s:191    .text.speaker_stop:0000000000000014 $d
+                     .debug_frame:0000000000000010 $d
+
+UNDEFINED SYMBOLS
+HAL_GetTick
+HAL_GPIO_TogglePin
+HAL_GPIO_WritePin

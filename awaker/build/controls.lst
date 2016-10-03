@@ -1,0 +1,1161 @@
+ARM GAS  /tmp/cc23ttcQ.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"controls.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.comm	controls_buttons,48,4
+  19              		.comm	controls_encoder,4,4
+  20              		.comm	controls_encoder_default,16,4
+  21              		.global	Controls_ButtonsHandler
+  22              		.section	.bss.Controls_ButtonsHandler,"aw",%nobits
+  23              		.align	2
+  26              	Controls_ButtonsHandler:
+  27 0000 00000000 		.space	4
+  28              		.global	Controls_EncoderHandler
+  29              		.section	.bss.Controls_EncoderHandler,"aw",%nobits
+  30              		.align	2
+  33              	Controls_EncoderHandler:
+  34 0000 00000000 		.space	4
+  35              		.section	.rodata
+  36              		.align	2
+  37              	.LC0:
+  38 0000 000C0140 		.word	1073810432
+  39 0004 1000     		.short	16
+  40 0006 01       		.byte	1
+  41 0007 00       		.byte	0
+  42 0008 00000000 		.word	0
+  43              		.align	2
+  44              	.LC1:
+  45 000c 000C0140 		.word	1073810432
+  46 0010 0800     		.short	8
+  47 0012 01       		.byte	1
+  48 0013 00       		.byte	0
+  49 0014 00000000 		.word	0
+  50              		.align	2
+  51              	.LC2:
+  52 0018 000C0140 		.word	1073810432
+  53 001c 2000     		.short	32
+  54 001e 00       		.byte	0
+  55 001f 00       		.byte	0
+  56 0020 00000000 		.word	0
+  57              		.align	2
+  58              	.LC3:
+  59 0024 000C0140 		.word	1073810432
+  60 0028 0001     		.short	256
+  61 002a 00       		.byte	0
+ARM GAS  /tmp/cc23ttcQ.s 			page 2
+
+
+  62 002b 00       		.byte	0
+  63 002c 00000000 		.word	0
+  64              		.section	.text.controls_init,"ax",%progbits
+  65              		.align	2
+  66              		.global	controls_init
+  67              		.thumb
+  68              		.thumb_func
+  70              	controls_init:
+  71              	.LFB63:
+  72              		.file 1 "sys/controls.c"
+   1:sys/controls.c **** #include "controls.h"
+   2:sys/controls.c **** 
+   3:sys/controls.c **** Controls_ButtonState controls_buttons[ButtonsCount];
+   4:sys/controls.c **** Controls_EncoderState* controls_encoder;
+   5:sys/controls.c **** Controls_EncoderState controls_encoder_default;
+   6:sys/controls.c **** 
+   7:sys/controls.c **** void (*Controls_ButtonsHandler)(uint8_t, uint8_t) = 0;
+   8:sys/controls.c **** void (*Controls_EncoderHandler)(uint16_t, int16_t) = 0;
+   9:sys/controls.c **** 
+  10:sys/controls.c **** 
+  11:sys/controls.c **** void controls_init(void)
+  12:sys/controls.c **** {
+  73              		.loc 1 12 0
+  74              		.cfi_startproc
+  75              		@ args = 0, pretend = 0, frame = 0
+  76              		@ frame_needed = 1, uses_anonymous_args = 0
+  77 0000 80B5     		push	{r7, lr}
+  78              	.LCFI0:
+  79              		.cfi_def_cfa_offset 8
+  80              		.cfi_offset 7, -8
+  81              		.cfi_offset 14, -4
+  82 0002 82B0     		sub	sp, sp, #8
+  83              	.LCFI1:
+  84              		.cfi_def_cfa_offset 16
+  85 0004 02AF     		add	r7, sp, #8
+  86              	.LCFI2:
+  87              		.cfi_def_cfa 7, 8
+  13:sys/controls.c ****     //buttons
+  14:sys/controls.c ****     controls_buttons[BIFrontGreen] = (Controls_ButtonState) {BFrontGreen, 1, 0, 0};
+  88              		.loc 1 14 0
+  89 0006 184B     		ldr	r3, .L2
+  90 0008 184A     		ldr	r2, .L2+4
+  91 000a 0C33     		adds	r3, r3, #12
+  92 000c 07CA     		ldmia	r2, {r0, r1, r2}
+  93 000e 83E80700 		stmia	r3, {r0, r1, r2}
+  15:sys/controls.c ****     controls_buttons[BIFrontRed] = (Controls_ButtonState) {BFrontRed, 1, 0, 0};
+  94              		.loc 1 15 0
+  95 0012 154B     		ldr	r3, .L2
+  96 0014 164A     		ldr	r2, .L2+8
+  97 0016 07CA     		ldmia	r2, {r0, r1, r2}
+  98 0018 83E80700 		stmia	r3, {r0, r1, r2}
+  16:sys/controls.c ****     controls_buttons[BITopBig] = (Controls_ButtonState) {BTopBig, 0, 0, 0};
+  99              		.loc 1 16 0
+ 100 001c 124B     		ldr	r3, .L2
+ 101 001e 154A     		ldr	r2, .L2+12
+ 102 0020 1833     		adds	r3, r3, #24
+ 103 0022 07CA     		ldmia	r2, {r0, r1, r2}
+ARM GAS  /tmp/cc23ttcQ.s 			page 3
+
+
+ 104 0024 83E80700 		stmia	r3, {r0, r1, r2}
+  17:sys/controls.c ****     controls_buttons[BITopSmall] = (Controls_ButtonState) {BTopSmall, 0, 0, 0};
+ 105              		.loc 1 17 0
+ 106 0028 0F4B     		ldr	r3, .L2
+ 107 002a 134A     		ldr	r2, .L2+16
+ 108 002c 2433     		adds	r3, r3, #36
+ 109 002e 07CA     		ldmia	r2, {r0, r1, r2}
+ 110 0030 83E80700 		stmia	r3, {r0, r1, r2}
+  18:sys/controls.c **** 
+  19:sys/controls.c ****     //encoder
+  20:sys/controls.c ****     controls_encoder_default = (Controls_EncoderState){0};
+ 111              		.loc 1 20 0
+ 112 0034 114B     		ldr	r3, .L2+20
+ 113 0036 0022     		movs	r2, #0
+ 114 0038 1A60     		str	r2, [r3]
+ 115 003a 0433     		adds	r3, r3, #4
+ 116 003c 0022     		movs	r2, #0
+ 117 003e 1A60     		str	r2, [r3]
+ 118 0040 0433     		adds	r3, r3, #4
+ 119 0042 0022     		movs	r2, #0
+ 120 0044 1A60     		str	r2, [r3]
+ 121 0046 0433     		adds	r3, r3, #4
+ 122 0048 0022     		movs	r2, #0
+ 123 004a 1A60     		str	r2, [r3]
+ 124 004c 0433     		adds	r3, r3, #4
+  21:sys/controls.c ****     controls_init_encoder_state(&controls_encoder_default, 0, 60, 0, 1);
+ 125              		.loc 1 21 0
+ 126 004e 0123     		movs	r3, #1
+ 127 0050 0093     		str	r3, [sp]
+ 128 0052 0A48     		ldr	r0, .L2+20
+ 129 0054 0021     		movs	r1, #0
+ 130 0056 3C22     		movs	r2, #60
+ 131 0058 0023     		movs	r3, #0
+ 132 005a FFF7FEFF 		bl	controls_init_encoder_state
+  22:sys/controls.c ****     controls_encoder = &controls_encoder_default;
+ 133              		.loc 1 22 0
+ 134 005e 084B     		ldr	r3, .L2+24
+ 135 0060 064A     		ldr	r2, .L2+20
+ 136 0062 1A60     		str	r2, [r3]
+  23:sys/controls.c ****     
+  24:sys/controls.c **** }
+ 137              		.loc 1 24 0
+ 138 0064 BD46     		mov	sp, r7
+ 139              	.LCFI3:
+ 140              		.cfi_def_cfa_register 13
+ 141              		@ sp needed
+ 142 0066 80BD     		pop	{r7, pc}
+ 143              	.L3:
+ 144              		.align	2
+ 145              	.L2:
+ 146 0068 00000000 		.word	controls_buttons
+ 147 006c 00000000 		.word	.LC0
+ 148 0070 0C000000 		.word	.LC1
+ 149 0074 18000000 		.word	.LC2
+ 150 0078 24000000 		.word	.LC3
+ 151 007c 00000000 		.word	controls_encoder_default
+ 152 0080 00000000 		.word	controls_encoder
+ARM GAS  /tmp/cc23ttcQ.s 			page 4
+
+
+ 153              		.cfi_endproc
+ 154              	.LFE63:
+ 156              		.section	.text.controls_init_encoder_state,"ax",%progbits
+ 157              		.align	2
+ 158              		.global	controls_init_encoder_state
+ 159              		.thumb
+ 160              		.thumb_func
+ 162              	controls_init_encoder_state:
+ 163              	.LFB64:
+  25:sys/controls.c **** 
+  26:sys/controls.c **** void controls_init_encoder_state(Controls_EncoderState* st, 
+  27:sys/controls.c **** 				     int16_t val,
+  28:sys/controls.c **** 				     int16_t max,
+  29:sys/controls.c **** 				     int16_t min,
+  30:sys/controls.c **** 				     uint8_t acceleration_en)
+  31:sys/controls.c **** {
+ 164              		.loc 1 31 0
+ 165              		.cfi_startproc
+ 166              		@ args = 4, pretend = 0, frame = 16
+ 167              		@ frame_needed = 1, uses_anonymous_args = 0
+ 168              		@ link register save eliminated.
+ 169 0000 80B4     		push	{r7}
+ 170              	.LCFI4:
+ 171              		.cfi_def_cfa_offset 4
+ 172              		.cfi_offset 7, -4
+ 173 0002 85B0     		sub	sp, sp, #20
+ 174              	.LCFI5:
+ 175              		.cfi_def_cfa_offset 24
+ 176 0004 00AF     		add	r7, sp, #0
+ 177              	.LCFI6:
+ 178              		.cfi_def_cfa_register 7
+ 179 0006 F860     		str	r0, [r7, #12]
+ 180 0008 0846     		mov	r0, r1
+ 181 000a 1146     		mov	r1, r2
+ 182 000c 1A46     		mov	r2, r3
+ 183 000e 0346     		mov	r3, r0	@ movhi
+ 184 0010 7B81     		strh	r3, [r7, #10]	@ movhi
+ 185 0012 0B46     		mov	r3, r1	@ movhi
+ 186 0014 3B81     		strh	r3, [r7, #8]	@ movhi
+ 187 0016 1346     		mov	r3, r2	@ movhi
+ 188 0018 FB80     		strh	r3, [r7, #6]	@ movhi
+  32:sys/controls.c ****     st->tim = TIM4;
+ 189              		.loc 1 32 0
+ 190 001a FB68     		ldr	r3, [r7, #12]
+ 191 001c 094A     		ldr	r2, .L5
+ 192 001e 1A60     		str	r2, [r3]
+  33:sys/controls.c ****     st->val = val;
+ 193              		.loc 1 33 0
+ 194 0020 FB68     		ldr	r3, [r7, #12]
+ 195 0022 7A89     		ldrh	r2, [r7, #10]	@ movhi
+ 196 0024 9A80     		strh	r2, [r3, #4]	@ movhi
+  34:sys/controls.c ****     st->max = max;
+ 197              		.loc 1 34 0
+ 198 0026 FB68     		ldr	r3, [r7, #12]
+ 199 0028 3A89     		ldrh	r2, [r7, #8]	@ movhi
+ 200 002a DA80     		strh	r2, [r3, #6]	@ movhi
+  35:sys/controls.c ****     st->min = min;
+ARM GAS  /tmp/cc23ttcQ.s 			page 5
+
+
+ 201              		.loc 1 35 0
+ 202 002c FB68     		ldr	r3, [r7, #12]
+ 203 002e FA88     		ldrh	r2, [r7, #6]	@ movhi
+ 204 0030 1A81     		strh	r2, [r3, #8]	@ movhi
+  36:sys/controls.c ****     st->acceleration_en = acceleration_en;
+ 205              		.loc 1 36 0
+ 206 0032 FB68     		ldr	r3, [r7, #12]
+ 207 0034 3A7E     		ldrb	r2, [r7, #24]
+ 208 0036 9A72     		strb	r2, [r3, #10]
+  37:sys/controls.c **** }
+ 209              		.loc 1 37 0
+ 210 0038 1437     		adds	r7, r7, #20
+ 211              	.LCFI7:
+ 212              		.cfi_def_cfa_offset 4
+ 213 003a BD46     		mov	sp, r7
+ 214              	.LCFI8:
+ 215              		.cfi_def_cfa_register 13
+ 216              		@ sp needed
+ 217 003c 5DF8047B 		ldr	r7, [sp], #4
+ 218              	.LCFI9:
+ 219              		.cfi_restore 7
+ 220              		.cfi_def_cfa_offset 0
+ 221 0040 7047     		bx	lr
+ 222              	.L6:
+ 223 0042 00BF     		.align	2
+ 224              	.L5:
+ 225 0044 00080040 		.word	1073743872
+ 226              		.cfi_endproc
+ 227              	.LFE64:
+ 229              		.section	.text._controls_button_handle,"ax",%progbits
+ 230              		.align	2
+ 231              		.global	_controls_button_handle
+ 232              		.thumb
+ 233              		.thumb_func
+ 235              	_controls_button_handle:
+ 236              	.LFB65:
+  38:sys/controls.c **** 
+  39:sys/controls.c **** void _controls_button_handle(uint8_t b, uint8_t e)
+  40:sys/controls.c **** {
+ 237              		.loc 1 40 0
+ 238              		.cfi_startproc
+ 239              		@ args = 0, pretend = 0, frame = 8
+ 240              		@ frame_needed = 1, uses_anonymous_args = 0
+ 241 0000 80B5     		push	{r7, lr}
+ 242              	.LCFI10:
+ 243              		.cfi_def_cfa_offset 8
+ 244              		.cfi_offset 7, -8
+ 245              		.cfi_offset 14, -4
+ 246 0002 82B0     		sub	sp, sp, #8
+ 247              	.LCFI11:
+ 248              		.cfi_def_cfa_offset 16
+ 249 0004 00AF     		add	r7, sp, #0
+ 250              	.LCFI12:
+ 251              		.cfi_def_cfa_register 7
+ 252 0006 0346     		mov	r3, r0
+ 253 0008 0A46     		mov	r2, r1
+ 254 000a FB71     		strb	r3, [r7, #7]
+ARM GAS  /tmp/cc23ttcQ.s 			page 6
+
+
+ 255 000c 1346     		mov	r3, r2
+ 256 000e BB71     		strb	r3, [r7, #6]
+  41:sys/controls.c ****     if(Controls_ButtonsHandler != 0)
+ 257              		.loc 1 41 0
+ 258 0010 064B     		ldr	r3, .L9
+ 259 0012 1B68     		ldr	r3, [r3]
+ 260 0014 002B     		cmp	r3, #0
+ 261 0016 06D0     		beq	.L7
+  42:sys/controls.c **** 	Controls_ButtonsHandler(b, e);
+ 262              		.loc 1 42 0
+ 263 0018 044B     		ldr	r3, .L9
+ 264 001a 1B68     		ldr	r3, [r3]
+ 265 001c F979     		ldrb	r1, [r7, #7]	@ zero_extendqisi2
+ 266 001e BA79     		ldrb	r2, [r7, #6]	@ zero_extendqisi2
+ 267 0020 0846     		mov	r0, r1
+ 268 0022 1146     		mov	r1, r2
+ 269 0024 9847     		blx	r3
+ 270              	.L7:
+  43:sys/controls.c **** }
+ 271              		.loc 1 43 0
+ 272 0026 0837     		adds	r7, r7, #8
+ 273              	.LCFI13:
+ 274              		.cfi_def_cfa_offset 8
+ 275 0028 BD46     		mov	sp, r7
+ 276              	.LCFI14:
+ 277              		.cfi_def_cfa_register 13
+ 278              		@ sp needed
+ 279 002a 80BD     		pop	{r7, pc}
+ 280              	.L10:
+ 281              		.align	2
+ 282              	.L9:
+ 283 002c 00000000 		.word	Controls_ButtonsHandler
+ 284              		.cfi_endproc
+ 285              	.LFE65:
+ 287              		.section	.text._controls_encoder_handle,"ax",%progbits
+ 288              		.align	2
+ 289              		.global	_controls_encoder_handle
+ 290              		.thumb
+ 291              		.thumb_func
+ 293              	_controls_encoder_handle:
+ 294              	.LFB66:
+  44:sys/controls.c **** void _controls_encoder_handle(uint16_t b, int16_t e)
+  45:sys/controls.c **** {
+ 295              		.loc 1 45 0
+ 296              		.cfi_startproc
+ 297              		@ args = 0, pretend = 0, frame = 8
+ 298              		@ frame_needed = 1, uses_anonymous_args = 0
+ 299 0000 80B5     		push	{r7, lr}
+ 300              	.LCFI15:
+ 301              		.cfi_def_cfa_offset 8
+ 302              		.cfi_offset 7, -8
+ 303              		.cfi_offset 14, -4
+ 304 0002 82B0     		sub	sp, sp, #8
+ 305              	.LCFI16:
+ 306              		.cfi_def_cfa_offset 16
+ 307 0004 00AF     		add	r7, sp, #0
+ 308              	.LCFI17:
+ARM GAS  /tmp/cc23ttcQ.s 			page 7
+
+
+ 309              		.cfi_def_cfa_register 7
+ 310 0006 0346     		mov	r3, r0
+ 311 0008 0A46     		mov	r2, r1
+ 312 000a FB80     		strh	r3, [r7, #6]	@ movhi
+ 313 000c 1346     		mov	r3, r2	@ movhi
+ 314 000e BB80     		strh	r3, [r7, #4]	@ movhi
+  46:sys/controls.c ****     if(Controls_EncoderHandler != 0)
+ 315              		.loc 1 46 0
+ 316 0010 074B     		ldr	r3, .L13
+ 317 0012 1B68     		ldr	r3, [r3]
+ 318 0014 002B     		cmp	r3, #0
+ 319 0016 07D0     		beq	.L11
+  47:sys/controls.c **** 	Controls_EncoderHandler(b, e);
+ 320              		.loc 1 47 0
+ 321 0018 054B     		ldr	r3, .L13
+ 322 001a 1B68     		ldr	r3, [r3]
+ 323 001c F988     		ldrh	r1, [r7, #6]
+ 324 001e B7F90420 		ldrsh	r2, [r7, #4]
+ 325 0022 0846     		mov	r0, r1
+ 326 0024 1146     		mov	r1, r2
+ 327 0026 9847     		blx	r3
+ 328              	.L11:
+  48:sys/controls.c **** }
+ 329              		.loc 1 48 0
+ 330 0028 0837     		adds	r7, r7, #8
+ 331              	.LCFI18:
+ 332              		.cfi_def_cfa_offset 8
+ 333 002a BD46     		mov	sp, r7
+ 334              	.LCFI19:
+ 335              		.cfi_def_cfa_register 13
+ 336              		@ sp needed
+ 337 002c 80BD     		pop	{r7, pc}
+ 338              	.L14:
+ 339 002e 00BF     		.align	2
+ 340              	.L13:
+ 341 0030 00000000 		.word	Controls_EncoderHandler
+ 342              		.cfi_endproc
+ 343              	.LFE66:
+ 345              		.section	.text.controls_update,"ax",%progbits
+ 346              		.align	2
+ 347              		.global	controls_update
+ 348              		.thumb
+ 349              		.thumb_func
+ 351              	controls_update:
+ 352              	.LFB67:
+  49:sys/controls.c **** 
+  50:sys/controls.c **** void controls_update(void)
+  51:sys/controls.c **** {
+ 353              		.loc 1 51 0
+ 354              		.cfi_startproc
+ 355              		@ args = 0, pretend = 0, frame = 24
+ 356              		@ frame_needed = 1, uses_anonymous_args = 0
+ 357 0000 80B5     		push	{r7, lr}
+ 358              	.LCFI20:
+ 359              		.cfi_def_cfa_offset 8
+ 360              		.cfi_offset 7, -8
+ 361              		.cfi_offset 14, -4
+ARM GAS  /tmp/cc23ttcQ.s 			page 8
+
+
+ 362 0002 86B0     		sub	sp, sp, #24
+ 363              	.LCFI21:
+ 364              		.cfi_def_cfa_offset 32
+ 365 0004 00AF     		add	r7, sp, #0
+ 366              	.LCFI22:
+ 367              		.cfi_def_cfa_register 7
+ 368              	.LBB2:
+  52:sys/controls.c ****     for(uint8_t i = 0; i < ButtonsCount; i++)
+ 369              		.loc 1 52 0
+ 370 0006 0023     		movs	r3, #0
+ 371 0008 FB75     		strb	r3, [r7, #23]
+ 372 000a 6EE0     		b	.L16
+ 373              	.L24:
+ 374              	.LBB3:
+  53:sys/controls.c ****     {
+  54:sys/controls.c **** 	Controls_ButtonState* b = &(controls_buttons[i]);
+ 375              		.loc 1 54 0
+ 376 000c FA7D     		ldrb	r2, [r7, #23]	@ zero_extendqisi2
+ 377 000e 1346     		mov	r3, r2
+ 378 0010 5B00     		lsls	r3, r3, #1
+ 379 0012 1344     		add	r3, r3, r2
+ 380 0014 9B00     		lsls	r3, r3, #2
+ 381 0016 864A     		ldr	r2, .L34
+ 382 0018 1344     		add	r3, r3, r2
+ 383 001a FB60     		str	r3, [r7, #12]
+  55:sys/controls.c **** 	if(HAL_GPIO_ReadPin(controls_buttons[i].gpio, b->pin) == (b->polarity_pressed) ? GPIO_PIN_SET : GP
+ 384              		.loc 1 55 0
+ 385 001c FA7D     		ldrb	r2, [r7, #23]	@ zero_extendqisi2
+ 386 001e 8449     		ldr	r1, .L34
+ 387 0020 1346     		mov	r3, r2
+ 388 0022 5B00     		lsls	r3, r3, #1
+ 389 0024 1344     		add	r3, r3, r2
+ 390 0026 9B00     		lsls	r3, r3, #2
+ 391 0028 0B44     		add	r3, r3, r1
+ 392 002a 1A68     		ldr	r2, [r3]
+ 393 002c FB68     		ldr	r3, [r7, #12]
+ 394 002e 9B88     		ldrh	r3, [r3, #4]
+ 395 0030 1046     		mov	r0, r2
+ 396 0032 1946     		mov	r1, r3
+ 397 0034 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 398 0038 0346     		mov	r3, r0
+ 399 003a 1A46     		mov	r2, r3
+ 400 003c FB68     		ldr	r3, [r7, #12]
+ 401 003e 9B79     		ldrb	r3, [r3, #6]	@ zero_extendqisi2
+ 402 0040 9A42     		cmp	r2, r3
+ 403 0042 29D1     		bne	.L17
+  56:sys/controls.c **** 	{
+  57:sys/controls.c **** 	    if(b->pressed == 0)
+ 404              		.loc 1 57 0
+ 405 0044 FB68     		ldr	r3, [r7, #12]
+ 406 0046 DB79     		ldrb	r3, [r3, #7]	@ zero_extendqisi2
+ 407 0048 002B     		cmp	r3, #0
+ 408 004a 08D1     		bne	.L18
+  58:sys/controls.c **** 	    {
+  59:sys/controls.c **** 		b->pressed = 1;
+ 409              		.loc 1 59 0
+ 410 004c FB68     		ldr	r3, [r7, #12]
+ARM GAS  /tmp/cc23ttcQ.s 			page 9
+
+
+ 411 004e 0122     		movs	r2, #1
+ 412 0050 DA71     		strb	r2, [r3, #7]
+  60:sys/controls.c **** 		b->press_start_time = controls_millis();
+ 413              		.loc 1 60 0
+ 414 0052 FFF7FEFF 		bl	controls_millis
+ 415 0056 0246     		mov	r2, r0
+ 416 0058 FB68     		ldr	r3, [r7, #12]
+ 417 005a 9A60     		str	r2, [r3, #8]
+ 418 005c 42E0     		b	.L21
+ 419              	.L18:
+  61:sys/controls.c **** 	    }
+  62:sys/controls.c **** 	    else
+  63:sys/controls.c **** 	    {
+  64:sys/controls.c **** 		if(controls_millis() - b->press_start_time > CONTROLS_LongClickTime)
+ 420              		.loc 1 64 0
+ 421 005e FFF7FEFF 		bl	controls_millis
+ 422 0062 0246     		mov	r2, r0
+ 423 0064 FB68     		ldr	r3, [r7, #12]
+ 424 0066 9B68     		ldr	r3, [r3, #8]
+ 425 0068 D31A     		subs	r3, r2, r3
+ 426 006a B3F5FA7F 		cmp	r3, #500
+ 427 006e 05D9     		bls	.L20
+  65:sys/controls.c **** 		{
+  66:sys/controls.c **** 		    _controls_button_handle(i, CONTROLS_LONG_PRESSING);
+ 428              		.loc 1 66 0
+ 429 0070 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 430 0072 1846     		mov	r0, r3
+ 431 0074 0821     		movs	r1, #8
+ 432 0076 FFF7FEFF 		bl	_controls_button_handle
+ 433 007a 33E0     		b	.L21
+ 434              	.L20:
+  67:sys/controls.c **** 		}
+  68:sys/controls.c **** 		else if(controls_millis() - b->press_start_time > CONTROLS_ClickTime)
+ 435              		.loc 1 68 0
+ 436 007c FFF7FEFF 		bl	controls_millis
+ 437 0080 0246     		mov	r2, r0
+ 438 0082 FB68     		ldr	r3, [r7, #12]
+ 439 0084 9B68     		ldr	r3, [r3, #8]
+ 440 0086 D31A     		subs	r3, r2, r3
+ 441 0088 1E2B     		cmp	r3, #30
+ 442 008a 2BD9     		bls	.L21
+  69:sys/controls.c **** 		{
+  70:sys/controls.c **** 		    _controls_button_handle(i, CONTROLS_PRESSING);
+ 443              		.loc 1 70 0
+ 444 008c FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 445 008e 1846     		mov	r0, r3
+ 446 0090 0221     		movs	r1, #2
+ 447 0092 FFF7FEFF 		bl	_controls_button_handle
+ 448 0096 25E0     		b	.L21
+ 449              	.L17:
+  71:sys/controls.c **** 		}
+  72:sys/controls.c **** 	    }
+  73:sys/controls.c **** 	}
+  74:sys/controls.c **** 	else
+  75:sys/controls.c **** 	{
+  76:sys/controls.c **** 	    if(b->pressed == 1)
+ 450              		.loc 1 76 0
+ARM GAS  /tmp/cc23ttcQ.s 			page 10
+
+
+ 451 0098 FB68     		ldr	r3, [r7, #12]
+ 452 009a DB79     		ldrb	r3, [r3, #7]	@ zero_extendqisi2
+ 453 009c 012B     		cmp	r3, #1
+ 454 009e 1BD1     		bne	.L22
+  77:sys/controls.c **** 	    {
+  78:sys/controls.c **** 		if(controls_millis() - b->press_start_time > CONTROLS_LongClickTime)
+ 455              		.loc 1 78 0
+ 456 00a0 FFF7FEFF 		bl	controls_millis
+ 457 00a4 0246     		mov	r2, r0
+ 458 00a6 FB68     		ldr	r3, [r7, #12]
+ 459 00a8 9B68     		ldr	r3, [r3, #8]
+ 460 00aa D31A     		subs	r3, r2, r3
+ 461 00ac B3F5FA7F 		cmp	r3, #500
+ 462 00b0 05D9     		bls	.L23
+  79:sys/controls.c **** 		{
+  80:sys/controls.c **** 		    _controls_button_handle(i, CONTROLS_LONG_CLICK);
+ 463              		.loc 1 80 0
+ 464 00b2 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 465 00b4 1846     		mov	r0, r3
+ 466 00b6 0421     		movs	r1, #4
+ 467 00b8 FFF7FEFF 		bl	_controls_button_handle
+ 468 00bc 0CE0     		b	.L22
+ 469              	.L23:
+  81:sys/controls.c **** 		}
+  82:sys/controls.c **** 		else if(controls_millis() - b->press_start_time > CONTROLS_ClickTime)
+ 470              		.loc 1 82 0
+ 471 00be FFF7FEFF 		bl	controls_millis
+ 472 00c2 0246     		mov	r2, r0
+ 473 00c4 FB68     		ldr	r3, [r7, #12]
+ 474 00c6 9B68     		ldr	r3, [r3, #8]
+ 475 00c8 D31A     		subs	r3, r2, r3
+ 476 00ca 1E2B     		cmp	r3, #30
+ 477 00cc 04D9     		bls	.L22
+  83:sys/controls.c **** 		{
+  84:sys/controls.c **** 		    _controls_button_handle(i, CONTROLS_CLICK);
+ 478              		.loc 1 84 0
+ 479 00ce FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 480 00d0 1846     		mov	r0, r3
+ 481 00d2 0121     		movs	r1, #1
+ 482 00d4 FFF7FEFF 		bl	_controls_button_handle
+ 483              	.L22:
+  85:sys/controls.c **** 		}
+  86:sys/controls.c **** 	    }
+  87:sys/controls.c **** 	    b->press_start_time = b->pressed = 0;
+ 484              		.loc 1 87 0
+ 485 00d8 FB68     		ldr	r3, [r7, #12]
+ 486 00da 0022     		movs	r2, #0
+ 487 00dc DA71     		strb	r2, [r3, #7]
+ 488 00de FB68     		ldr	r3, [r7, #12]
+ 489 00e0 0022     		movs	r2, #0
+ 490 00e2 9A60     		str	r2, [r3, #8]
+ 491              	.L21:
+ 492              	.LBE3:
+  52:sys/controls.c ****     {
+ 493              		.loc 1 52 0 discriminator 2
+ 494 00e4 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 495 00e6 0133     		adds	r3, r3, #1
+ARM GAS  /tmp/cc23ttcQ.s 			page 11
+
+
+ 496 00e8 FB75     		strb	r3, [r7, #23]
+ 497              	.L16:
+  52:sys/controls.c ****     {
+ 498              		.loc 1 52 0 is_stmt 0 discriminator 1
+ 499 00ea FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 500 00ec 032B     		cmp	r3, #3
+ 501 00ee 8DD9     		bls	.L24
+ 502              	.LBE2:
+  88:sys/controls.c **** 	}
+  89:sys/controls.c ****     }
+  90:sys/controls.c **** 
+  91:sys/controls.c ****     if(controls_encoder != 0)
+ 503              		.loc 1 91 0 is_stmt 1
+ 504 00f0 504B     		ldr	r3, .L34+4
+ 505 00f2 1B68     		ldr	r3, [r3]
+ 506 00f4 002B     		cmp	r3, #0
+ 507 00f6 00F09780 		beq	.L15
+ 508              	.LBB4:
+  92:sys/controls.c ****     {
+  93:sys/controls.c **** 	Controls_EncoderState *en = controls_encoder;
+ 509              		.loc 1 93 0
+ 510 00fa 4E4B     		ldr	r3, .L34+4
+ 511 00fc 1B68     		ldr	r3, [r3]
+ 512 00fe BB60     		str	r3, [r7, #8]
+  94:sys/controls.c **** 	if(en->period_start_time == 0)
+ 513              		.loc 1 94 0
+ 514 0100 BB68     		ldr	r3, [r7, #8]
+ 515 0102 DB68     		ldr	r3, [r3, #12]
+ 516 0104 002B     		cmp	r3, #0
+ 517 0106 03D1     		bne	.L26
+  95:sys/controls.c **** 	{
+  96:sys/controls.c **** 	    en->tim->CNT = CONTROLS_EncoderDefault;
+ 518              		.loc 1 96 0
+ 519 0108 BB68     		ldr	r3, [r7, #8]
+ 520 010a 1B68     		ldr	r3, [r3]
+ 521 010c 8022     		movs	r2, #128
+ 522 010e 5A62     		str	r2, [r3, #36]
+ 523              	.L26:
+  97:sys/controls.c **** 	}
+  98:sys/controls.c **** 	uint32_t dt = (controls_millis() - en->period_start_time);
+ 524              		.loc 1 98 0
+ 525 0110 FFF7FEFF 		bl	controls_millis
+ 526 0114 0246     		mov	r2, r0
+ 527 0116 BB68     		ldr	r3, [r7, #8]
+ 528 0118 DB68     		ldr	r3, [r3, #12]
+ 529 011a D31A     		subs	r3, r2, r3
+ 530 011c 7B60     		str	r3, [r7, #4]
+  99:sys/controls.c **** 	if(dt > CONTROLS_EncoderPeriodTime)
+ 531              		.loc 1 99 0
+ 532 011e 7B68     		ldr	r3, [r7, #4]
+ 533 0120 642B     		cmp	r3, #100
+ 534 0122 40F28180 		bls	.L15
+ 535              	.LBB5:
+ 100:sys/controls.c **** 	{
+ 101:sys/controls.c **** 	    int16_t dv = (en->tim->CNT - CONTROLS_EncoderDefault);
+ 536              		.loc 1 101 0
+ 537 0126 BB68     		ldr	r3, [r7, #8]
+ARM GAS  /tmp/cc23ttcQ.s 			page 12
+
+
+ 538 0128 1B68     		ldr	r3, [r3]
+ 539 012a 5B6A     		ldr	r3, [r3, #36]
+ 540 012c 9BB2     		uxth	r3, r3
+ 541 012e 803B     		subs	r3, r3, #128
+ 542 0130 9BB2     		uxth	r3, r3
+ 543 0132 BB82     		strh	r3, [r7, #20]	@ movhi
+ 102:sys/controls.c **** 	    if(en->acceleration_en)
+ 544              		.loc 1 102 0
+ 545 0134 BB68     		ldr	r3, [r7, #8]
+ 546 0136 9B7A     		ldrb	r3, [r3, #10]	@ zero_extendqisi2
+ 547 0138 002B     		cmp	r3, #0
+ 548 013a 3FD0     		beq	.L27
+ 549              	.LBB6:
+ 103:sys/controls.c **** 	    {
+ 104:sys/controls.c **** 		int16_t s = dv * (int)1000 / (int)dt;
+ 550              		.loc 1 104 0
+ 551 013c B7F91430 		ldrsh	r3, [r7, #20]
+ 552 0140 4FF47A72 		mov	r2, #1000
+ 553 0144 02FB03F2 		mul	r2, r2, r3
+ 554 0148 7B68     		ldr	r3, [r7, #4]
+ 555 014a 92FBF3F3 		sdiv	r3, r2, r3
+ 556 014e 7B80     		strh	r3, [r7, #2]	@ movhi
+ 105:sys/controls.c **** 		s = (int16_t)abs(s);
+ 557              		.loc 1 105 0
+ 558 0150 B7F90230 		ldrsh	r3, [r7, #2]
+ 559 0154 002B     		cmp	r3, #0
+ 560 0156 B8BF     		it	lt
+ 561 0158 5B42     		rsblt	r3, r3, #0
+ 562 015a 7B80     		strh	r3, [r7, #2]	@ movhi
+ 106:sys/controls.c **** 		if(s >= CONTROLS_EncoderDSpeed)
+ 563              		.loc 1 106 0
+ 564 015c B7F90230 		ldrsh	r3, [r7, #2]
+ 565 0160 392B     		cmp	r3, #57
+ 566 0162 06DD     		ble	.L28
+ 107:sys/controls.c **** 		    dv *= CONTROLS_EncoderDAccel;
+ 567              		.loc 1 107 0
+ 568 0164 BB8A     		ldrh	r3, [r7, #20]
+ 569 0166 1A46     		mov	r2, r3	@ movhi
+ 570 0168 9200     		lsls	r2, r2, #2
+ 571 016a 1344     		add	r3, r3, r2
+ 572 016c 9BB2     		uxth	r3, r3
+ 573 016e BB82     		strh	r3, [r7, #20]	@ movhi
+ 574 0170 24E0     		b	.L27
+ 575              	.L28:
+ 108:sys/controls.c **** 		else if(s >= CONTROLS_EncoderCSpeed)
+ 576              		.loc 1 108 0
+ 577 0172 B7F90230 		ldrsh	r3, [r7, #2]
+ 578 0176 2F2B     		cmp	r3, #47
+ 579 0178 04DD     		ble	.L29
+ 109:sys/controls.c **** 		    dv *= CONTROLS_EncoderCAccel;
+ 580              		.loc 1 109 0
+ 581 017a BB8A     		ldrh	r3, [r7, #20]
+ 582 017c 9B00     		lsls	r3, r3, #2
+ 583 017e 9BB2     		uxth	r3, r3
+ 584 0180 BB82     		strh	r3, [r7, #20]	@ movhi
+ 585 0182 1BE0     		b	.L27
+ 586              	.L29:
+ARM GAS  /tmp/cc23ttcQ.s 			page 13
+
+
+ 110:sys/controls.c **** 		else if(s >= CONTROLS_EncoderBSpeed)
+ 587              		.loc 1 110 0
+ 588 0184 B7F90230 		ldrsh	r3, [r7, #2]
+ 589 0188 252B     		cmp	r3, #37
+ 590 018a 06DD     		ble	.L30
+ 111:sys/controls.c **** 		    dv *= CONTROLS_EncoderBAccel;
+ 591              		.loc 1 111 0
+ 592 018c BB8A     		ldrh	r3, [r7, #20]
+ 593 018e 1A46     		mov	r2, r3	@ movhi
+ 594 0190 5200     		lsls	r2, r2, #1
+ 595 0192 1344     		add	r3, r3, r2
+ 596 0194 9BB2     		uxth	r3, r3
+ 597 0196 BB82     		strh	r3, [r7, #20]	@ movhi
+ 598 0198 10E0     		b	.L27
+ 599              	.L30:
+ 112:sys/controls.c **** 		else if(s >= CONTROLS_EncoderASpeed)
+ 600              		.loc 1 112 0
+ 601 019a B7F90230 		ldrsh	r3, [r7, #2]
+ 602 019e 1B2B     		cmp	r3, #27
+ 603 01a0 04DD     		ble	.L31
+ 113:sys/controls.c **** 		    dv *= CONTROLS_EncoderAAccel;
+ 604              		.loc 1 113 0
+ 605 01a2 BB8A     		ldrh	r3, [r7, #20]
+ 606 01a4 5B00     		lsls	r3, r3, #1
+ 607 01a6 9BB2     		uxth	r3, r3
+ 608 01a8 BB82     		strh	r3, [r7, #20]	@ movhi
+ 609 01aa 07E0     		b	.L27
+ 610              	.L31:
+ 114:sys/controls.c **** 		else if(s >= CONTROLS_Encoder1Speed)
+ 611              		.loc 1 114 0
+ 612 01ac B7F90230 		ldrsh	r3, [r7, #2]
+ 613 01b0 122B     		cmp	r3, #18
+ 614 01b2 03DD     		ble	.L27
+ 115:sys/controls.c **** 		    dv += CONTROLS_Encoder1Accel;
+ 615              		.loc 1 115 0
+ 616 01b4 BB8A     		ldrh	r3, [r7, #20]
+ 617 01b6 0133     		adds	r3, r3, #1
+ 618 01b8 9BB2     		uxth	r3, r3
+ 619 01ba BB82     		strh	r3, [r7, #20]	@ movhi
+ 620              	.L27:
+ 621              	.LBE6:
+ 116:sys/controls.c **** 		//printf("speed %d\n", dv * (int)1000 / (int)dt);
+ 117:sys/controls.c **** 	    }
+ 118:sys/controls.c **** 	    int16_t v = en->val + dv;
+ 622              		.loc 1 118 0
+ 623 01bc BB68     		ldr	r3, [r7, #8]
+ 624 01be 9B88     		ldrh	r3, [r3, #4]
+ 625 01c0 9AB2     		uxth	r2, r3
+ 626 01c2 BB8A     		ldrh	r3, [r7, #20]
+ 627 01c4 1344     		add	r3, r3, r2
+ 628 01c6 9BB2     		uxth	r3, r3
+ 629 01c8 7B82     		strh	r3, [r7, #18]	@ movhi
+ 119:sys/controls.c **** 
+ 120:sys/controls.c **** 	    if(v > en->max && en->max != 0)
+ 630              		.loc 1 120 0
+ 631 01ca BB68     		ldr	r3, [r7, #8]
+ 632 01cc DB88     		ldrh	r3, [r3, #6]
+ARM GAS  /tmp/cc23ttcQ.s 			page 14
+
+
+ 633 01ce B7F91220 		ldrsh	r2, [r7, #18]
+ 634 01d2 1BB2     		sxth	r3, r3
+ 635 01d4 9A42     		cmp	r2, r3
+ 636 01d6 06DD     		ble	.L32
+ 637              		.loc 1 120 0 is_stmt 0 discriminator 1
+ 638 01d8 BB68     		ldr	r3, [r7, #8]
+ 639 01da DB88     		ldrh	r3, [r3, #6]
+ 640 01dc 002B     		cmp	r3, #0
+ 641 01de 02D0     		beq	.L32
+ 121:sys/controls.c **** 		v = en->min;
+ 642              		.loc 1 121 0 is_stmt 1
+ 643 01e0 BB68     		ldr	r3, [r7, #8]
+ 644 01e2 1B89     		ldrh	r3, [r3, #8]	@ movhi
+ 645 01e4 7B82     		strh	r3, [r7, #18]	@ movhi
+ 646              	.L32:
+ 122:sys/controls.c **** 	    if(v < en->min && en->max != 0)
+ 647              		.loc 1 122 0
+ 648 01e6 BB68     		ldr	r3, [r7, #8]
+ 649 01e8 1B89     		ldrh	r3, [r3, #8]
+ 650 01ea B7F91220 		ldrsh	r2, [r7, #18]
+ 651 01ee 1BB2     		sxth	r3, r3
+ 652 01f0 9A42     		cmp	r2, r3
+ 653 01f2 06DA     		bge	.L33
+ 654              		.loc 1 122 0 is_stmt 0 discriminator 1
+ 655 01f4 BB68     		ldr	r3, [r7, #8]
+ 656 01f6 DB88     		ldrh	r3, [r3, #6]
+ 657 01f8 002B     		cmp	r3, #0
+ 658 01fa 02D0     		beq	.L33
+ 123:sys/controls.c **** 		v = en->max;
+ 659              		.loc 1 123 0 is_stmt 1
+ 660 01fc BB68     		ldr	r3, [r7, #8]
+ 661 01fe DB88     		ldrh	r3, [r3, #6]	@ movhi
+ 662 0200 7B82     		strh	r3, [r7, #18]	@ movhi
+ 663              	.L33:
+ 124:sys/controls.c **** 
+ 125:sys/controls.c **** 	    en->val = v;
+ 664              		.loc 1 125 0
+ 665 0202 BB68     		ldr	r3, [r7, #8]
+ 666 0204 7A8A     		ldrh	r2, [r7, #18]	@ movhi
+ 667 0206 9A80     		strh	r2, [r3, #4]	@ movhi
+ 126:sys/controls.c **** 
+ 127:sys/controls.c **** 	    _controls_encoder_handle(v, dv);
+ 668              		.loc 1 127 0
+ 669 0208 7A8A     		ldrh	r2, [r7, #18]
+ 670 020a B7F91430 		ldrsh	r3, [r7, #20]
+ 671 020e 1046     		mov	r0, r2
+ 672 0210 1946     		mov	r1, r3
+ 673 0212 FFF7FEFF 		bl	_controls_encoder_handle
+ 128:sys/controls.c **** 	    
+ 129:sys/controls.c **** 	    en->tim->CNT = CONTROLS_EncoderDefault;
+ 674              		.loc 1 129 0
+ 675 0216 BB68     		ldr	r3, [r7, #8]
+ 676 0218 1B68     		ldr	r3, [r3]
+ 677 021a 8022     		movs	r2, #128
+ 678 021c 5A62     		str	r2, [r3, #36]
+ 130:sys/controls.c **** 	    en->period_start_time = controls_millis();
+ 679              		.loc 1 130 0
+ARM GAS  /tmp/cc23ttcQ.s 			page 15
+
+
+ 680 021e FFF7FEFF 		bl	controls_millis
+ 681 0222 0246     		mov	r2, r0
+ 682 0224 BB68     		ldr	r3, [r7, #8]
+ 683 0226 DA60     		str	r2, [r3, #12]
+ 684              	.L15:
+ 685              	.LBE5:
+ 686              	.LBE4:
+ 131:sys/controls.c **** 	}
+ 132:sys/controls.c ****     }
+ 133:sys/controls.c **** }
+ 687              		.loc 1 133 0
+ 688 0228 1837     		adds	r7, r7, #24
+ 689              	.LCFI23:
+ 690              		.cfi_def_cfa_offset 8
+ 691 022a BD46     		mov	sp, r7
+ 692              	.LCFI24:
+ 693              		.cfi_def_cfa_register 13
+ 694              		@ sp needed
+ 695 022c 80BD     		pop	{r7, pc}
+ 696              	.L35:
+ 697 022e 00BF     		.align	2
+ 698              	.L34:
+ 699 0230 00000000 		.word	controls_buttons
+ 700 0234 00000000 		.word	controls_encoder
+ 701              		.cfi_endproc
+ 702              	.LFE67:
+ 704              		.section	.text.en_gv,"ax",%progbits
+ 705              		.align	2
+ 706              		.global	en_gv
+ 707              		.thumb
+ 708              		.thumb_func
+ 710              	en_gv:
+ 711              	.LFB68:
+ 134:sys/controls.c **** int16_t en_gv()
+ 135:sys/controls.c **** {
+ 712              		.loc 1 135 0
+ 713              		.cfi_startproc
+ 714              		@ args = 0, pretend = 0, frame = 8
+ 715              		@ frame_needed = 1, uses_anonymous_args = 0
+ 716              		@ link register save eliminated.
+ 717 0000 80B4     		push	{r7}
+ 718              	.LCFI25:
+ 719              		.cfi_def_cfa_offset 4
+ 720              		.cfi_offset 7, -4
+ 721 0002 83B0     		sub	sp, sp, #12
+ 722              	.LCFI26:
+ 723              		.cfi_def_cfa_offset 16
+ 724 0004 00AF     		add	r7, sp, #0
+ 725              	.LCFI27:
+ 726              		.cfi_def_cfa_register 7
+ 136:sys/controls.c ****     if(controls_encoder != 0)
+ 727              		.loc 1 136 0
+ 728 0006 094B     		ldr	r3, .L39
+ 729 0008 1B68     		ldr	r3, [r3]
+ 730 000a 002B     		cmp	r3, #0
+ 731 000c 05D0     		beq	.L37
+ 732              	.LBB7:
+ARM GAS  /tmp/cc23ttcQ.s 			page 16
+
+
+ 137:sys/controls.c ****     {
+ 138:sys/controls.c **** 	Controls_EncoderState *en = controls_encoder;
+ 733              		.loc 1 138 0
+ 734 000e 074B     		ldr	r3, .L39
+ 735 0010 1B68     		ldr	r3, [r3]
+ 736 0012 7B60     		str	r3, [r7, #4]
+ 139:sys/controls.c **** 	return en->val;
+ 737              		.loc 1 139 0
+ 738 0014 7B68     		ldr	r3, [r7, #4]
+ 739 0016 9B88     		ldrh	r3, [r3, #4]
+ 740 0018 00E0     		b	.L38
+ 741              	.L37:
+ 742              	.LBE7:
+ 140:sys/controls.c ****     }
+ 141:sys/controls.c ****     return 0;
+ 743              		.loc 1 141 0
+ 744 001a 0023     		movs	r3, #0
+ 745              	.L38:
+ 746 001c 1BB2     		sxth	r3, r3
+ 142:sys/controls.c **** }
+ 747              		.loc 1 142 0
+ 748 001e 1846     		mov	r0, r3
+ 749 0020 0C37     		adds	r7, r7, #12
+ 750              	.LCFI28:
+ 751              		.cfi_def_cfa_offset 4
+ 752 0022 BD46     		mov	sp, r7
+ 753              	.LCFI29:
+ 754              		.cfi_def_cfa_register 13
+ 755              		@ sp needed
+ 756 0024 5DF8047B 		ldr	r7, [sp], #4
+ 757              	.LCFI30:
+ 758              		.cfi_restore 7
+ 759              		.cfi_def_cfa_offset 0
+ 760 0028 7047     		bx	lr
+ 761              	.L40:
+ 762 002a 00BF     		.align	2
+ 763              	.L39:
+ 764 002c 00000000 		.word	controls_encoder
+ 765              		.cfi_endproc
+ 766              	.LFE68:
+ 768              		.section	.text.controls_set_buttons_handler,"ax",%progbits
+ 769              		.align	2
+ 770              		.global	controls_set_buttons_handler
+ 771              		.thumb
+ 772              		.thumb_func
+ 774              	controls_set_buttons_handler:
+ 775              	.LFB69:
+ 143:sys/controls.c **** 
+ 144:sys/controls.c **** void controls_set_buttons_handler(void (*handler)(uint8_t, uint8_t))
+ 145:sys/controls.c **** {
+ 776              		.loc 1 145 0
+ 777              		.cfi_startproc
+ 778              		@ args = 0, pretend = 0, frame = 8
+ 779              		@ frame_needed = 1, uses_anonymous_args = 0
+ 780              		@ link register save eliminated.
+ 781 0000 80B4     		push	{r7}
+ 782              	.LCFI31:
+ARM GAS  /tmp/cc23ttcQ.s 			page 17
+
+
+ 783              		.cfi_def_cfa_offset 4
+ 784              		.cfi_offset 7, -4
+ 785 0002 83B0     		sub	sp, sp, #12
+ 786              	.LCFI32:
+ 787              		.cfi_def_cfa_offset 16
+ 788 0004 00AF     		add	r7, sp, #0
+ 789              	.LCFI33:
+ 790              		.cfi_def_cfa_register 7
+ 791 0006 7860     		str	r0, [r7, #4]
+ 146:sys/controls.c ****     Controls_ButtonsHandler = handler;
+ 792              		.loc 1 146 0
+ 793 0008 034A     		ldr	r2, .L42
+ 794 000a 7B68     		ldr	r3, [r7, #4]
+ 795 000c 1360     		str	r3, [r2]
+ 147:sys/controls.c **** }
+ 796              		.loc 1 147 0
+ 797 000e 0C37     		adds	r7, r7, #12
+ 798              	.LCFI34:
+ 799              		.cfi_def_cfa_offset 4
+ 800 0010 BD46     		mov	sp, r7
+ 801              	.LCFI35:
+ 802              		.cfi_def_cfa_register 13
+ 803              		@ sp needed
+ 804 0012 5DF8047B 		ldr	r7, [sp], #4
+ 805              	.LCFI36:
+ 806              		.cfi_restore 7
+ 807              		.cfi_def_cfa_offset 0
+ 808 0016 7047     		bx	lr
+ 809              	.L43:
+ 810              		.align	2
+ 811              	.L42:
+ 812 0018 00000000 		.word	Controls_ButtonsHandler
+ 813              		.cfi_endproc
+ 814              	.LFE69:
+ 816              		.section	.text.controls_set_encoder_handler,"ax",%progbits
+ 817              		.align	2
+ 818              		.global	controls_set_encoder_handler
+ 819              		.thumb
+ 820              		.thumb_func
+ 822              	controls_set_encoder_handler:
+ 823              	.LFB70:
+ 148:sys/controls.c **** 
+ 149:sys/controls.c **** void controls_set_encoder_handler(Controls_EncoderState* conf, void (*handler)(int16_t, int16_t))
+ 150:sys/controls.c **** {
+ 824              		.loc 1 150 0
+ 825              		.cfi_startproc
+ 826              		@ args = 0, pretend = 0, frame = 8
+ 827              		@ frame_needed = 1, uses_anonymous_args = 0
+ 828              		@ link register save eliminated.
+ 829 0000 80B4     		push	{r7}
+ 830              	.LCFI37:
+ 831              		.cfi_def_cfa_offset 4
+ 832              		.cfi_offset 7, -4
+ 833 0002 83B0     		sub	sp, sp, #12
+ 834              	.LCFI38:
+ 835              		.cfi_def_cfa_offset 16
+ 836 0004 00AF     		add	r7, sp, #0
+ARM GAS  /tmp/cc23ttcQ.s 			page 18
+
+
+ 837              	.LCFI39:
+ 838              		.cfi_def_cfa_register 7
+ 839 0006 7860     		str	r0, [r7, #4]
+ 840 0008 3960     		str	r1, [r7]
+ 151:sys/controls.c ****     if(conf != 0)
+ 841              		.loc 1 151 0
+ 842 000a 7B68     		ldr	r3, [r7, #4]
+ 843 000c 002B     		cmp	r3, #0
+ 844 000e 03D0     		beq	.L45
+ 152:sys/controls.c **** 	controls_encoder = conf;
+ 845              		.loc 1 152 0
+ 846 0010 074A     		ldr	r2, .L47
+ 847 0012 7B68     		ldr	r3, [r7, #4]
+ 848 0014 1360     		str	r3, [r2]
+ 849 0016 02E0     		b	.L46
+ 850              	.L45:
+ 153:sys/controls.c ****     else
+ 154:sys/controls.c **** 	controls_encoder = &controls_encoder_default;
+ 851              		.loc 1 154 0
+ 852 0018 054B     		ldr	r3, .L47
+ 853 001a 064A     		ldr	r2, .L47+4
+ 854 001c 1A60     		str	r2, [r3]
+ 855              	.L46:
+ 155:sys/controls.c ****     Controls_EncoderHandler = handler;
+ 856              		.loc 1 155 0
+ 857 001e 064A     		ldr	r2, .L47+8
+ 858 0020 3B68     		ldr	r3, [r7]
+ 859 0022 1360     		str	r3, [r2]
+ 156:sys/controls.c **** }
+ 860              		.loc 1 156 0
+ 861 0024 0C37     		adds	r7, r7, #12
+ 862              	.LCFI40:
+ 863              		.cfi_def_cfa_offset 4
+ 864 0026 BD46     		mov	sp, r7
+ 865              	.LCFI41:
+ 866              		.cfi_def_cfa_register 13
+ 867              		@ sp needed
+ 868 0028 5DF8047B 		ldr	r7, [sp], #4
+ 869              	.LCFI42:
+ 870              		.cfi_restore 7
+ 871              		.cfi_def_cfa_offset 0
+ 872 002c 7047     		bx	lr
+ 873              	.L48:
+ 874 002e 00BF     		.align	2
+ 875              	.L47:
+ 876 0030 00000000 		.word	controls_encoder
+ 877 0034 00000000 		.word	controls_encoder_default
+ 878 0038 00000000 		.word	Controls_EncoderHandler
+ 879              		.cfi_endproc
+ 880              	.LFE70:
+ 882              		.section	.text.controls_millis,"ax",%progbits
+ 883              		.align	2
+ 884              		.global	controls_millis
+ 885              		.thumb
+ 886              		.thumb_func
+ 888              	controls_millis:
+ 889              	.LFB71:
+ARM GAS  /tmp/cc23ttcQ.s 			page 19
+
+
+ 157:sys/controls.c **** 
+ 158:sys/controls.c **** uint32_t controls_millis(void)
+ 159:sys/controls.c **** {
+ 890              		.loc 1 159 0
+ 891              		.cfi_startproc
+ 892              		@ args = 0, pretend = 0, frame = 0
+ 893              		@ frame_needed = 1, uses_anonymous_args = 0
+ 894 0000 80B5     		push	{r7, lr}
+ 895              	.LCFI43:
+ 896              		.cfi_def_cfa_offset 8
+ 897              		.cfi_offset 7, -8
+ 898              		.cfi_offset 14, -4
+ 899 0002 00AF     		add	r7, sp, #0
+ 900              	.LCFI44:
+ 901              		.cfi_def_cfa_register 7
+ 160:sys/controls.c ****     return HAL_GetTick();
+ 902              		.loc 1 160 0
+ 903 0004 FFF7FEFF 		bl	HAL_GetTick
+ 904 0008 0346     		mov	r3, r0
+ 161:sys/controls.c **** }
+ 905              		.loc 1 161 0
+ 906 000a 1846     		mov	r0, r3
+ 907 000c 80BD     		pop	{r7, pc}
+ 908              		.cfi_endproc
+ 909              	.LFE71:
+ 911 000e 00BF     		.text
+ 912              	.Letext0:
+ 913              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 914              		.file 3 "/usr/include/newlib/stdint.h"
+ 915              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
+ 916              		.file 5 "sys/controls.h"
+ 917              		.file 6 "Drivers/CMSIS/Include/core_cm3.h"
+ 918              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h"
+ 919              		.file 8 "<built-in>"
+ARM GAS  /tmp/cc23ttcQ.s 			page 20
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 controls.c
+                            *COM*:0000000000000030 controls_buttons
+                            *COM*:0000000000000004 controls_encoder
+                            *COM*:0000000000000010 controls_encoder_default
+     /tmp/cc23ttcQ.s:26     .bss.Controls_ButtonsHandler:0000000000000000 Controls_ButtonsHandler
+     /tmp/cc23ttcQ.s:23     .bss.Controls_ButtonsHandler:0000000000000000 $d
+     /tmp/cc23ttcQ.s:33     .bss.Controls_EncoderHandler:0000000000000000 Controls_EncoderHandler
+     /tmp/cc23ttcQ.s:30     .bss.Controls_EncoderHandler:0000000000000000 $d
+     /tmp/cc23ttcQ.s:36     .rodata:0000000000000000 $d
+     /tmp/cc23ttcQ.s:65     .text.controls_init:0000000000000000 $t
+     /tmp/cc23ttcQ.s:70     .text.controls_init:0000000000000000 controls_init
+     /tmp/cc23ttcQ.s:162    .text.controls_init_encoder_state:0000000000000000 controls_init_encoder_state
+     /tmp/cc23ttcQ.s:146    .text.controls_init:0000000000000068 $d
+     /tmp/cc23ttcQ.s:157    .text.controls_init_encoder_state:0000000000000000 $t
+     /tmp/cc23ttcQ.s:225    .text.controls_init_encoder_state:0000000000000044 $d
+     /tmp/cc23ttcQ.s:230    .text._controls_button_handle:0000000000000000 $t
+     /tmp/cc23ttcQ.s:235    .text._controls_button_handle:0000000000000000 _controls_button_handle
+     /tmp/cc23ttcQ.s:283    .text._controls_button_handle:000000000000002c $d
+     /tmp/cc23ttcQ.s:288    .text._controls_encoder_handle:0000000000000000 $t
+     /tmp/cc23ttcQ.s:293    .text._controls_encoder_handle:0000000000000000 _controls_encoder_handle
+     /tmp/cc23ttcQ.s:341    .text._controls_encoder_handle:0000000000000030 $d
+     /tmp/cc23ttcQ.s:346    .text.controls_update:0000000000000000 $t
+     /tmp/cc23ttcQ.s:351    .text.controls_update:0000000000000000 controls_update
+     /tmp/cc23ttcQ.s:888    .text.controls_millis:0000000000000000 controls_millis
+     /tmp/cc23ttcQ.s:699    .text.controls_update:0000000000000230 $d
+     /tmp/cc23ttcQ.s:705    .text.en_gv:0000000000000000 $t
+     /tmp/cc23ttcQ.s:710    .text.en_gv:0000000000000000 en_gv
+     /tmp/cc23ttcQ.s:764    .text.en_gv:000000000000002c $d
+     /tmp/cc23ttcQ.s:769    .text.controls_set_buttons_handler:0000000000000000 $t
+     /tmp/cc23ttcQ.s:774    .text.controls_set_buttons_handler:0000000000000000 controls_set_buttons_handler
+     /tmp/cc23ttcQ.s:812    .text.controls_set_buttons_handler:0000000000000018 $d
+     /tmp/cc23ttcQ.s:817    .text.controls_set_encoder_handler:0000000000000000 $t
+     /tmp/cc23ttcQ.s:822    .text.controls_set_encoder_handler:0000000000000000 controls_set_encoder_handler
+     /tmp/cc23ttcQ.s:876    .text.controls_set_encoder_handler:0000000000000030 $d
+     /tmp/cc23ttcQ.s:883    .text.controls_millis:0000000000000000 $t
+                     .debug_frame:0000000000000010 $d
+
+UNDEFINED SYMBOLS
+HAL_GPIO_ReadPin
+HAL_GetTick

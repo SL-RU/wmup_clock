@@ -1,0 +1,89 @@
+#include <stdio.h>
+#include "stm32f1xx_hal.h"
+#include "hw_defs.h"
+#include <math.h>
+
+#define CONTROLS_ClickTime 30
+#define CONTROLS_LongClickTime 500
+
+#define CONTROLS_EncoderPeriodTime 100
+#define CONTROLS_EncoderDefault 128
+#define CONTROLS_Encoder1Speed 19
+#define CONTROLS_EncoderASpeed 28
+#define CONTROLS_EncoderBSpeed 38
+#define CONTROLS_EncoderCSpeed 48
+#define CONTROLS_EncoderDSpeed 58
+#define CONTROLS_Encoder1Accel 1
+#define CONTROLS_EncoderAAccel 2
+#define CONTROLS_EncoderBAccel 3
+#define CONTROLS_EncoderCAccel 4
+#define CONTROLS_EncoderDAccel 5
+
+#define CONTROLS_CLICK 0b0001            //after release & > ClickTime
+#define CONTROLS_PRESSING 0b0010        //>ClickTime
+#define CONTROLS_LONG_CLICK 0b0100       //after release & > LongClickTime
+#define CONTROLS_LONG_PRESSING 0b1000    //>LongClickTime
+#define CONTROLS_PRESSING_ALL (CONTROLS_PRESSING | CONTROLS_LONG_PRESSING)
+#define CONTROLS_CLICK_ALL (CONTROLS_CLICK | CONTROLS_LONG_CLICK)
+
+
+
+typedef struct 
+{
+GPIO_TypeDef* gpio;
+uint16_t pin;
+uint8_t polarity_pressed; //if 1 - pressed when readpin = 1, else when 1
+uint8_t pressed;
+uint32_t press_start_time;
+} Controls_ButtonState;
+
+typedef struct 
+{
+TIM_TypeDef * tim;
+int16_t val;
+int16_t max;
+int16_t min;
+uint8_t acceleration_en; 
+uint32_t period_start_time;
+} Controls_EncoderState;
+
+
+/**
+ * @name controls_init - Initialization for buttons, leds & encoders
+ * @param  - Empty 
+ * @return void
+ */
+void controls_init(void);
+
+void controls_update(void);
+/**
+ * @name controls_init_encoder_state - Initializes structure with parameters for encoder 
+ * @param st -  structure
+ * @param val - default value
+ * @param max - max encoder value
+ * @param min - min encoder value
+ * @param acceleration_en - is acceleration of value enabled. If enabled then value will be changing with dependnce of rotation speed
+ * @return void
+ */
+void controls_init_encoder_state(Controls_EncoderState* st, int16_t val, int16_t max, int16_t min, uint8_t acceleration_en);
+
+/**
+ * @name controls_set_buttons_handler - set handler function for buttons events
+ * @param handler - void handler(uint8_t buttonID, uint8_t event)
+ * @return void
+ */
+void controls_set_buttons_handler(void (*handler)(uint8_t, uint8_t));
+
+/**
+ * @name controls_set_encoder_handler - set handler function for encoder
+ * @param conf - configuration for encoder 
+ * @param handler - void handler(uint16_t current_encoder_value, int16_t delta_with_last_value);Empty handler 
+ * @return void
+ */
+void controls_set_encoder_handler(Controls_EncoderState* conf, void (*handler)(uint16_t, int16_t));
+
+Controls_ButtonState * controls_get_button_state(uint8_t button);
+
+uint32_t controls_millis(void);
+
+int16_t en_gv();
