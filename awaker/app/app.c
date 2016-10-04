@@ -70,6 +70,11 @@ void apps_preset_encoder(int16_t val, uint8_t preset)
 
 void apps_input_buttons(uint8_t button, uint8_t event)
 {
+    if((button == BITopBig || button == BITopSmall) && event & CONTROLS_CLICK_ALL)
+    {
+	clock_button(button);
+	return;
+    }
     if((button == BIFrontRed || button == BIFrontGreen) && event == CONTROLS_LONG_CLICK)
     {
 	if(app_current != 0)

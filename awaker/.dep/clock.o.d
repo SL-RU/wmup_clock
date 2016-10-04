@@ -37,8 +37,10 @@ build/clock.o: sys/clock.c sys/clock.h Inc/rtc.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rtc_ex.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
- Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
- /usr/include/newlib/string.h /usr/include/newlib/sys/string.h
+ Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h sys/speaker.h \
+ Inc/gpio.h sys/controls.h sys/hw_defs.h /usr/include/newlib/math.h \
+ /usr/include/newlib/string.h /usr/include/newlib/sys/string.h \
+ hd44780/hd44780.h /usr/lib/gcc/arm-none-eabi/4.9/include/stdbool.h
 
 sys/clock.h:
 
@@ -142,6 +144,20 @@ Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h:
 
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:
 
+sys/speaker.h:
+
+Inc/gpio.h:
+
+sys/controls.h:
+
+sys/hw_defs.h:
+
+/usr/include/newlib/math.h:
+
 /usr/include/newlib/string.h:
 
 /usr/include/newlib/sys/string.h:
+
+hd44780/hd44780.h:
+
+/usr/lib/gcc/arm-none-eabi/4.9/include/stdbool.h:

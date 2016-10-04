@@ -117,7 +117,8 @@ int main(void)
   clock_init();
   
   apps_init();
-  app_switch(APP_SET_TIME_ID);
+  app_switch(APP_CLOCK_ID);
+  printf("Started!\n");
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -131,6 +132,7 @@ int main(void)
 	  apps_draw();
       }
       apps_update();
+      clock_update();
       controls_update();
       HAL_Delay(1);
   /* USER CODE END WHILE */

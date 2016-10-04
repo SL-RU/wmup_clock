@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc1LNPqK.s 			page 1
+ARM GAS  /tmp/ccZjdh9x.s 			page 1
 
 
    1              		.syntax unified
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc1LNPqK.s 			page 1
   44              		@ args = 0, pretend = 0, frame = 0
   45              		@ frame_needed = 1, uses_anonymous_args = 0
   46              		@ link register save eliminated.
-ARM GAS  /tmp/cc1LNPqK.s 			page 2
+ARM GAS  /tmp/ccZjdh9x.s 			page 2
 
 
   47 0000 80B4     		push	{r7}
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc1LNPqK.s 			page 1
   99              	.LCFI7:
  100              		.cfi_restore 7
  101              		.cfi_def_cfa_offset 0
-ARM GAS  /tmp/cc1LNPqK.s 			page 3
+ARM GAS  /tmp/ccZjdh9x.s 			page 3
 
 
  102 000a 7047     		bx	lr
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cc1LNPqK.s 			page 1
  148 001e 064B     		ldr	r3, .L7+8
  149 0020 1A70     		strb	r2, [r3]
   29:app/app_set_time.c ****     hour = tm->Hours;
-ARM GAS  /tmp/cc1LNPqK.s 			page 4
+ARM GAS  /tmp/ccZjdh9x.s 			page 4
 
 
  150              		.loc 1 29 0
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cc1LNPqK.s 			page 1
  201 000c 0ED1     		bne	.L9
  202              	.LBB2:
   35:app/app_set_time.c ****     {
-ARM GAS  /tmp/cc1LNPqK.s 			page 5
+ARM GAS  /tmp/ccZjdh9x.s 			page 5
 
 
   36:app/app_set_time.c **** 	RTC_TimeTypeDef * tm = clock_get_time();
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cc1LNPqK.s 			page 1
  248      3A253032 
  248      643A2530 
  248      326400
-ARM GAS  /tmp/cc1LNPqK.s 			page 6
+ARM GAS  /tmp/ccZjdh9x.s 			page 6
 
 
  249 001f 00       		.align	2
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cc1LNPqK.s 			page 1
  286 000c 2A48     		ldr	r0, .L21
  287 000e FFF7FEFF 		bl	hd44780_printf
   47:app/app_set_time.c ****     hd44780_position(1, 0);
-ARM GAS  /tmp/cc1LNPqK.s 			page 7
+ARM GAS  /tmp/ccZjdh9x.s 			page 7
 
 
  288              		.loc 1 47 0
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cc1LNPqK.s 			page 1
  337 0070 1946     		mov	r1, r3
  338 0072 144B     		ldr	r3, .L21+12
  339 0074 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
-ARM GAS  /tmp/cc1LNPqK.s 			page 8
+ARM GAS  /tmp/ccZjdh9x.s 			page 8
 
 
  340 0076 1A46     		mov	r2, r3
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cc1LNPqK.s 			page 1
  391              		.section	.text.app_set_time_encoder,"ax",%progbits
  392              		.align	2
  393              		.global	app_set_time_encoder
-ARM GAS  /tmp/cc1LNPqK.s 			page 9
+ARM GAS  /tmp/ccZjdh9x.s 			page 9
 
 
  394              		.thumb
@@ -538,7 +538,7 @@ ARM GAS  /tmp/cc1LNPqK.s 			page 1
   64:app/app_set_time.c ****     case 3: sec = val; break;
  442              		.loc 1 64 0
  443 0034 FB88     		ldrh	r3, [r7, #6]	@ movhi
-ARM GAS  /tmp/cc1LNPqK.s 			page 10
+ARM GAS  /tmp/ccZjdh9x.s 			page 10
 
 
  444 0036 DAB2     		uxtb	r2, r3
@@ -598,7 +598,7 @@ ARM GAS  /tmp/cc1LNPqK.s 			page 1
  495 0006 0346     		mov	r3, r0
  496 0008 0A46     		mov	r2, r1
  497 000a FB71     		strb	r3, [r7, #7]
-ARM GAS  /tmp/cc1LNPqK.s 			page 11
+ARM GAS  /tmp/ccZjdh9x.s 			page 11
 
 
  498 000c 1346     		mov	r3, r2
@@ -658,7 +658,7 @@ ARM GAS  /tmp/cc1LNPqK.s 			page 1
  546 0058 07D1     		bne	.L35
   76:app/app_set_time.c **** 		apps_preset_encoder(hour, APPS_ENCODER_TIME24);
  547              		.loc 1 76 0
-ARM GAS  /tmp/cc1LNPqK.s 			page 12
+ARM GAS  /tmp/ccZjdh9x.s 			page 12
 
 
  548 005a 204B     		ldr	r3, .L40+4
@@ -718,7 +718,7 @@ ARM GAS  /tmp/cc1LNPqK.s 			page 1
   85:app/app_set_time.c **** 	    {
   86:app/app_set_time.c **** 		stage = 0;
  594              		.loc 1 86 0
-ARM GAS  /tmp/cc1LNPqK.s 			page 13
+ARM GAS  /tmp/ccZjdh9x.s 			page 13
 
 
  595 00aa 0B4B     		ldr	r3, .L40
@@ -778,7 +778,7 @@ ARM GAS  /tmp/cc1LNPqK.s 			page 1
  642              		.thumb_func
  644              	app_set_time_can_close:
  645              	.LFB70:
-ARM GAS  /tmp/cc1LNPqK.s 			page 14
+ARM GAS  /tmp/ccZjdh9x.s 			page 14
 
 
   95:app/app_set_time.c **** 
@@ -838,7 +838,7 @@ ARM GAS  /tmp/cc1LNPqK.s 			page 1
  698              		.cfi_def_cfa_register 13
  699              		@ sp needed
  700 000a 5DF8047B 		ldr	r7, [sp], #4
-ARM GAS  /tmp/cc1LNPqK.s 			page 15
+ARM GAS  /tmp/ccZjdh9x.s 			page 15
 
 
  701              	.LCFI38:
@@ -854,44 +854,44 @@ ARM GAS  /tmp/cc1LNPqK.s 			page 1
  712              		.file 4 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rtc.h"
  713              		.file 5 "app/app.h"
  714              		.file 6 "Drivers/CMSIS/Include/core_cm3.h"
-ARM GAS  /tmp/cc1LNPqK.s 			page 16
+ARM GAS  /tmp/ccZjdh9x.s 			page 16
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 app_set_time.c
-     /tmp/cc1LNPqK.s:23     .data._app_set_time:0000000000000000 _app_set_time
-     /tmp/cc1LNPqK.s:20     .data._app_set_time:0000000000000000 $d
-     /tmp/cc1LNPqK.s:116    .text.app_set_time_open:0000000000000000 app_set_time_open
-     /tmp/cc1LNPqK.s:180    .text.app_set_time_update:0000000000000000 app_set_time_update
-     /tmp/cc1LNPqK.s:267    .text.app_set_time_draw:0000000000000000 app_set_time_draw
-     /tmp/cc1LNPqK.s:397    .text.app_set_time_encoder:0000000000000000 app_set_time_encoder
-     /tmp/cc1LNPqK.s:478    .text.app_set_time_buttons:0000000000000000 app_set_time_buttons
-     /tmp/cc1LNPqK.s:644    .text.app_set_time_can_close:0000000000000000 app_set_time_can_close
-     /tmp/cc1LNPqK.s:679    .text.app_set_time_close:0000000000000000 app_set_time_close
-     /tmp/cc1LNPqK.s:34     .text.app_set_time:0000000000000000 $t
-     /tmp/cc1LNPqK.s:39     .text.app_set_time:0000000000000000 app_set_time
-     /tmp/cc1LNPqK.s:69     .text.app_set_time:0000000000000010 $d
-     /tmp/cc1LNPqK.s:74     .text.app_set_time_init:0000000000000000 $t
-     /tmp/cc1LNPqK.s:79     .text.app_set_time_init:0000000000000000 app_set_time_init
+     /tmp/ccZjdh9x.s:23     .data._app_set_time:0000000000000000 _app_set_time
+     /tmp/ccZjdh9x.s:20     .data._app_set_time:0000000000000000 $d
+     /tmp/ccZjdh9x.s:116    .text.app_set_time_open:0000000000000000 app_set_time_open
+     /tmp/ccZjdh9x.s:180    .text.app_set_time_update:0000000000000000 app_set_time_update
+     /tmp/ccZjdh9x.s:267    .text.app_set_time_draw:0000000000000000 app_set_time_draw
+     /tmp/ccZjdh9x.s:397    .text.app_set_time_encoder:0000000000000000 app_set_time_encoder
+     /tmp/ccZjdh9x.s:478    .text.app_set_time_buttons:0000000000000000 app_set_time_buttons
+     /tmp/ccZjdh9x.s:644    .text.app_set_time_can_close:0000000000000000 app_set_time_can_close
+     /tmp/ccZjdh9x.s:679    .text.app_set_time_close:0000000000000000 app_set_time_close
+     /tmp/ccZjdh9x.s:34     .text.app_set_time:0000000000000000 $t
+     /tmp/ccZjdh9x.s:39     .text.app_set_time:0000000000000000 app_set_time
+     /tmp/ccZjdh9x.s:69     .text.app_set_time:0000000000000010 $d
+     /tmp/ccZjdh9x.s:74     .text.app_set_time_init:0000000000000000 $t
+     /tmp/ccZjdh9x.s:79     .text.app_set_time_init:0000000000000000 app_set_time_init
                             *COM*:0000000000000001 stage
                             *COM*:0000000000000001 sec
                             *COM*:0000000000000001 min
                             *COM*:0000000000000001 hour
-     /tmp/cc1LNPqK.s:111    .text.app_set_time_open:0000000000000000 $t
-     /tmp/cc1LNPqK.s:167    .text.app_set_time_open:0000000000000030 $d
-     /tmp/cc1LNPqK.s:175    .text.app_set_time_update:0000000000000000 $t
-     /tmp/cc1LNPqK.s:235    .text.app_set_time_update:0000000000000034 $d
-     /tmp/cc1LNPqK.s:243    .rodata:0000000000000000 $d
-     /tmp/cc1LNPqK.s:262    .text.app_set_time_draw:0000000000000000 $t
-     /tmp/cc1LNPqK.s:301    .text.app_set_time_draw:0000000000000028 $d
-     /tmp/cc1LNPqK.s:306    .text.app_set_time_draw:000000000000003c $t
-     /tmp/cc1LNPqK.s:378    .text.app_set_time_draw:00000000000000b8 $d
-     /tmp/cc1LNPqK.s:392    .text.app_set_time_encoder:0000000000000000 $t
-     /tmp/cc1LNPqK.s:465    .text.app_set_time_encoder:0000000000000048 $d
-     /tmp/cc1LNPqK.s:473    .text.app_set_time_buttons:0000000000000000 $t
-     /tmp/cc1LNPqK.s:631    .text.app_set_time_buttons:00000000000000d8 $d
-     /tmp/cc1LNPqK.s:639    .text.app_set_time_can_close:0000000000000000 $t
-     /tmp/cc1LNPqK.s:674    .text.app_set_time_close:0000000000000000 $t
+     /tmp/ccZjdh9x.s:111    .text.app_set_time_open:0000000000000000 $t
+     /tmp/ccZjdh9x.s:167    .text.app_set_time_open:0000000000000030 $d
+     /tmp/ccZjdh9x.s:175    .text.app_set_time_update:0000000000000000 $t
+     /tmp/ccZjdh9x.s:235    .text.app_set_time_update:0000000000000034 $d
+     /tmp/ccZjdh9x.s:243    .rodata:0000000000000000 $d
+     /tmp/ccZjdh9x.s:262    .text.app_set_time_draw:0000000000000000 $t
+     /tmp/ccZjdh9x.s:301    .text.app_set_time_draw:0000000000000028 $d
+     /tmp/ccZjdh9x.s:306    .text.app_set_time_draw:000000000000003c $t
+     /tmp/ccZjdh9x.s:378    .text.app_set_time_draw:00000000000000b8 $d
+     /tmp/ccZjdh9x.s:392    .text.app_set_time_encoder:0000000000000000 $t
+     /tmp/ccZjdh9x.s:465    .text.app_set_time_encoder:0000000000000048 $d
+     /tmp/ccZjdh9x.s:473    .text.app_set_time_buttons:0000000000000000 $t
+     /tmp/ccZjdh9x.s:631    .text.app_set_time_buttons:00000000000000d8 $d
+     /tmp/ccZjdh9x.s:639    .text.app_set_time_can_close:0000000000000000 $t
+     /tmp/ccZjdh9x.s:674    .text.app_set_time_close:0000000000000000 $t
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

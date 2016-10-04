@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccNgAHMN.s 			page 1
+ARM GAS  /tmp/cchDob7b.s 			page 1
 
 
    1              		.syntax unified
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccNgAHMN.s 			page 1
   43              		.cfi_startproc
   44              		@ args = 0, pretend = 0, frame = 0
   45              		@ frame_needed = 1, uses_anonymous_args = 0
-ARM GAS  /tmp/ccNgAHMN.s 			page 2
+ARM GAS  /tmp/cchDob7b.s 			page 2
 
 
   46              		@ link register save eliminated.
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccNgAHMN.s 			page 1
   97              		@ sp needed
   98 0006 5DF8047B 		ldr	r7, [sp], #4
   99              	.LCFI7:
-ARM GAS  /tmp/ccNgAHMN.s 			page 3
+ARM GAS  /tmp/cchDob7b.s 			page 3
 
 
  100              		.cfi_restore 7
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccNgAHMN.s 			page 1
  145      326400
  146 002b 00       		.section	.text.app_clock_draw,"ax",%progbits
  147              		.align	2
-ARM GAS  /tmp/ccNgAHMN.s 			page 4
+ARM GAS  /tmp/cchDob7b.s 			page 4
 
 
  148              		.global	app_clock_draw
@@ -210,328 +210,331 @@ ARM GAS  /tmp/ccNgAHMN.s 			page 1
   28:app/app_clock.c ****     Clock_AlarmReg * ar = clock_alarm_get();
  172              		.loc 1 28 0
  173 000c FFF7FEFF 		bl	clock_alarm_get
- 174 0010 3860     		str	r0, [r7]
+ 174 0010 0346     		mov	r3, r0
+ 175 0012 3B60     		str	r3, [r7]
   29:app/app_clock.c ****     hd44780_position(0, 0);
- 175              		.loc 1 29 0
- 176 0012 0020     		movs	r0, #0
- 177 0014 0021     		movs	r1, #0
- 178 0016 FFF7FEFF 		bl	hd44780_position
+ 176              		.loc 1 29 0
+ 177 0014 0020     		movs	r0, #0
+ 178 0016 0021     		movs	r1, #0
+ 179 0018 FFF7FEFF 		bl	hd44780_position
   30:app/app_clock.c ****     hd44780_printf("time: %02d:%02d:%02d",  tm->Hours, tm->Minutes, tm->Seconds);
- 179              		.loc 1 30 0
- 180 001a 7B68     		ldr	r3, [r7, #4]
- 181 001c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 182 001e 1946     		mov	r1, r3
- 183 0020 7B68     		ldr	r3, [r7, #4]
- 184 0022 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 185 0024 1A46     		mov	r2, r3
- 186 0026 7B68     		ldr	r3, [r7, #4]
- 187 0028 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
- 188 002a 0F48     		ldr	r0, .L8
- 189 002c FFF7FEFF 		bl	hd44780_printf
+ 180              		.loc 1 30 0
+ 181 001c 7B68     		ldr	r3, [r7, #4]
+ 182 001e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 183 0020 1946     		mov	r1, r3
+ 184 0022 7B68     		ldr	r3, [r7, #4]
+ 185 0024 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 186 0026 1A46     		mov	r2, r3
+ 187 0028 7B68     		ldr	r3, [r7, #4]
+ 188 002a 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 189 002c 0E48     		ldr	r0, .L8
+ 190 002e FFF7FEFF 		bl	hd44780_printf
   31:app/app_clock.c **** 
   32:app/app_clock.c ****     hd44780_position(1, 0);
- 190              		.loc 1 32 0
- 191 0030 0120     		movs	r0, #1
- 192 0032 0021     		movs	r1, #0
- 193 0034 FFF7FEFF 		bl	hd44780_position
+ 191              		.loc 1 32 0
+ 192 0032 0120     		movs	r0, #1
+ 193 0034 0021     		movs	r1, #0
+ 194 0036 FFF7FEFF 		bl	hd44780_position
   33:app/app_clock.c ****     hd44780_printf("alarm:%d %02d:%02d", ar->enabled, ar->hour, ar->minute);
- 194              		.loc 1 33 0
- 195 0038 3B68     		ldr	r3, [r7]
- 196 003a 1B78     		ldrb	r3, [r3]
-ARM GAS  /tmp/ccNgAHMN.s 			page 5
+ 195              		.loc 1 33 0
+ 196 003a 3B68     		ldr	r3, [r7]
+ARM GAS  /tmp/cchDob7b.s 			page 5
 
 
- 197 003c C3F30003 		ubfx	r3, r3, #0, #1
- 198 0040 DBB2     		uxtb	r3, r3
- 199 0042 1946     		mov	r1, r3
- 200 0044 3B68     		ldr	r3, [r7]
- 201 0046 1B78     		ldrb	r3, [r3]
- 202 0048 C3F34403 		ubfx	r3, r3, #1, #5
- 203 004c DBB2     		uxtb	r3, r3
- 204 004e 1A46     		mov	r2, r3
- 205 0050 3B68     		ldr	r3, [r7]
- 206 0052 5B78     		ldrb	r3, [r3, #1]
- 207 0054 C3F30403 		ubfx	r3, r3, #0, #5
- 208 0058 DBB2     		uxtb	r3, r3
- 209 005a 0448     		ldr	r0, .L8+4
- 210 005c FFF7FEFF 		bl	hd44780_printf
+ 197 003c 1B78     		ldrb	r3, [r3]
+ 198 003e C3F30003 		ubfx	r3, r3, #0, #1
+ 199 0042 DBB2     		uxtb	r3, r3
+ 200 0044 1946     		mov	r1, r3
+ 201 0046 3B68     		ldr	r3, [r7]
+ 202 0048 1B78     		ldrb	r3, [r3]
+ 203 004a C3F34403 		ubfx	r3, r3, #1, #5
+ 204 004e DBB2     		uxtb	r3, r3
+ 205 0050 1A46     		mov	r2, r3
+ 206 0052 3B68     		ldr	r3, [r7]
+ 207 0054 5B78     		ldrb	r3, [r3, #1]
+ 208 0056 C3F30503 		ubfx	r3, r3, #0, #6
+ 209 005a DBB2     		uxtb	r3, r3
+ 210 005c 0348     		ldr	r0, .L8+4
+ 211 005e FFF7FEFF 		bl	hd44780_printf
   34:app/app_clock.c **** }
- 211              		.loc 1 34 0
- 212 0060 0837     		adds	r7, r7, #8
- 213              	.LCFI15:
- 214              		.cfi_def_cfa_offset 8
- 215 0062 BD46     		mov	sp, r7
- 216              	.LCFI16:
- 217              		.cfi_def_cfa_register 13
- 218              		@ sp needed
- 219 0064 80BD     		pop	{r7, pc}
- 220              	.L9:
- 221 0066 00BF     		.align	2
- 222              	.L8:
- 223 0068 00000000 		.word	.LC0
- 224 006c 18000000 		.word	.LC1
- 225              		.cfi_endproc
- 226              	.LFE66:
- 228              		.section	.text.app_clock_encoder,"ax",%progbits
- 229              		.align	2
- 230              		.global	app_clock_encoder
- 231              		.thumb
- 232              		.thumb_func
- 234              	app_clock_encoder:
- 235              	.LFB67:
+ 212              		.loc 1 34 0
+ 213 0062 0837     		adds	r7, r7, #8
+ 214              	.LCFI15:
+ 215              		.cfi_def_cfa_offset 8
+ 216 0064 BD46     		mov	sp, r7
+ 217              	.LCFI16:
+ 218              		.cfi_def_cfa_register 13
+ 219              		@ sp needed
+ 220 0066 80BD     		pop	{r7, pc}
+ 221              	.L9:
+ 222              		.align	2
+ 223              	.L8:
+ 224 0068 00000000 		.word	.LC0
+ 225 006c 18000000 		.word	.LC1
+ 226              		.cfi_endproc
+ 227              	.LFE66:
+ 229              		.section	.text.app_clock_encoder,"ax",%progbits
+ 230              		.align	2
+ 231              		.global	app_clock_encoder
+ 232              		.thumb
+ 233              		.thumb_func
+ 235              	app_clock_encoder:
+ 236              	.LFB67:
   35:app/app_clock.c **** void app_clock_encoder(int16_t val, int16_t del)
   36:app/app_clock.c **** {
- 236              		.loc 1 36 0
- 237              		.cfi_startproc
- 238              		@ args = 0, pretend = 0, frame = 8
- 239              		@ frame_needed = 1, uses_anonymous_args = 0
- 240              		@ link register save eliminated.
- 241 0000 80B4     		push	{r7}
- 242              	.LCFI17:
- 243              		.cfi_def_cfa_offset 4
- 244              		.cfi_offset 7, -4
- 245 0002 83B0     		sub	sp, sp, #12
- 246              	.LCFI18:
- 247              		.cfi_def_cfa_offset 16
- 248 0004 00AF     		add	r7, sp, #0
- 249              	.LCFI19:
- 250              		.cfi_def_cfa_register 7
- 251 0006 0346     		mov	r3, r0
- 252 0008 0A46     		mov	r2, r1
-ARM GAS  /tmp/ccNgAHMN.s 			page 6
+ 237              		.loc 1 36 0
+ 238              		.cfi_startproc
+ 239              		@ args = 0, pretend = 0, frame = 8
+ 240              		@ frame_needed = 1, uses_anonymous_args = 0
+ 241              		@ link register save eliminated.
+ 242 0000 80B4     		push	{r7}
+ 243              	.LCFI17:
+ 244              		.cfi_def_cfa_offset 4
+ 245              		.cfi_offset 7, -4
+ 246 0002 83B0     		sub	sp, sp, #12
+ 247              	.LCFI18:
+ 248              		.cfi_def_cfa_offset 16
+ 249 0004 00AF     		add	r7, sp, #0
+ 250              	.LCFI19:
+ 251              		.cfi_def_cfa_register 7
+ 252 0006 0346     		mov	r3, r0
+ARM GAS  /tmp/cchDob7b.s 			page 6
 
 
- 253 000a FB80     		strh	r3, [r7, #6]	@ movhi
- 254 000c 1346     		mov	r3, r2	@ movhi
- 255 000e BB80     		strh	r3, [r7, #4]	@ movhi
+ 253 0008 0A46     		mov	r2, r1
+ 254 000a FB80     		strh	r3, [r7, #6]	@ movhi
+ 255 000c 1346     		mov	r3, r2	@ movhi
+ 256 000e BB80     		strh	r3, [r7, #4]	@ movhi
   37:app/app_clock.c **** }
- 256              		.loc 1 37 0
- 257 0010 0C37     		adds	r7, r7, #12
- 258              	.LCFI20:
- 259              		.cfi_def_cfa_offset 4
- 260 0012 BD46     		mov	sp, r7
- 261              	.LCFI21:
- 262              		.cfi_def_cfa_register 13
- 263              		@ sp needed
- 264 0014 5DF8047B 		ldr	r7, [sp], #4
- 265              	.LCFI22:
- 266              		.cfi_restore 7
- 267              		.cfi_def_cfa_offset 0
- 268 0018 7047     		bx	lr
- 269              		.cfi_endproc
- 270              	.LFE67:
- 272 001a 00BF     		.section	.text.app_clock_buttons,"ax",%progbits
- 273              		.align	2
- 274              		.global	app_clock_buttons
- 275              		.thumb
- 276              		.thumb_func
- 278              	app_clock_buttons:
- 279              	.LFB68:
-  38:app/app_clock.c **** void app_clock_buttons(uint8_t b, uint8_t e)
-  39:app/app_clock.c **** {
- 280              		.loc 1 39 0
- 281              		.cfi_startproc
- 282              		@ args = 0, pretend = 0, frame = 8
- 283              		@ frame_needed = 1, uses_anonymous_args = 0
- 284 0000 80B5     		push	{r7, lr}
- 285              	.LCFI23:
- 286              		.cfi_def_cfa_offset 8
- 287              		.cfi_offset 7, -8
- 288              		.cfi_offset 14, -4
- 289 0002 82B0     		sub	sp, sp, #8
- 290              	.LCFI24:
- 291              		.cfi_def_cfa_offset 16
- 292 0004 00AF     		add	r7, sp, #0
- 293              	.LCFI25:
- 294              		.cfi_def_cfa_register 7
- 295 0006 0346     		mov	r3, r0
- 296 0008 0A46     		mov	r2, r1
- 297 000a FB71     		strb	r3, [r7, #7]
- 298 000c 1346     		mov	r3, r2
- 299 000e BB71     		strb	r3, [r7, #6]
-  40:app/app_clock.c ****     if(b == BITopBig && e == CONTROLS_LONG_PRESSING)
- 300              		.loc 1 40 0
- 301 0010 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
- 302 0012 022B     		cmp	r3, #2
- 303 0014 05D1     		bne	.L12
- 304              		.loc 1 40 0 is_stmt 0 discriminator 1
- 305 0016 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
- 306 0018 082B     		cmp	r3, #8
- 307 001a 02D1     		bne	.L12
-ARM GAS  /tmp/ccNgAHMN.s 			page 7
+ 257              		.loc 1 37 0
+ 258 0010 0C37     		adds	r7, r7, #12
+ 259              	.LCFI20:
+ 260              		.cfi_def_cfa_offset 4
+ 261 0012 BD46     		mov	sp, r7
+ 262              	.LCFI21:
+ 263              		.cfi_def_cfa_register 13
+ 264              		@ sp needed
+ 265 0014 5DF8047B 		ldr	r7, [sp], #4
+ 266              	.LCFI22:
+ 267              		.cfi_restore 7
+ 268              		.cfi_def_cfa_offset 0
+ 269 0018 7047     		bx	lr
+ 270              		.cfi_endproc
+ 271              	.LFE67:
+ 273              		.global	lc
+ 274 001a 00BF     		.section	.data.lc,"aw",%progbits
+ 277              	lc:
+ 278 0000 01       		.byte	1
+ 279              		.section	.text.app_clock_buttons,"ax",%progbits
+ 280              		.align	2
+ 281              		.global	app_clock_buttons
+ 282              		.thumb
+ 283              		.thumb_func
+ 285              	app_clock_buttons:
+ 286              	.LFB68:
+  38:app/app_clock.c **** uint8_t lc = 1;;
+  39:app/app_clock.c **** void app_clock_buttons(uint8_t b, uint8_t e)
+  40:app/app_clock.c **** {
+ 287              		.loc 1 40 0
+ 288              		.cfi_startproc
+ 289              		@ args = 0, pretend = 0, frame = 8
+ 290              		@ frame_needed = 1, uses_anonymous_args = 0
+ 291 0000 80B5     		push	{r7, lr}
+ 292              	.LCFI23:
+ 293              		.cfi_def_cfa_offset 8
+ 294              		.cfi_offset 7, -8
+ 295              		.cfi_offset 14, -4
+ 296 0002 82B0     		sub	sp, sp, #8
+ 297              	.LCFI24:
+ 298              		.cfi_def_cfa_offset 16
+ 299 0004 00AF     		add	r7, sp, #0
+ 300              	.LCFI25:
+ 301              		.cfi_def_cfa_register 7
+ 302 0006 0346     		mov	r3, r0
+ 303 0008 0A46     		mov	r2, r1
+ 304 000a FB71     		strb	r3, [r7, #7]
+ 305 000c 1346     		mov	r3, r2
+ 306 000e BB71     		strb	r3, [r7, #6]
+  41:app/app_clock.c ****     if(b == BIFrontGreen && e == CONTROLS_CLICK)
+ 307              		.loc 1 41 0
+ 308 0010 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ARM GAS  /tmp/cchDob7b.s 			page 7
 
 
-  41:app/app_clock.c ****     {
-  42:app/app_clock.c **** 	speaker_start();
- 308              		.loc 1 42 0 is_stmt 1
- 309 001c FFF7FEFF 		bl	speaker_start
- 310 0020 01E0     		b	.L13
- 311              	.L12:
-  43:app/app_clock.c ****     }
-  44:app/app_clock.c ****     else
-  45:app/app_clock.c **** 	speaker_stop();
- 312              		.loc 1 45 0
- 313 0022 FFF7FEFF 		bl	speaker_stop
- 314              	.L13:
-  46:app/app_clock.c **** 
-  47:app/app_clock.c ****     if(b == BITopSmall && e == CONTROLS_CLICK)
- 315              		.loc 1 47 0
- 316 0026 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
- 317 0028 032B     		cmp	r3, #3
- 318 002a 07D1     		bne	.L14
- 319              		.loc 1 47 0 is_stmt 0 discriminator 1
- 320 002c BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
- 321 002e 012B     		cmp	r3, #1
- 322 0030 04D1     		bne	.L14
-  48:app/app_clock.c ****     {
-  49:app/app_clock.c **** 	clock_alarm_set(0, 11, 47);
- 323              		.loc 1 49 0 is_stmt 1
- 324 0032 0020     		movs	r0, #0
- 325 0034 0B21     		movs	r1, #11
- 326 0036 2F22     		movs	r2, #47
- 327 0038 FFF7FEFF 		bl	clock_alarm_set
- 328              	.L14:
-  50:app/app_clock.c ****     }
-  51:app/app_clock.c ****     
-  52:app/app_clock.c ****     if(b == BITopSmall && e == CONTROLS_LONG_CLICK)
- 329              		.loc 1 52 0
- 330 003c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
- 331 003e 032B     		cmp	r3, #3
- 332 0040 07D1     		bne	.L11
- 333              		.loc 1 52 0 is_stmt 0 discriminator 1
- 334 0042 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
- 335 0044 042B     		cmp	r3, #4
- 336 0046 04D1     		bne	.L11
-  53:app/app_clock.c ****     {
-  54:app/app_clock.c **** 	clock_alarm_set(1, 20, 13);
- 337              		.loc 1 54 0 is_stmt 1
- 338 0048 0120     		movs	r0, #1
- 339 004a 1421     		movs	r1, #20
- 340 004c 0D22     		movs	r2, #13
- 341 004e FFF7FEFF 		bl	clock_alarm_set
- 342              	.L11:
-  55:app/app_clock.c ****     }
-  56:app/app_clock.c **** }
- 343              		.loc 1 56 0
- 344 0052 0837     		adds	r7, r7, #8
- 345              	.LCFI26:
- 346              		.cfi_def_cfa_offset 8
- 347 0054 BD46     		mov	sp, r7
- 348              	.LCFI27:
-ARM GAS  /tmp/ccNgAHMN.s 			page 8
+ 309 0012 012B     		cmp	r3, #1
+ 310 0014 11D1     		bne	.L12
+ 311              		.loc 1 41 0 is_stmt 0 discriminator 1
+ 312 0016 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 313 0018 012B     		cmp	r3, #1
+ 314 001a 0ED1     		bne	.L12
+  42:app/app_clock.c ****     {
+  43:app/app_clock.c **** 	lc = !lc;
+ 315              		.loc 1 43 0 is_stmt 1
+ 316 001c 0E4B     		ldr	r3, .L14
+ 317 001e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 318 0020 002B     		cmp	r3, #0
+ 319 0022 0CBF     		ite	eq
+ 320 0024 0123     		moveq	r3, #1
+ 321 0026 0023     		movne	r3, #0
+ 322 0028 DBB2     		uxtb	r3, r3
+ 323 002a 1A46     		mov	r2, r3
+ 324 002c 0A4B     		ldr	r3, .L14
+ 325 002e 1A70     		strb	r2, [r3]
+  44:app/app_clock.c **** 	hd44780_brightness(lc);
+ 326              		.loc 1 44 0
+ 327 0030 094B     		ldr	r3, .L14
+ 328 0032 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 329 0034 1846     		mov	r0, r3
+ 330 0036 FFF7FEFF 		bl	hd44780_brightness
+ 331              	.L12:
+  45:app/app_clock.c **** 	//clock_alarm_set(1, 2, 31);
+  46:app/app_clock.c ****     }
+  47:app/app_clock.c ****     
+  48:app/app_clock.c ****     if(b == BIFrontRed && e == CONTROLS_CLICK)
+ 332              		.loc 1 48 0
+ 333 003a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 334 003c 002B     		cmp	r3, #0
+ 335 003e 07D1     		bne	.L11
+ 336              		.loc 1 48 0 is_stmt 0 discriminator 1
+ 337 0040 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 338 0042 012B     		cmp	r3, #1
+ 339 0044 04D1     		bne	.L11
+  49:app/app_clock.c ****     {
+  50:app/app_clock.c **** 	clock_alarm_set(1, 7, 53);
+ 340              		.loc 1 50 0 is_stmt 1
+ 341 0046 0120     		movs	r0, #1
+ 342 0048 0721     		movs	r1, #7
+ 343 004a 3522     		movs	r2, #53
+ 344 004c FFF7FEFF 		bl	clock_alarm_set
+ 345              	.L11:
+  51:app/app_clock.c ****     }
+  52:app/app_clock.c **** }
+ 346              		.loc 1 52 0
+ 347 0050 0837     		adds	r7, r7, #8
+ 348              	.LCFI26:
+ 349              		.cfi_def_cfa_offset 8
+ 350 0052 BD46     		mov	sp, r7
+ 351              	.LCFI27:
+ 352              		.cfi_def_cfa_register 13
+ 353              		@ sp needed
+ 354 0054 80BD     		pop	{r7, pc}
+ARM GAS  /tmp/cchDob7b.s 			page 8
 
 
- 349              		.cfi_def_cfa_register 13
- 350              		@ sp needed
- 351 0056 80BD     		pop	{r7, pc}
- 352              		.cfi_endproc
- 353              	.LFE68:
- 355              		.section	.text.app_clock_can_close,"ax",%progbits
- 356              		.align	2
- 357              		.global	app_clock_can_close
- 358              		.thumb
- 359              		.thumb_func
- 361              	app_clock_can_close:
- 362              	.LFB69:
-  57:app/app_clock.c **** 
-  58:app/app_clock.c **** uint8_t app_clock_can_close() { return 1; }
- 363              		.loc 1 58 0
- 364              		.cfi_startproc
- 365              		@ args = 0, pretend = 0, frame = 0
- 366              		@ frame_needed = 1, uses_anonymous_args = 0
- 367              		@ link register save eliminated.
- 368 0000 80B4     		push	{r7}
- 369              	.LCFI28:
- 370              		.cfi_def_cfa_offset 4
- 371              		.cfi_offset 7, -4
- 372 0002 00AF     		add	r7, sp, #0
- 373              	.LCFI29:
- 374              		.cfi_def_cfa_register 7
- 375              		.loc 1 58 0
- 376 0004 0123     		movs	r3, #1
- 377 0006 1846     		mov	r0, r3
- 378 0008 BD46     		mov	sp, r7
- 379              	.LCFI30:
- 380              		.cfi_def_cfa_register 13
- 381              		@ sp needed
- 382 000a 5DF8047B 		ldr	r7, [sp], #4
- 383              	.LCFI31:
- 384              		.cfi_restore 7
- 385              		.cfi_def_cfa_offset 0
- 386 000e 7047     		bx	lr
- 387              		.cfi_endproc
- 388              	.LFE69:
- 390              		.section	.text.app_clock_close,"ax",%progbits
- 391              		.align	2
- 392              		.global	app_clock_close
- 393              		.thumb
- 394              		.thumb_func
- 396              	app_clock_close:
- 397              	.LFB70:
-  59:app/app_clock.c **** uint8_t app_clock_close() { return 1; }
- 398              		.loc 1 59 0
- 399              		.cfi_startproc
- 400              		@ args = 0, pretend = 0, frame = 0
- 401              		@ frame_needed = 1, uses_anonymous_args = 0
- 402              		@ link register save eliminated.
- 403 0000 80B4     		push	{r7}
- 404              	.LCFI32:
- 405              		.cfi_def_cfa_offset 4
- 406              		.cfi_offset 7, -4
-ARM GAS  /tmp/ccNgAHMN.s 			page 9
+ 355              	.L15:
+ 356 0056 00BF     		.align	2
+ 357              	.L14:
+ 358 0058 00000000 		.word	lc
+ 359              		.cfi_endproc
+ 360              	.LFE68:
+ 362              		.section	.text.app_clock_can_close,"ax",%progbits
+ 363              		.align	2
+ 364              		.global	app_clock_can_close
+ 365              		.thumb
+ 366              		.thumb_func
+ 368              	app_clock_can_close:
+ 369              	.LFB69:
+  53:app/app_clock.c **** 
+  54:app/app_clock.c **** uint8_t app_clock_can_close() { return 1; }
+ 370              		.loc 1 54 0
+ 371              		.cfi_startproc
+ 372              		@ args = 0, pretend = 0, frame = 0
+ 373              		@ frame_needed = 1, uses_anonymous_args = 0
+ 374              		@ link register save eliminated.
+ 375 0000 80B4     		push	{r7}
+ 376              	.LCFI28:
+ 377              		.cfi_def_cfa_offset 4
+ 378              		.cfi_offset 7, -4
+ 379 0002 00AF     		add	r7, sp, #0
+ 380              	.LCFI29:
+ 381              		.cfi_def_cfa_register 7
+ 382              		.loc 1 54 0
+ 383 0004 0123     		movs	r3, #1
+ 384 0006 1846     		mov	r0, r3
+ 385 0008 BD46     		mov	sp, r7
+ 386              	.LCFI30:
+ 387              		.cfi_def_cfa_register 13
+ 388              		@ sp needed
+ 389 000a 5DF8047B 		ldr	r7, [sp], #4
+ 390              	.LCFI31:
+ 391              		.cfi_restore 7
+ 392              		.cfi_def_cfa_offset 0
+ 393 000e 7047     		bx	lr
+ 394              		.cfi_endproc
+ 395              	.LFE69:
+ 397              		.section	.text.app_clock_close,"ax",%progbits
+ 398              		.align	2
+ 399              		.global	app_clock_close
+ 400              		.thumb
+ 401              		.thumb_func
+ 403              	app_clock_close:
+ 404              	.LFB70:
+  55:app/app_clock.c **** uint8_t app_clock_close() { return 1; }
+ 405              		.loc 1 55 0
+ 406              		.cfi_startproc
+ 407              		@ args = 0, pretend = 0, frame = 0
+ 408              		@ frame_needed = 1, uses_anonymous_args = 0
+ 409              		@ link register save eliminated.
+ 410 0000 80B4     		push	{r7}
+ 411              	.LCFI32:
+ 412              		.cfi_def_cfa_offset 4
+ARM GAS  /tmp/cchDob7b.s 			page 9
 
 
- 407 0002 00AF     		add	r7, sp, #0
- 408              	.LCFI33:
- 409              		.cfi_def_cfa_register 7
- 410              		.loc 1 59 0
- 411 0004 0123     		movs	r3, #1
- 412 0006 1846     		mov	r0, r3
- 413 0008 BD46     		mov	sp, r7
- 414              	.LCFI34:
- 415              		.cfi_def_cfa_register 13
- 416              		@ sp needed
- 417 000a 5DF8047B 		ldr	r7, [sp], #4
- 418              	.LCFI35:
- 419              		.cfi_restore 7
- 420              		.cfi_def_cfa_offset 0
- 421 000e 7047     		bx	lr
- 422              		.cfi_endproc
- 423              	.LFE70:
- 425              		.text
- 426              	.Letext0:
- 427              		.file 2 "/usr/include/newlib/machine/_default_types.h"
- 428              		.file 3 "/usr/include/newlib/stdint.h"
- 429              		.file 4 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rtc.h"
- 430              		.file 5 "sys/clock.h"
- 431              		.file 6 "app/app.h"
- 432              		.file 7 "Drivers/CMSIS/Include/core_cm3.h"
-ARM GAS  /tmp/ccNgAHMN.s 			page 10
+ 413              		.cfi_offset 7, -4
+ 414 0002 00AF     		add	r7, sp, #0
+ 415              	.LCFI33:
+ 416              		.cfi_def_cfa_register 7
+ 417              		.loc 1 55 0
+ 418 0004 0123     		movs	r3, #1
+ 419 0006 1846     		mov	r0, r3
+ 420 0008 BD46     		mov	sp, r7
+ 421              	.LCFI34:
+ 422              		.cfi_def_cfa_register 13
+ 423              		@ sp needed
+ 424 000a 5DF8047B 		ldr	r7, [sp], #4
+ 425              	.LCFI35:
+ 426              		.cfi_restore 7
+ 427              		.cfi_def_cfa_offset 0
+ 428 000e 7047     		bx	lr
+ 429              		.cfi_endproc
+ 430              	.LFE70:
+ 432              		.text
+ 433              	.Letext0:
+ 434              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 435              		.file 3 "/usr/include/newlib/stdint.h"
+ 436              		.file 4 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rtc.h"
+ 437              		.file 5 "sys/clock.h"
+ 438              		.file 6 "app/app.h"
+ 439              		.file 7 "Drivers/CMSIS/Include/core_cm3.h"
+ARM GAS  /tmp/cchDob7b.s 			page 10
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 app_clock.c
-     /tmp/ccNgAHMN.s:23     .data._app_clock:0000000000000000 _app_clock
-     /tmp/ccNgAHMN.s:20     .data._app_clock:0000000000000000 $d
-     /tmp/ccNgAHMN.s:79     .text.app_clock_open:0000000000000000 app_clock_open
-     /tmp/ccNgAHMN.s:112    .text.app_clock_update:0000000000000000 app_clock_update
-     /tmp/ccNgAHMN.s:152    .text.app_clock_draw:0000000000000000 app_clock_draw
-     /tmp/ccNgAHMN.s:234    .text.app_clock_encoder:0000000000000000 app_clock_encoder
-     /tmp/ccNgAHMN.s:278    .text.app_clock_buttons:0000000000000000 app_clock_buttons
-     /tmp/ccNgAHMN.s:361    .text.app_clock_can_close:0000000000000000 app_clock_can_close
-     /tmp/ccNgAHMN.s:396    .text.app_clock_close:0000000000000000 app_clock_close
-     /tmp/ccNgAHMN.s:34     .text.app_clock:0000000000000000 $t
-     /tmp/ccNgAHMN.s:39     .text.app_clock:0000000000000000 app_clock
-     /tmp/ccNgAHMN.s:69     .text.app_clock:0000000000000010 $d
-     /tmp/ccNgAHMN.s:74     .text.app_clock_open:0000000000000000 $t
-     /tmp/ccNgAHMN.s:107    .text.app_clock_update:0000000000000000 $t
-     /tmp/ccNgAHMN.s:140    .rodata:0000000000000000 $d
-     /tmp/ccNgAHMN.s:147    .text.app_clock_draw:0000000000000000 $t
-     /tmp/ccNgAHMN.s:223    .text.app_clock_draw:0000000000000068 $d
-     /tmp/ccNgAHMN.s:229    .text.app_clock_encoder:0000000000000000 $t
-     /tmp/ccNgAHMN.s:273    .text.app_clock_buttons:0000000000000000 $t
-     /tmp/ccNgAHMN.s:356    .text.app_clock_can_close:0000000000000000 $t
-     /tmp/ccNgAHMN.s:391    .text.app_clock_close:0000000000000000 $t
+     /tmp/cchDob7b.s:23     .data._app_clock:0000000000000000 _app_clock
+     /tmp/cchDob7b.s:20     .data._app_clock:0000000000000000 $d
+     /tmp/cchDob7b.s:79     .text.app_clock_open:0000000000000000 app_clock_open
+     /tmp/cchDob7b.s:112    .text.app_clock_update:0000000000000000 app_clock_update
+     /tmp/cchDob7b.s:152    .text.app_clock_draw:0000000000000000 app_clock_draw
+     /tmp/cchDob7b.s:235    .text.app_clock_encoder:0000000000000000 app_clock_encoder
+     /tmp/cchDob7b.s:285    .text.app_clock_buttons:0000000000000000 app_clock_buttons
+     /tmp/cchDob7b.s:368    .text.app_clock_can_close:0000000000000000 app_clock_can_close
+     /tmp/cchDob7b.s:403    .text.app_clock_close:0000000000000000 app_clock_close
+     /tmp/cchDob7b.s:34     .text.app_clock:0000000000000000 $t
+     /tmp/cchDob7b.s:39     .text.app_clock:0000000000000000 app_clock
+     /tmp/cchDob7b.s:69     .text.app_clock:0000000000000010 $d
+     /tmp/cchDob7b.s:74     .text.app_clock_open:0000000000000000 $t
+     /tmp/cchDob7b.s:107    .text.app_clock_update:0000000000000000 $t
+     /tmp/cchDob7b.s:140    .rodata:0000000000000000 $d
+     /tmp/cchDob7b.s:147    .text.app_clock_draw:0000000000000000 $t
+     /tmp/cchDob7b.s:224    .text.app_clock_draw:0000000000000068 $d
+     /tmp/cchDob7b.s:230    .text.app_clock_encoder:0000000000000000 $t
+     /tmp/cchDob7b.s:277    .data.lc:0000000000000000 lc
+     /tmp/cchDob7b.s:280    .text.app_clock_buttons:0000000000000000 $t
+     /tmp/cchDob7b.s:358    .text.app_clock_buttons:0000000000000058 $d
+     /tmp/cchDob7b.s:363    .text.app_clock_can_close:0000000000000000 $t
+     /tmp/cchDob7b.s:398    .text.app_clock_close:0000000000000000 $t
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS
@@ -539,6 +542,5 @@ clock_get_time
 clock_alarm_get
 hd44780_position
 hd44780_printf
-speaker_start
-speaker_stop
+hd44780_brightness
 clock_alarm_set

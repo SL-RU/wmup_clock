@@ -35,23 +35,19 @@ void app_clock_draw()
 void app_clock_encoder(int16_t val, int16_t del)
 {
 }
+uint8_t lc = 1;;
 void app_clock_buttons(uint8_t b, uint8_t e)
 {
-    if(b == BITopBig && e == CONTROLS_LONG_PRESSING)
+    if(b == BIFrontGreen && e == CONTROLS_CLICK)
     {
-	speaker_start();
-    }
-    else
-	speaker_stop();
-
-    if(b == BITopSmall && e == CONTROLS_CLICK)
-    {
-	clock_alarm_set(0, 11, 47);
+	lc = !lc;
+	hd44780_brightness(lc);
+	//clock_alarm_set(1, 2, 31);
     }
     
-    if(b == BITopSmall && e == CONTROLS_LONG_CLICK)
+    if(b == BIFrontRed && e == CONTROLS_CLICK)
     {
-	clock_alarm_set(1, 20, 13);
+	clock_alarm_set(1, 7, 53);
     }
 }
 

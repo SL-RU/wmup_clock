@@ -37,8 +37,8 @@ build/sys.o: sys/sys.c sys/sys.h sys/clock.h Inc/rtc.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rtc_ex.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
- Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h sys/controls.h \
- sys/hw_defs.h Inc/gpio.h /usr/include/newlib/math.h
+ Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h sys/speaker.h \
+ Inc/gpio.h sys/controls.h sys/hw_defs.h /usr/include/newlib/math.h
 
 sys/sys.h:
 
@@ -144,10 +144,12 @@ Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h:
 
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:
 
+sys/speaker.h:
+
+Inc/gpio.h:
+
 sys/controls.h:
 
 sys/hw_defs.h:
-
-Inc/gpio.h:
 
 /usr/include/newlib/math.h:

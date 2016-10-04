@@ -1,6 +1,7 @@
 #include "clock.h"
 #include <string.h>
 #include <stdio.h>
+#include "hd44780.h"
 
 RTC_TimeTypeDef clock_time;
 Clock_AlarmReg clock_alarm;
@@ -11,18 +12,47 @@ void clock_init(void)
     //printf("%lu $ %lu\n", sizeof(Clock_AlarmReg), sizeof(uint32_t));
 }
 
+uint32_t _clock_cnt = 0;
 void clock_update(void)
 {
-    if((HAL_GetTick()/500)%2 == 0)
+    _clock_cnt++;
+    if(_clock_cnt == 500)
     {
+	_clock_cnt = 0;
 	clock_get_time();
 	if(clock_alarm.enabled)
 	{
 	    if(clock_alarm.hour == clock_time.Hours)
 	    {
-		
+		if(clock_alarm.minute <= clock_time.Minutes)
+		{
+		    speaker_start();
+		    hd44780_brightness(1);
+		}
+	    }
+	    else if (clock_alarm.hour <= clock_time.Hours)
+	    {
+		speaker_start();
+		hd44780_brightness(1);
 	    }
 	}
+    }
+}
+
+void clock_button(uint8_t b)
+{
+    if(b == BITopBig)
+    {
+	speaker_stop();
+	clock_alarm_set(0, clock_alarm.hour, clock_alarm.minute);
+    }
+    if(b == BITopSmall)
+    {
+	speaker_stop();
+	if(clock_time.Minutes >= 54)
+	    clock_alarm_set(1, clock_time.Hours + 1, 3); //TODO: !!!
+	else
+	    clock_alarm_set(1, clock_time.Hours, clock_time.Minutes + 5); //TODO: !!!
     }
 }
 

@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccnikZjS.s 			page 1
+ARM GAS  /tmp/ccDQoODe.s 			page 1
 
 
    1              		.syntax unified
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccnikZjS.s 			page 1
   45              		.loc 1 11 0
   46 0006 0123     		movs	r3, #1
   47 0008 0093     		str	r3, [sp]
-ARM GAS  /tmp/ccnikZjS.s 			page 2
+ARM GAS  /tmp/ccDQoODe.s 			page 2
 
 
   48 000a 0848     		ldr	r0, .L2
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccnikZjS.s 			page 1
   18:app/app.c     **** }
   98              		.loc 1 18 0
   99 0008 1846     		mov	r0, r3
-ARM GAS  /tmp/ccnikZjS.s 			page 3
+ARM GAS  /tmp/ccDQoODe.s 			page 3
 
 
  100 000a BD46     		mov	sp, r7
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccnikZjS.s 			page 1
  150 0016 00BF     		.align	2
  151              	.L10:
  152 0018 00000000 		.word	app_current
-ARM GAS  /tmp/ccnikZjS.s 			page 4
+ARM GAS  /tmp/ccDQoODe.s 			page 4
 
 
  153              		.cfi_endproc
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccnikZjS.s 			page 1
   32:app/app.c     **** void app_set(App_Struct * app)
   33:app/app.c     **** {
  204              		.loc 1 33 0
-ARM GAS  /tmp/ccnikZjS.s 			page 5
+ARM GAS  /tmp/ccDQoODe.s 			page 5
 
 
  205              		.cfi_startproc
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccnikZjS.s 			page 1
  250 0034 9847     		blx	r3
  251              	.L16:
   43:app/app.c     **** }
-ARM GAS  /tmp/ccnikZjS.s 			page 6
+ARM GAS  /tmp/ccDQoODe.s 			page 6
 
 
  252              		.loc 1 43 0
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccnikZjS.s 			page 1
  303 0012 02D0     		beq	.L24
  304 0014 012B     		cmp	r3, #1
  305 0016 04D0     		beq	.L25
-ARM GAS  /tmp/ccnikZjS.s 			page 7
+ARM GAS  /tmp/ccDQoODe.s 			page 7
 
 
  306 0018 07E0     		b	.L23
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccnikZjS.s 			page 1
   56:app/app.c     **** 
   57:app/app.c     **** 
   58:app/app.c     **** void apps_preset_encoder(int16_t val, uint8_t preset)
-ARM GAS  /tmp/ccnikZjS.s 			page 8
+ARM GAS  /tmp/ccDQoODe.s 			page 8
 
 
   59:app/app.c     **** {
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccnikZjS.s 			page 1
  400 0030 FB68     		ldr	r3, [r7, #12]
  401 0032 FA88     		ldrh	r2, [r7, #6]	@ movhi
  402 0034 9A80     		strh	r2, [r3, #4]	@ movhi
-ARM GAS  /tmp/ccnikZjS.s 			page 9
+ARM GAS  /tmp/ccDQoODe.s 			page 9
 
 
  403              	.L32:
@@ -535,234 +535,263 @@ ARM GAS  /tmp/ccnikZjS.s 			page 1
  451 000a FB71     		strb	r3, [r7, #7]
  452 000c 1346     		mov	r3, r2
  453 000e BB71     		strb	r3, [r7, #6]
-  73:app/app.c     ****     if((button == BIFrontRed || button == BIFrontGreen) && event == CONTROLS_LONG_CLICK)
+  73:app/app.c     ****     if((button == BITopBig || button == BITopSmall) && event & CONTROLS_CLICK_ALL)
  454              		.loc 1 73 0
  455 0010 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
-ARM GAS  /tmp/ccnikZjS.s 			page 10
+ARM GAS  /tmp/ccDQoODe.s 			page 10
 
 
- 456 0012 002B     		cmp	r3, #0
+ 456 0012 022B     		cmp	r3, #2
  457 0014 02D0     		beq	.L36
  458              		.loc 1 73 0 is_stmt 0 discriminator 2
  459 0016 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
- 460 0018 012B     		cmp	r3, #1
- 461 001a 34D1     		bne	.L37
+ 460 0018 032B     		cmp	r3, #3
+ 461 001a 09D1     		bne	.L37
  462              	.L36:
  463              		.loc 1 73 0 discriminator 3
  464 001c BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
- 465 001e 042B     		cmp	r3, #4
- 466 0020 31D1     		bne	.L37
+ 465 001e 03F00503 		and	r3, r3, #5
+ 466 0022 002B     		cmp	r3, #0
+ 467 0024 04D0     		beq	.L37
   74:app/app.c     ****     {
-  75:app/app.c     **** 	if(app_current != 0)
- 467              		.loc 1 75 0 is_stmt 1
- 468 0022 204B     		ldr	r3, .L45
- 469 0024 1B68     		ldr	r3, [r3]
- 470 0026 002B     		cmp	r3, #0
- 471 0028 28D0     		beq	.L38
-  76:app/app.c     **** 	{
-  77:app/app.c     **** 	    if(button == BIFrontGreen)
- 472              		.loc 1 77 0
- 473 002a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
- 474 002c 012B     		cmp	r3, #1
- 475 002e 10D1     		bne	.L39
-  78:app/app.c     **** 	    {
-  79:app/app.c     **** 		if(app_current->id > 0)
- 476              		.loc 1 79 0
- 477 0030 1C4B     		ldr	r3, .L45
- 478 0032 1B68     		ldr	r3, [r3]
- 479 0034 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 480 0036 002B     		cmp	r3, #0
- 481 0038 08D0     		beq	.L40
-  80:app/app.c     **** 		{
-  81:app/app.c     **** 		    app_switch(app_current->id - 1);
- 482              		.loc 1 81 0
- 483 003a 1A4B     		ldr	r3, .L45
- 484 003c 1B68     		ldr	r3, [r3]
- 485 003e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 486 0040 013B     		subs	r3, r3, #1
- 487 0042 DBB2     		uxtb	r3, r3
- 488 0044 1846     		mov	r0, r3
- 489 0046 FFF7FEFF 		bl	app_switch
- 490 004a 02E0     		b	.L39
- 491              	.L40:
-  82:app/app.c     **** 		}
-  83:app/app.c     **** 		else
-  84:app/app.c     **** 		{
-  85:app/app.c     **** 		    app_switch(APP_COUNT - 1);
- 492              		.loc 1 85 0
- 493 004c 0120     		movs	r0, #1
- 494 004e FFF7FEFF 		bl	app_switch
- 495              	.L39:
-  86:app/app.c     **** 		}
-  87:app/app.c     **** 	    }
-  88:app/app.c     **** 	    if(button == BIFrontRed)
- 496              		.loc 1 88 0
- 497 0052 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
-ARM GAS  /tmp/ccnikZjS.s 			page 11
+  75:app/app.c     **** 	clock_button(button);
+ 468              		.loc 1 75 0 is_stmt 1
+ 469 0026 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 470 0028 1846     		mov	r0, r3
+ 471 002a FFF7FEFF 		bl	clock_button
+  76:app/app.c     **** 	return;
+ 472              		.loc 1 76 0
+ 473 002e 46E0     		b	.L35
+ 474              	.L37:
+  77:app/app.c     ****     }
+  78:app/app.c     ****     if((button == BIFrontRed || button == BIFrontGreen) && event == CONTROLS_LONG_CLICK)
+ 475              		.loc 1 78 0
+ 476 0030 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 477 0032 002B     		cmp	r3, #0
+ 478 0034 02D0     		beq	.L39
+ 479              		.loc 1 78 0 is_stmt 0 discriminator 2
+ 480 0036 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 481 0038 012B     		cmp	r3, #1
+ 482 003a 34D1     		bne	.L40
+ 483              	.L39:
+ 484              		.loc 1 78 0 discriminator 3
+ 485 003c BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 486 003e 042B     		cmp	r3, #4
+ 487 0040 31D1     		bne	.L40
+  79:app/app.c     ****     {
+  80:app/app.c     **** 	if(app_current != 0)
+ 488              		.loc 1 80 0 is_stmt 1
+ 489 0042 204B     		ldr	r3, .L47
+ 490 0044 1B68     		ldr	r3, [r3]
+ 491 0046 002B     		cmp	r3, #0
+ 492 0048 28D0     		beq	.L41
+  81:app/app.c     **** 	{
+  82:app/app.c     **** 	    if(button == BIFrontGreen)
+ 493              		.loc 1 82 0
+ 494 004a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 495 004c 012B     		cmp	r3, #1
+ 496 004e 10D1     		bne	.L42
+  83:app/app.c     **** 	    {
+  84:app/app.c     **** 		if(app_current->id > 0)
+ 497              		.loc 1 84 0
+ 498 0050 1C4B     		ldr	r3, .L47
+ 499 0052 1B68     		ldr	r3, [r3]
+ 500 0054 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 501 0056 002B     		cmp	r3, #0
+ARM GAS  /tmp/ccDQoODe.s 			page 11
 
 
- 498 0054 002B     		cmp	r3, #0
- 499 0056 15D1     		bne	.L43
-  89:app/app.c     **** 	    {
-  90:app/app.c     **** 		if(app_current->id < APP_COUNT - 1)
- 500              		.loc 1 90 0
- 501 0058 124B     		ldr	r3, .L45
- 502 005a 1B68     		ldr	r3, [r3]
- 503 005c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 504 005e 002B     		cmp	r3, #0
- 505 0060 08D1     		bne	.L42
-  91:app/app.c     **** 		{
-  92:app/app.c     **** 		    app_switch(app_current->id + 1);
- 506              		.loc 1 92 0
- 507 0062 104B     		ldr	r3, .L45
- 508 0064 1B68     		ldr	r3, [r3]
- 509 0066 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 510 0068 0133     		adds	r3, r3, #1
- 511 006a DBB2     		uxtb	r3, r3
- 512 006c 1846     		mov	r0, r3
- 513 006e FFF7FEFF 		bl	app_switch
- 514 0072 07E0     		b	.L43
- 515              	.L42:
-  93:app/app.c     **** 		}
-  94:app/app.c     **** 		else
-  95:app/app.c     **** 		{
-  96:app/app.c     **** 		    app_switch(0);
- 516              		.loc 1 96 0
- 517 0074 0020     		movs	r0, #0
- 518 0076 FFF7FEFF 		bl	app_switch
-  97:app/app.c     **** 		}
-  98:app/app.c     **** 	    }
-  99:app/app.c     **** 	}
- 100:app/app.c     **** 	else
- 101:app/app.c     **** 	{
- 102:app/app.c     **** 	    app_switch(0);
- 103:app/app.c     **** 	}
- 104:app/app.c     **** 	return;
- 519              		.loc 1 104 0
- 520 007a 10E0     		b	.L35
- 521              	.L38:
- 102:app/app.c     **** 	}
- 522              		.loc 1 102 0
- 523 007c 0020     		movs	r0, #0
- 524 007e FFF7FEFF 		bl	app_switch
- 525              		.loc 1 104 0
- 526 0082 0CE0     		b	.L35
- 527              	.L43:
- 528              		.loc 1 104 0 is_stmt 0 discriminator 1
- 529 0084 0BE0     		b	.L35
- 530              	.L37:
- 105:app/app.c     ****     }
- 106:app/app.c     ****     if(app_current != 0)
- 531              		.loc 1 106 0 is_stmt 1
- 532 0086 074B     		ldr	r3, .L45
- 533 0088 1B68     		ldr	r3, [r3]
- 534 008a 002B     		cmp	r3, #0
- 535 008c 07D0     		beq	.L35
-ARM GAS  /tmp/ccnikZjS.s 			page 12
+ 502 0058 08D0     		beq	.L43
+  85:app/app.c     **** 		{
+  86:app/app.c     **** 		    app_switch(app_current->id - 1);
+ 503              		.loc 1 86 0
+ 504 005a 1A4B     		ldr	r3, .L47
+ 505 005c 1B68     		ldr	r3, [r3]
+ 506 005e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 507 0060 013B     		subs	r3, r3, #1
+ 508 0062 DBB2     		uxtb	r3, r3
+ 509 0064 1846     		mov	r0, r3
+ 510 0066 FFF7FEFF 		bl	app_switch
+ 511 006a 02E0     		b	.L42
+ 512              	.L43:
+  87:app/app.c     **** 		}
+  88:app/app.c     **** 		else
+  89:app/app.c     **** 		{
+  90:app/app.c     **** 		    app_switch(APP_COUNT - 1);
+ 513              		.loc 1 90 0
+ 514 006c 0120     		movs	r0, #1
+ 515 006e FFF7FEFF 		bl	app_switch
+ 516              	.L42:
+  91:app/app.c     **** 		}
+  92:app/app.c     **** 	    }
+  93:app/app.c     **** 	    if(button == BIFrontRed)
+ 517              		.loc 1 93 0
+ 518 0072 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 519 0074 002B     		cmp	r3, #0
+ 520 0076 15D1     		bne	.L46
+  94:app/app.c     **** 	    {
+  95:app/app.c     **** 		if(app_current->id < APP_COUNT - 1)
+ 521              		.loc 1 95 0
+ 522 0078 124B     		ldr	r3, .L47
+ 523 007a 1B68     		ldr	r3, [r3]
+ 524 007c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 525 007e 002B     		cmp	r3, #0
+ 526 0080 08D1     		bne	.L45
+  96:app/app.c     **** 		{
+  97:app/app.c     **** 		    app_switch(app_current->id + 1);
+ 527              		.loc 1 97 0
+ 528 0082 104B     		ldr	r3, .L47
+ 529 0084 1B68     		ldr	r3, [r3]
+ 530 0086 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 531 0088 0133     		adds	r3, r3, #1
+ 532 008a DBB2     		uxtb	r3, r3
+ 533 008c 1846     		mov	r0, r3
+ 534 008e FFF7FEFF 		bl	app_switch
+ 535 0092 07E0     		b	.L46
+ 536              	.L45:
+  98:app/app.c     **** 		}
+  99:app/app.c     **** 		else
+ 100:app/app.c     **** 		{
+ 101:app/app.c     **** 		    app_switch(0);
+ 537              		.loc 1 101 0
+ 538 0094 0020     		movs	r0, #0
+ 539 0096 FFF7FEFF 		bl	app_switch
+ 102:app/app.c     **** 		}
+ 103:app/app.c     **** 	    }
+ARM GAS  /tmp/ccDQoODe.s 			page 12
 
 
- 107:app/app.c     **** 	app_current->buttons(button, event);
- 536              		.loc 1 107 0
- 537 008e 054B     		ldr	r3, .L45
- 538 0090 1B68     		ldr	r3, [r3]
- 539 0092 5B69     		ldr	r3, [r3, #20]
- 540 0094 F979     		ldrb	r1, [r7, #7]	@ zero_extendqisi2
- 541 0096 BA79     		ldrb	r2, [r7, #6]	@ zero_extendqisi2
- 542 0098 0846     		mov	r0, r1
- 543 009a 1146     		mov	r1, r2
- 544 009c 9847     		blx	r3
- 545              	.L35:
- 108:app/app.c     **** }
- 546              		.loc 1 108 0
- 547 009e 0837     		adds	r7, r7, #8
- 548              	.LCFI30:
- 549              		.cfi_def_cfa_offset 8
- 550 00a0 BD46     		mov	sp, r7
- 551              	.LCFI31:
- 552              		.cfi_def_cfa_register 13
- 553              		@ sp needed
- 554 00a2 80BD     		pop	{r7, pc}
- 555              	.L46:
- 556              		.align	2
- 557              	.L45:
- 558 00a4 00000000 		.word	app_current
- 559              		.cfi_endproc
- 560              	.LFE70:
- 562              		.section	.text.apps_input_encoder,"ax",%progbits
- 563              		.align	2
- 564              		.global	apps_input_encoder
- 565              		.thumb
- 566              		.thumb_func
- 568              	apps_input_encoder:
- 569              	.LFB71:
- 109:app/app.c     **** 
- 110:app/app.c     **** void apps_input_encoder(int16_t value, int16_t delta)
- 111:app/app.c     **** {
- 570              		.loc 1 111 0
- 571              		.cfi_startproc
- 572              		@ args = 0, pretend = 0, frame = 8
- 573              		@ frame_needed = 1, uses_anonymous_args = 0
- 574 0000 80B5     		push	{r7, lr}
- 575              	.LCFI32:
- 576              		.cfi_def_cfa_offset 8
- 577              		.cfi_offset 7, -8
- 578              		.cfi_offset 14, -4
- 579 0002 82B0     		sub	sp, sp, #8
- 580              	.LCFI33:
- 581              		.cfi_def_cfa_offset 16
- 582 0004 00AF     		add	r7, sp, #0
- 583              	.LCFI34:
- 584              		.cfi_def_cfa_register 7
- 585 0006 0346     		mov	r3, r0
- 586 0008 0A46     		mov	r2, r1
- 587 000a FB80     		strh	r3, [r7, #6]	@ movhi
- 588 000c 1346     		mov	r3, r2	@ movhi
- 589 000e BB80     		strh	r3, [r7, #4]	@ movhi
-ARM GAS  /tmp/ccnikZjS.s 			page 13
+ 104:app/app.c     **** 	}
+ 105:app/app.c     **** 	else
+ 106:app/app.c     **** 	{
+ 107:app/app.c     **** 	    app_switch(0);
+ 108:app/app.c     **** 	}
+ 109:app/app.c     **** 	return;
+ 540              		.loc 1 109 0
+ 541 009a 10E0     		b	.L35
+ 542              	.L41:
+ 107:app/app.c     **** 	}
+ 543              		.loc 1 107 0
+ 544 009c 0020     		movs	r0, #0
+ 545 009e FFF7FEFF 		bl	app_switch
+ 546              		.loc 1 109 0
+ 547 00a2 0CE0     		b	.L35
+ 548              	.L46:
+ 549              		.loc 1 109 0 is_stmt 0 discriminator 1
+ 550 00a4 0BE0     		b	.L35
+ 551              	.L40:
+ 110:app/app.c     ****     }
+ 111:app/app.c     ****     if(app_current != 0)
+ 552              		.loc 1 111 0 is_stmt 1
+ 553 00a6 074B     		ldr	r3, .L47
+ 554 00a8 1B68     		ldr	r3, [r3]
+ 555 00aa 002B     		cmp	r3, #0
+ 556 00ac 07D0     		beq	.L35
+ 112:app/app.c     **** 	app_current->buttons(button, event);
+ 557              		.loc 1 112 0
+ 558 00ae 054B     		ldr	r3, .L47
+ 559 00b0 1B68     		ldr	r3, [r3]
+ 560 00b2 5B69     		ldr	r3, [r3, #20]
+ 561 00b4 F979     		ldrb	r1, [r7, #7]	@ zero_extendqisi2
+ 562 00b6 BA79     		ldrb	r2, [r7, #6]	@ zero_extendqisi2
+ 563 00b8 0846     		mov	r0, r1
+ 564 00ba 1146     		mov	r1, r2
+ 565 00bc 9847     		blx	r3
+ 566              	.L35:
+ 113:app/app.c     **** }
+ 567              		.loc 1 113 0
+ 568 00be 0837     		adds	r7, r7, #8
+ 569              	.LCFI30:
+ 570              		.cfi_def_cfa_offset 8
+ 571 00c0 BD46     		mov	sp, r7
+ 572              	.LCFI31:
+ 573              		.cfi_def_cfa_register 13
+ 574              		@ sp needed
+ 575 00c2 80BD     		pop	{r7, pc}
+ 576              	.L48:
+ 577              		.align	2
+ 578              	.L47:
+ 579 00c4 00000000 		.word	app_current
+ 580              		.cfi_endproc
+ 581              	.LFE70:
+ 583              		.section	.text.apps_input_encoder,"ax",%progbits
+ 584              		.align	2
+ 585              		.global	apps_input_encoder
+ 586              		.thumb
+ARM GAS  /tmp/ccDQoODe.s 			page 13
 
 
- 112:app/app.c     ****     if(app_current != 0)
- 590              		.loc 1 112 0
- 591 0010 084B     		ldr	r3, .L49
- 592 0012 1B68     		ldr	r3, [r3]
- 593 0014 002B     		cmp	r3, #0
- 594 0016 09D0     		beq	.L47
- 113:app/app.c     **** 	app_current->encoder(value, delta);
- 595              		.loc 1 113 0
- 596 0018 064B     		ldr	r3, .L49
- 597 001a 1B68     		ldr	r3, [r3]
- 598 001c 1B69     		ldr	r3, [r3, #16]
- 599 001e B7F90610 		ldrsh	r1, [r7, #6]
- 600 0022 B7F90420 		ldrsh	r2, [r7, #4]
- 601 0026 0846     		mov	r0, r1
- 602 0028 1146     		mov	r1, r2
- 603 002a 9847     		blx	r3
- 604              	.L47:
- 114:app/app.c     **** }
- 605              		.loc 1 114 0
- 606 002c 0837     		adds	r7, r7, #8
- 607              	.LCFI35:
- 608              		.cfi_def_cfa_offset 8
- 609 002e BD46     		mov	sp, r7
- 610              	.LCFI36:
- 611              		.cfi_def_cfa_register 13
- 612              		@ sp needed
- 613 0030 80BD     		pop	{r7, pc}
- 614              	.L50:
- 615 0032 00BF     		.align	2
- 616              	.L49:
- 617 0034 00000000 		.word	app_current
- 618              		.cfi_endproc
- 619              	.LFE71:
- 621              		.text
- 622              	.Letext0:
- 623              		.file 2 "/usr/include/newlib/machine/_default_types.h"
- 624              		.file 3 "/usr/include/newlib/stdint.h"
- 625              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
- 626              		.file 5 "sys/controls.h"
- 627              		.file 6 "app/app.h"
- 628              		.file 7 "Drivers/CMSIS/Include/core_cm3.h"
-ARM GAS  /tmp/ccnikZjS.s 			page 14
+ 587              		.thumb_func
+ 589              	apps_input_encoder:
+ 590              	.LFB71:
+ 114:app/app.c     **** 
+ 115:app/app.c     **** void apps_input_encoder(int16_t value, int16_t delta)
+ 116:app/app.c     **** {
+ 591              		.loc 1 116 0
+ 592              		.cfi_startproc
+ 593              		@ args = 0, pretend = 0, frame = 8
+ 594              		@ frame_needed = 1, uses_anonymous_args = 0
+ 595 0000 80B5     		push	{r7, lr}
+ 596              	.LCFI32:
+ 597              		.cfi_def_cfa_offset 8
+ 598              		.cfi_offset 7, -8
+ 599              		.cfi_offset 14, -4
+ 600 0002 82B0     		sub	sp, sp, #8
+ 601              	.LCFI33:
+ 602              		.cfi_def_cfa_offset 16
+ 603 0004 00AF     		add	r7, sp, #0
+ 604              	.LCFI34:
+ 605              		.cfi_def_cfa_register 7
+ 606 0006 0346     		mov	r3, r0
+ 607 0008 0A46     		mov	r2, r1
+ 608 000a FB80     		strh	r3, [r7, #6]	@ movhi
+ 609 000c 1346     		mov	r3, r2	@ movhi
+ 610 000e BB80     		strh	r3, [r7, #4]	@ movhi
+ 117:app/app.c     ****     if(app_current != 0)
+ 611              		.loc 1 117 0
+ 612 0010 084B     		ldr	r3, .L51
+ 613 0012 1B68     		ldr	r3, [r3]
+ 614 0014 002B     		cmp	r3, #0
+ 615 0016 09D0     		beq	.L49
+ 118:app/app.c     **** 	app_current->encoder(value, delta);
+ 616              		.loc 1 118 0
+ 617 0018 064B     		ldr	r3, .L51
+ 618 001a 1B68     		ldr	r3, [r3]
+ 619 001c 1B69     		ldr	r3, [r3, #16]
+ 620 001e B7F90610 		ldrsh	r1, [r7, #6]
+ 621 0022 B7F90420 		ldrsh	r2, [r7, #4]
+ 622 0026 0846     		mov	r0, r1
+ 623 0028 1146     		mov	r1, r2
+ 624 002a 9847     		blx	r3
+ 625              	.L49:
+ 119:app/app.c     **** }
+ 626              		.loc 1 119 0
+ 627 002c 0837     		adds	r7, r7, #8
+ 628              	.LCFI35:
+ 629              		.cfi_def_cfa_offset 8
+ 630 002e BD46     		mov	sp, r7
+ 631              	.LCFI36:
+ 632              		.cfi_def_cfa_register 13
+ 633              		@ sp needed
+ 634 0030 80BD     		pop	{r7, pc}
+ 635              	.L52:
+ 636 0032 00BF     		.align	2
+ 637              	.L51:
+ 638 0034 00000000 		.word	app_current
+ARM GAS  /tmp/ccDQoODe.s 			page 14
+
+
+ 639              		.cfi_endproc
+ 640              	.LFE71:
+ 642              		.text
+ 643              	.Letext0:
+ 644              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 645              		.file 3 "/usr/include/newlib/stdint.h"
+ 646              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
+ 647              		.file 5 "sys/controls.h"
+ 648              		.file 6 "app/app.h"
+ 649              		.file 7 "Drivers/CMSIS/Include/core_cm3.h"
+ARM GAS  /tmp/ccDQoODe.s 			page 15
 
 
 DEFINED SYMBOLS
@@ -770,34 +799,34 @@ DEFINED SYMBOLS
                             *COM*:0000000000000004 app_current
                             *COM*:0000000000000010 Apps_encoder60
                             *COM*:0000000000000010 Apps_encoder24
-     /tmp/ccnikZjS.s:22     .text.apps_init:0000000000000000 $t
-     /tmp/ccnikZjS.s:27     .text.apps_init:0000000000000000 apps_init
-     /tmp/ccnikZjS.s:70     .text.apps_init:000000000000002c $d
-     /tmp/ccnikZjS.s:76     .text.app_get_current:0000000000000000 $t
-     /tmp/ccnikZjS.s:81     .text.app_get_current:0000000000000000 app_get_current
-     /tmp/ccnikZjS.s:112    .text.app_get_current:0000000000000014 $d
-     /tmp/ccnikZjS.s:117    .text.apps_update:0000000000000000 $t
-     /tmp/ccnikZjS.s:122    .text.apps_update:0000000000000000 apps_update
-     /tmp/ccnikZjS.s:152    .text.apps_update:0000000000000018 $d
-     /tmp/ccnikZjS.s:157    .text.apps_draw:0000000000000000 $t
-     /tmp/ccnikZjS.s:162    .text.apps_draw:0000000000000000 apps_draw
-     /tmp/ccnikZjS.s:192    .text.apps_draw:0000000000000018 $d
-     /tmp/ccnikZjS.s:197    .text.app_set:0000000000000000 $t
-     /tmp/ccnikZjS.s:202    .text.app_set:0000000000000000 app_set
-     /tmp/ccnikZjS.s:264    .text.app_set:000000000000003c $d
-     /tmp/ccnikZjS.s:269    .rodata:0000000000000000 $d
-     /tmp/ccnikZjS.s:273    .text.app_switch:0000000000000000 $t
-     /tmp/ccnikZjS.s:278    .text.app_switch:0000000000000000 app_switch
-     /tmp/ccnikZjS.s:343    .text.app_switch:0000000000000048 $d
-     /tmp/ccnikZjS.s:348    .text.apps_preset_encoder:0000000000000000 $t
-     /tmp/ccnikZjS.s:353    .text.apps_preset_encoder:0000000000000000 apps_preset_encoder
-     /tmp/ccnikZjS.s:420    .text.apps_preset_encoder:0000000000000044 $d
-     /tmp/ccnikZjS.s:568    .text.apps_input_encoder:0000000000000000 apps_input_encoder
-     /tmp/ccnikZjS.s:427    .text.apps_input_buttons:0000000000000000 $t
-     /tmp/ccnikZjS.s:432    .text.apps_input_buttons:0000000000000000 apps_input_buttons
-     /tmp/ccnikZjS.s:558    .text.apps_input_buttons:00000000000000a4 $d
-     /tmp/ccnikZjS.s:563    .text.apps_input_encoder:0000000000000000 $t
-     /tmp/ccnikZjS.s:617    .text.apps_input_encoder:0000000000000034 $d
+     /tmp/ccDQoODe.s:22     .text.apps_init:0000000000000000 $t
+     /tmp/ccDQoODe.s:27     .text.apps_init:0000000000000000 apps_init
+     /tmp/ccDQoODe.s:70     .text.apps_init:000000000000002c $d
+     /tmp/ccDQoODe.s:76     .text.app_get_current:0000000000000000 $t
+     /tmp/ccDQoODe.s:81     .text.app_get_current:0000000000000000 app_get_current
+     /tmp/ccDQoODe.s:112    .text.app_get_current:0000000000000014 $d
+     /tmp/ccDQoODe.s:117    .text.apps_update:0000000000000000 $t
+     /tmp/ccDQoODe.s:122    .text.apps_update:0000000000000000 apps_update
+     /tmp/ccDQoODe.s:152    .text.apps_update:0000000000000018 $d
+     /tmp/ccDQoODe.s:157    .text.apps_draw:0000000000000000 $t
+     /tmp/ccDQoODe.s:162    .text.apps_draw:0000000000000000 apps_draw
+     /tmp/ccDQoODe.s:192    .text.apps_draw:0000000000000018 $d
+     /tmp/ccDQoODe.s:197    .text.app_set:0000000000000000 $t
+     /tmp/ccDQoODe.s:202    .text.app_set:0000000000000000 app_set
+     /tmp/ccDQoODe.s:264    .text.app_set:000000000000003c $d
+     /tmp/ccDQoODe.s:269    .rodata:0000000000000000 $d
+     /tmp/ccDQoODe.s:273    .text.app_switch:0000000000000000 $t
+     /tmp/ccDQoODe.s:278    .text.app_switch:0000000000000000 app_switch
+     /tmp/ccDQoODe.s:343    .text.app_switch:0000000000000048 $d
+     /tmp/ccDQoODe.s:348    .text.apps_preset_encoder:0000000000000000 $t
+     /tmp/ccDQoODe.s:353    .text.apps_preset_encoder:0000000000000000 apps_preset_encoder
+     /tmp/ccDQoODe.s:420    .text.apps_preset_encoder:0000000000000044 $d
+     /tmp/ccDQoODe.s:589    .text.apps_input_encoder:0000000000000000 apps_input_encoder
+     /tmp/ccDQoODe.s:427    .text.apps_input_buttons:0000000000000000 $t
+     /tmp/ccDQoODe.s:432    .text.apps_input_buttons:0000000000000000 apps_input_buttons
+     /tmp/ccDQoODe.s:579    .text.apps_input_buttons:00000000000000c4 $d
+     /tmp/ccDQoODe.s:584    .text.apps_input_encoder:0000000000000000 $t
+     /tmp/ccDQoODe.s:638    .text.apps_input_encoder:0000000000000034 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS
@@ -807,3 +836,4 @@ app_clock
 app_set_time
 printf
 controls_set_encoder_handler
+clock_button

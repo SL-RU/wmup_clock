@@ -40,7 +40,8 @@ build/main.o: Src/main.c Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
  Inc/rtc.h Inc/tim.h Inc/usart.h Inc/gpio.h hd44780/hd44780.h \
  /usr/lib/gcc/arm-none-eabi/4.9/include/stdbool.h sys/controls.h \
  sys/hw_defs.h /usr/include/newlib/math.h app/app.h sys/clock.h \
- app/app_clock.h app/app.h app/app_set_time.h sys/speaker.h
+ sys/speaker.h sys/controls.h app/app_clock.h app/app.h \
+ app/app_set_time.h sys/speaker.h
 
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 
@@ -163,6 +164,10 @@ sys/hw_defs.h:
 app/app.h:
 
 sys/clock.h:
+
+sys/speaker.h:
+
+sys/controls.h:
 
 app/app_clock.h:
 
